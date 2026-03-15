@@ -25,15 +25,17 @@ color:#222;
 background:#000;
 color:white;
 text-align:center;
-padding:6px;
+padding:8px;
 font-size:16px;
 }
 
 .accessibility-bar button{
 margin:0 5px;
 font-size:16px;
-padding:4px 8px;
+padding:6px 10px;
 cursor:pointer;
+border:none;
+border-radius:4px;
 }
 
 /* HEADER */
@@ -269,13 +271,32 @@ margin-left:0;
 
 <script>
 
+/* FONT SIZE CONTROLS */
+
+let fontSize = 20;
+
 function increaseText(){
-document.body.style.fontSize="22px";
+fontSize += 4;
+if(fontSize > 36){
+fontSize = 36;
+}
+document.body.style.fontSize = fontSize + "px";
 }
 
 function decreaseText(){
-document.body.style.fontSize="18px";
+fontSize -= 4;
+if(fontSize < 18){
+fontSize = 18;
 }
+document.body.style.fontSize = fontSize + "px";
+}
+
+function resetText(){
+fontSize = 20;
+document.body.style.fontSize = "20px";
+}
+
+/* MOBILE MENU */
 
 function toggleMenu(){
 var nav=document.getElementById("navMenu");
@@ -297,6 +318,7 @@ nav.style.display="flex";
 Accessibility:
 <button onclick="increaseText()">A+</button>
 <button onclick="decreaseText()">A-</button>
+<button onclick="resetText()">Reset</button>
 </div>
 
 <header>
@@ -309,9 +331,7 @@ Accessibility:
 
 </header>
 
-<div class="menu-button" onclick="toggleMenu()">
-☰ Menu
-</div>
+<div class="menu-button" onclick="toggleMenu()">☰ Menu</div>
 
 <nav id="navMenu">
 
@@ -343,7 +363,7 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <div class="hero-image">
 
-<img src="group1-b.jpg" alt="Happy seniors enjoying community support">
+<img src="group1-b.jpg" alt="Seniors enjoying time together">
 
 </div>
 
