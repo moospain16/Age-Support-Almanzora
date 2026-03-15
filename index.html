@@ -10,8 +10,6 @@
 
 <style>
 
-/* BASE */
-
 body{
 font-family: Arial, sans-serif;
 font-size:20px;
@@ -58,6 +56,18 @@ font-weight:bold;
 margin-top:10px;
 }
 
+/* MOBILE MENU BUTTON */
+
+.menu-button{
+display:none;
+background:#003366;
+color:white;
+padding:12px;
+font-size:22px;
+text-align:center;
+cursor:pointer;
+}
+
 /* NAV */
 
 nav{
@@ -76,22 +86,28 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO */
+/* HERO IMAGE */
 
 .hero{
-padding:60px 20px;
+background-image:url("https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f");
+background-size:cover;
+background-position:center;
+color:white;
 text-align:center;
-background:#eaf4ff;
+padding:120px 20px;
 }
 
 .hero h2{
 font-size:42px;
+margin-bottom:20px;
+text-shadow:2px 2px 6px rgba(0,0,0,0.6);
 }
 
 .hero p{
 font-size:22px;
 max-width:700px;
 margin:auto;
+text-shadow:2px 2px 6px rgba(0,0,0,0.6);
 }
 
 /* BUTTONS */
@@ -114,6 +130,7 @@ color:white;
 .btn-volunteer{
 background:#0066cc;
 color:white;
+margin-left:10px;
 }
 
 /* SERVICES */
@@ -157,7 +174,7 @@ padding:50px 20px;
 font-size:36px;
 }
 
-.help .phone-big{
+.phone-big{
 font-size:34px;
 font-weight:bold;
 }
@@ -171,7 +188,14 @@ padding:30px;
 font-size:18px;
 }
 
-/* FLOATING CALL BUTTON */
+.designer-credit{
+font-size:12px;
+color:#666;
+text-align:right;
+margin-top:20px;
+}
+
+/* CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -191,8 +215,30 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 
 @media (max-width:700px){
 
+.menu-button{
+display:block;
+}
+
+nav{
+display:none;
+flex-direction:column;
+}
+
+nav a{
+padding:12px;
+border-top:1px solid #ddd;
+}
+
+.hero{
+padding:80px 20px;
+}
+
 .hero h2{
-font-size:34px;
+font-size:32px;
+}
+
+.hero p{
+font-size:20px;
 }
 
 .services{
@@ -200,13 +246,20 @@ flex-direction:column;
 align-items:center;
 }
 
+.card{
+max-width:90%;
+}
+
+.btn{
+width:90%;
+margin-left:0;
+}
+
 }
 
 </style>
 
 <script>
-
-/* TEXT SIZE CONTROLS */
 
 function increaseText(){
 document.body.style.fontSize="22px";
@@ -216,6 +269,15 @@ function decreaseText(){
 document.body.style.fontSize="18px";
 }
 
+function toggleMenu(){
+var nav=document.getElementById("navMenu");
+if(nav.style.display==="flex"){
+nav.style.display="none";
+}else{
+nav.style.display="flex";
+}
+}
+
 </script>
 
 </head>
@@ -223,11 +285,9 @@ document.body.style.fontSize="18px";
 <body>
 
 <div class="accessibility-bar">
-
 Accessibility:
 <button onclick="increaseText()">A+</button>
 <button onclick="decreaseText()">A-</button>
-
 </div>
 
 <header>
@@ -235,13 +295,16 @@ Accessibility:
 <h1>Age Support Almanzora</h1>
 
 <p>Supporting Our Community in the Almanzora Valley</p>
-<p>Practical and emotional support for people who need a helping hand.</p>
 
 <div class="phone">📞 Call Us: 634 316 573</div>
 
 </header>
 
-<nav>
+<div class="menu-button" onclick="toggleMenu()">
+☰ Menu
+</div>
+
+<nav id="navMenu">
 
 <a href="index.html">Home</a>
 <a href="befriending.html">Befriending</a>
@@ -257,8 +320,7 @@ Accessibility:
 <h2>Supporting Seniors in Our Community</h2>
 
 <p>
-We provide emotional and practical support for older people
-and carers living in the Almanzora Valley.
+We provide practical and emotional support for people in the Almanzora Valley who need a helping hand.
 </p>
 
 <a class="btn btn-help" href="befriending.html">Get Help</a>
@@ -270,39 +332,21 @@ and carers living in the Almanzora Valley.
 <section class="services">
 
 <a href="befriending.html" class="card">
-
 <h3>🤝 Befriending</h3>
-
-<p>
-Friendly volunteers who visit or call older people who feel lonely.
-</p>
-
+<p>Friendly volunteers who visit or call people who feel lonely.</p>
 <p><strong>Learn more →</strong></p>
-
 </a>
 
 <a href="equipment.html" class="card">
-
 <h3>🦽 Equipment Loan</h3>
-
-<p>
-Wheelchairs, walkers and mobility aids available to borrow.
-</p>
-
+<p>Wheelchairs, walkers and mobility aids available to borrow.</p>
 <p><strong>Learn more →</strong></p>
-
 </a>
 
 <a href="carer-support.html" class="card">
-
 <h3>💬 Carer Support</h3>
-
-<p>
-Support and advice for people caring for elderly loved ones.
-</p>
-
+<p>Support and advice for people caring for loved ones.</p>
 <p><strong>Learn more →</strong></p>
-
 </a>
 
 </section>
@@ -333,10 +377,13 @@ Almanzora Valley, Spain
 ✉ info@agesupportalmanzora.com
 </p>
 
+<div class="designer-credit">
+Designed by TerraLytics ©2026
+</div>
+
 </footer>
 
 <a class="call-button" href="tel:634316573">📞 Call Us</a>
 
 </body>
-
 </html>
