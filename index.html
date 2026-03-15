@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Age Support Almanzora</title>
+
+<style>
+
+/* BASE */
+
+body{
+font-family: Arial, sans-serif;
+font-size:20px;
+line-height:1.7;
+margin:0;
+background:#ffffff;
+color:#222;
+}
+
+/* ACCESSIBILITY BAR */
+
+.accessibility-bar{
+background:#000;
+color:white;
+text-align:center;
+padding:6px;
+font-size:16px;
+}
+
+.accessibility-bar button{
+margin:0 5px;
+font-size:16px;
+padding:4px 8px;
+cursor:pointer;
+}
+
+/* HEADER */
+
+header{
+background:#003366;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:40px;
+}
+
+.phone{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* NAV */
+
+nav{
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+gap:25px;
+padding:15px;
+font-size:20px;
+flex-wrap:wrap;
+}
+
+nav a{
+text-decoration:none;
+color:#003366;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+padding:60px 20px;
+text-align:center;
+background:#eaf4ff;
+}
+
+.hero h2{
+font-size:42px;
+}
+
+.hero p{
+font-size:22px;
+max-width:700px;
+margin:auto;
+}
+
+/* BUTTONS */
+
+.btn{
+display:inline-block;
+margin-top:25px;
+padding:18px 30px;
+font-size:22px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.btn-help{
+background:#ff9900;
+color:white;
+}
+
+.btn-volunteer{
+background:#0066cc;
+color:white;
+}
+
+/* SERVICES */
+
+.services{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+padding:60px 20px;
+}
+
+.services a{
+text-decoration:none;
+color:#222;
+}
+
+.card{
+background:white;
+border:1px solid #ddd;
+padding:30px;
+max-width:280px;
+text-align:center;
+border-radius:10px;
+}
+
+.card h3{
+font-size:26px;
+}
+
+/* HELP SECTION */
+
+.help{
+background:#003366;
+color:white;
+text-align:center;
+padding:50px 20px;
+}
+
+.help h2{
+font-size:36px;
+}
+
+.help .phone-big{
+font-size:34px;
+font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+background:#f2f2f2;
+text-align:center;
+padding:30px;
+font-size:18px;
+}
+
+/* FLOATING CALL BUTTON */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9900;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+.hero h2{
+font-size:34px;
+}
+
+.services{
+flex-direction:column;
+align-items:center;
+}
+
+}
+
+</style>
+
+<script>
+
+/* TEXT SIZE CONTROLS */
+
+function increaseText(){
+document.body.style.fontSize="22px";
+}
+
+function decreaseText(){
+document.body.style.fontSize="18px";
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="accessibility-bar">
+
+Accessibility:
+<button onclick="increaseText()">A+</button>
+<button onclick="decreaseText()">A-</button>
+
+</div>
+
+<header>
+
+<h1>Age Support Almanzora</h1>
+
+<p>Supporting Our Community in the Almanzora Valley</p>
+<p>Practical and emotional support for people who need a helping hand.</p>
+
+<div class="phone">📞 Call Us: 634 316 573</div>
+
+</header>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="befriending.html">Befriending</a>
+<a href="equipment.html">Equipment Loan</a>
+<a href="carer-support.html">Carer Support</a>
+<a href="volunteer.html">Volunteer</a>
+<a href="contact.html">Contact</a>
+
+</nav>
+
+<section class="hero">
+
+<h2>Supporting Seniors in Our Community</h2>
+
+<p>
+We provide emotional and practical support for older people
+and carers living in the Almanzora Valley.
+</p>
+
+<a class="btn btn-help" href="befriending.html">Get Help</a>
+
+<a class="btn btn-volunteer" href="volunteer.html">Volunteer</a>
+
+</section>
+
+<section class="services">
+
+<a href="befriending.html" class="card">
+
+<h3>🤝 Befriending</h3>
+
+<p>
+Friendly volunteers who visit or call older people who feel lonely.
+</p>
+
+<p><strong>Learn more →</strong></p>
+
+</a>
+
+<a href="equipment.html" class="card">
+
+<h3>🦽 Equipment Loan</h3>
+
+<p>
+Wheelchairs, walkers and mobility aids available to borrow.
+</p>
+
+<p><strong>Learn more →</strong></p>
+
+</a>
+
+<a href="carer-support.html" class="card">
+
+<h3>💬 Carer Support</h3>
+
+<p>
+Support and advice for people caring for elderly loved ones.
+</p>
+
+<p><strong>Learn more →</strong></p>
+
+</a>
+
+</section>
+
+<section class="help">
+
+<h2>Need Help or Someone to Talk To?</h2>
+
+<p>Our friendly team is here to help.</p>
+
+<div class="phone-big">📞 634 316 573</div>
+
+<p>Open Tuesday – Friday | 10am – 2pm</p>
+
+</section>
+
+<footer>
+
+<p><strong>Age Support Almanzora</strong></p>
+
+<p>
+Albox Information Centre<br>
+Almanzora Valley, Spain
+</p>
+
+<p>
+📞 634 316 573<br>
+✉ info@agesupportalmanzora.com
+</p>
+
+</footer>
+
+<a class="call-button" href="tel:634316573">📞 Call Us</a>
+
+</body>
+
+</html>
