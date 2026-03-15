@@ -56,7 +56,7 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* MOBILE MENU BUTTON */
+/* MOBILE MENU */
 
 .menu-button{
 display:none;
@@ -68,7 +68,7 @@ text-align:center;
 cursor:pointer;
 }
 
-/* NAV */
+/* NAVIGATION */
 
 nav{
 background:#f2f2f2;
@@ -86,28 +86,41 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO IMAGE */
+/* HERO SECTION */
 
 .hero{
-background-image:url("https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f");
-background-size:cover;
-background-position:center;
+background:#003366;
 color:white;
-text-align:center;
-padding:120px 20px;
+padding:60px 20px;
 }
 
-.hero h2{
+.hero-container{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:40px;
+max-width:1100px;
+margin:auto;
+flex-wrap:wrap;
+}
+
+.hero-text{
+max-width:500px;
+}
+
+.hero-text h2{
 font-size:42px;
 margin-bottom:20px;
-text-shadow:2px 2px 6px rgba(0,0,0,0.6);
 }
 
-.hero p{
+.hero-text p{
 font-size:22px;
-max-width:700px;
-margin:auto;
-text-shadow:2px 2px 6px rgba(0,0,0,0.6);
+}
+
+.hero-image img{
+width:420px;
+max-width:100%;
+border-radius:10px;
 }
 
 /* BUTTONS */
@@ -170,10 +183,6 @@ text-align:center;
 padding:50px 20px;
 }
 
-.help h2{
-font-size:36px;
-}
-
 .phone-big{
 font-size:34px;
 font-weight:bold;
@@ -183,16 +192,19 @@ font-weight:bold;
 
 footer{
 background:#f2f2f2;
-text-align:center;
 padding:30px;
 font-size:18px;
+}
+
+.footer-content{
+text-align:center;
 }
 
 .designer-credit{
 font-size:12px;
 color:#666;
-text-align:right;
 margin-top:20px;
+text-align:left;
 }
 
 /* CALL BUTTON */
@@ -224,20 +236,16 @@ display:none;
 flex-direction:column;
 }
 
-nav a{
-padding:12px;
-border-top:1px solid #ddd;
+.hero-container{
+flex-direction:column;
+text-align:center;
 }
 
-.hero{
-padding:80px 20px;
-}
-
-.hero h2{
+.hero-text h2{
 font-size:32px;
 }
 
-.hero p{
+.hero-text p{
 font-size:20px;
 }
 
@@ -271,6 +279,7 @@ document.body.style.fontSize="18px";
 
 function toggleMenu(){
 var nav=document.getElementById("navMenu");
+
 if(nav.style.display==="flex"){
 nav.style.display="none";
 }else{
@@ -317,6 +326,10 @@ Accessibility:
 
 <section class="hero">
 
+<div class="hero-container">
+
+<div class="hero-text">
+
 <h2>Supporting Seniors in Our Community</h2>
 
 <p>
@@ -324,8 +337,17 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 </p>
 
 <a class="btn btn-help" href="befriending.html">Get Help</a>
-
 <a class="btn btn-volunteer" href="volunteer.html">Volunteer</a>
+
+</div>
+
+<div class="hero-image">
+
+<img src="group1-b.jpg" alt="Happy seniors enjoying community support">
+
+</div>
+
+</div>
 
 </section>
 
@@ -365,6 +387,8 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <footer>
 
+<div class="footer-content">
+
 <p><strong>Age Support Almanzora</strong></p>
 
 <p>
@@ -376,6 +400,8 @@ Almanzora Valley, Spain
 📞 634 316 573<br>
 ✉ info@agesupportalmanzora.com
 </p>
+
+</div>
 
 <div class="designer-credit">
 Designed by TerraLytics ©2026
