@@ -1,181 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Volunteer - Age Support Almanzora</title>
+<title>Volunteer</title>
 
 <style>
 
-body{
-font-family: Arial, sans-serif;
-font-size:20px;
-line-height:1.7;
-margin:0;
-background:#ffffff;
-color:#222;
-}
+body{font-family:Arial;font-size:20px;margin:0}
 
-header{
-background:#003366;
-color:white;
-padding:20px;
-text-align:center;
-}
+.accessibility-bar{background:black;color:white;text-align:center;padding:8px}
 
-header h1{
-margin:0;
-font-size:38px;
-}
+header{background:#003366;color:white;text-align:center;padding:20px}
 
-.phone{
-font-size:24px;
-font-weight:bold;
-margin-top:10px;
-}
+nav{background:#f2f2f2;display:flex;justify-content:center;gap:25px;padding:15px;flex-wrap:wrap}
 
-nav{
-background:#f2f2f2;
-display:flex;
-justify-content:center;
-gap:30px;
-padding:15px;
-font-size:20px;
-flex-wrap:wrap;
-}
+nav a{text-decoration:none;color:#003366;font-weight:bold}
 
-nav a{
-text-decoration:none;
-color:#003366;
-font-weight:bold;
-}
+.content{max-width:900px;margin:auto;padding:40px 20px}
 
-.container{
-max-width:900px;
-margin:auto;
-padding:40px 20px;
-}
+footer{background:#f2f2f2;padding:30px}
 
-h1{
-font-size:40px;
-}
-
-.call-box{
-background:#0066cc;
-color:white;
-padding:30px;
-border-radius:10px;
-text-align:center;
-margin:30px 0;
-}
-
-.call-box h2{
-font-size:30px;
-margin-top:0;
-}
-
-footer{
-background:#f2f2f2;
-text-align:center;
-padding:30px;
-font-size:18px;
-margin-top:40px;
-}
+.designer-credit{font-size:12px;text-align:left;color:#666}
 
 </style>
+
+<script>
+
+let fontSize=localStorage.getItem("siteFontSize")
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize=fontSize+"px"
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36){fontSize=36};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function decreaseText(){fontSize-=4;if(fontSize<18){fontSize=18};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
+
+</script>
 
 </head>
 
 <body>
 
+<div class="accessibility-bar">
+Accessibility:
+<button onclick="increaseText()">A+</button>
+<button onclick="decreaseText()">A-</button>
+<button onclick="resetText()">Reset</button>
+</div>
+
 <header>
-
-<h1>Age Support Almanzora</h1>
-<p>Helping Older People in the Almanzora Valley</p>
-<div class="phone">📞 Call Us: 634 316 573</div>
-
+<h1>Volunteer</h1>
 </header>
 
 <nav>
-
 <a href="index.html">Home</a>
 <a href="befriending.html">Befriending</a>
 <a href="equipment.html">Equipment Loan</a>
 <a href="carer-support.html">Carer Support</a>
 <a href="volunteer.html">Volunteer</a>
 <a href="contact.html">Contact</a>
-
 </nav>
 
-<div class="container">
+<div class="content">
 
-<h1>Volunteer With Us</h1>
+<h2>Join Our Team of Volunteers</h2>
 
 <p>
-Age Support Almanzora is run entirely by volunteers.  
-Without the help of our volunteers we would not be able to
-support older people in the Almanzora Valley.
+Volunteers are the heart of our organisation.
 </p>
 
 <p>
-Volunteering can be a rewarding way to meet people, give back
-to the community, and make a real difference in someone’s life.
-</p>
-
-<div class="call-box">
-
-<h2>Interested in Volunteering?</h2>
-
-<p>Call us to learn more</p>
-
-<h2>📞 634 316 573</h2>
-
-</div>
-
-<h2>Ways You Can Help</h2>
-
-<ul>
-
-<li>Befriending older people who feel lonely</li>
-
-<li>Helping at the information centre</li>
-
-<li>Assisting with equipment loans</li>
-
-<li>Helping at charity events or fundraisers</li>
-
-</ul>
-
-<h2>No Experience Needed</h2>
-
-<p>
-You do not need any special skills to volunteer.
-All you need is a little time and a caring attitude.
-</p>
-
-<p>
-Even a small amount of time can make a huge difference
-to someone who feels isolated.
+If you have a little time to spare and would like to help people in your community, we would love to hear from you.
 </p>
 
 </div>
 
 <footer>
 
-<p><strong>Age Support Almanzora</strong></p>
+<p>Age Support Almanzora</p>
 
-<p>
-Albox Information Centre<br>
-Almanzora Valley, Spain
-</p>
-
-<p>
-📞 634 316 573<br>
-✉ info@agesupportalmanzora.com
-</p>
+<div class="designer-credit">
+Designed by TerraLytics ©2026
+</div>
 
 </footer>
 
