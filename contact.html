@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Contact | Age Support Almanzora</title>
 
 <style>
 
+/* BODY */
+
 body{
-font-family:Arial,sans-serif;
+font-family: Arial, sans-serif;
 font-size:20px;
 line-height:1.7;
 margin:0;
-padding-top:50px;
 background:white;
 color:#222;
+padding-top:50px;
 }
 
-/* FLOATING ACCESSIBILITY BAR */
+/* ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -39,7 +44,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* Header */
+/* HEADER */
 
 header{
 background:#003366;
@@ -48,34 +53,76 @@ text-align:center;
 padding:20px;
 }
 
+header h1{
+margin:0;
+font-size:40px;
+}
+
+.phone{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* NAVIGATION */
+
 nav{
 background:#f2f2f2;
-padding:15px;
 display:flex;
 justify-content:center;
 gap:25px;
+padding:15px;
+font-size:20px;
 flex-wrap:wrap;
 }
 
 nav a{
 text-decoration:none;
-font-weight:bold;
 color:#003366;
+font-weight:bold;
 }
 
-/* Content */
+/* HERO */
 
-.container{
+.hero{
+background:#003366;
+color:white;
+padding:60px 20px;
+}
+
+.hero-container{
+max-width:900px;
+margin:auto;
+text-align:center;
+}
+
+.hero h2{
+font-size:40px;
+margin-top:0;
+}
+
+/* CONTENT */
+
+.content{
 max-width:900px;
 margin:auto;
 padding:40px 20px;
 }
 
-h1{
+.content h2{
 color:#003366;
 }
 
-/* Footer */
+/* CONTACT BOX */
+
+.contact-box{
+background:#f2f2f2;
+padding:25px;
+border-radius:10px;
+margin-top:20px;
+}
+
+/* FOOTER */
 
 footer{
 background:#f2f2f2;
@@ -86,7 +133,7 @@ text-align:center;
 .charity-info{
 font-size:0.85em;
 color:#666;
-margin-top:15px;
+margin-top:20px;
 }
 
 .site-credit{
@@ -96,7 +143,7 @@ color:#777;
 padding:15px;
 }
 
-/* Floating Call Button */
+/* FLOATING CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -108,7 +155,13 @@ font-size:22px;
 padding:16px 22px;
 border-radius:50px;
 text-decoration:none;
+font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
+z-index:1000;
+}
+
+.call-button:hover{
+background:#218838;
 }
 
 </style>
@@ -161,49 +214,64 @@ Accessibility:
 </div>
 
 <header>
+
 <h1>Age Support Almanzora</h1>
-<p>Contact Us</p>
+
+<p>Supporting Our Community in the Almanzora Valley</p>
+
+<div class="phone">📞 634 316 573</div>
+
 </header>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="befriending.html">Befriending</a>
-<a href="equipment.html">Equipment Loan</a>
-<a href="carer-support.html">Carer Support</a>
-<a href="volunteer.html">Volunteer</a>
-<a href="contact.html">Contact</a>
+
+<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+
 </nav>
 
-<div class="container">
+<section class="hero">
 
-<h1>Contact Age Support Almanzora</h1>
+<div class="hero-container">
+
+<h2>Contact Us</h2>
 
 <p>
-If you need help, would like to volunteer, or simply want more information about our services, please get in touch.
+If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.
 </p>
 
-<p>
-<strong>Phone:</strong>  
+</div>
+
+</section>
+
+<section class="content">
+
+<h2>How to Reach Us</h2>
+
+<div class="contact-box">
+
+<p><strong>Phone:</strong><br>
 <a href="tel:634316573">634 316 573</a>
 </p>
 
-<p>
-<strong>Opening Hours:</strong><br>
+<p><strong>Opening Hours:</strong><br>
 Tuesday – Friday<br>
 10:00am – 2:00pm
 </p>
 
-<p>
-<strong>Location:</strong><br>
+<p><strong>Location:</strong><br>
 Albox Information Centre<br>
 Almanzora Valley
 </p>
 
+</div>
+
+<h2>We Are Here to Help</h2>
+
 <p>
-Our team will be happy to assist you and answer any questions you may have.
+If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.
 </p>
 
-</div>
+</section>
 
 <footer>
 
@@ -224,7 +292,9 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">📞 Call Us</a>
+<a href="tel:634316573" class="call-button">
+📞 Call Us
+</a>
 
 </body>
 </html>
