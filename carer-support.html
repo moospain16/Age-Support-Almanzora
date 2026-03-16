@@ -1,80 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carer Support</title>
 
 <style>
 
-body{
-font-family: Arial;
-font-size:20px;
-line-height:1.7;
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+body{font-family:Arial;font-size:20px;margin:0}
 
-h1{
-font-size:40px;
-}
+.accessibility-bar{background:black;color:white;text-align:center;padding:8px}
 
-.callbox{
-background:#ff9900;
-color:white;
-padding:25px;
-text-align:center;
-border-radius:8px;
-margin:30px 0;
-}
+header{background:#003366;color:white;text-align:center;padding:20px}
 
-.phone{
-font-size:30px;
-font-weight:bold;
-}
+nav{background:#f2f2f2;display:flex;justify-content:center;gap:25px;padding:15px;flex-wrap:wrap}
+
+nav a{text-decoration:none;color:#003366;font-weight:bold}
+
+.content{max-width:900px;margin:auto;padding:40px 20px}
+
+footer{background:#f2f2f2;padding:30px}
+
+.designer-credit{font-size:12px;text-align:left;color:#666}
 
 </style>
+
+<script>
+
+let fontSize=localStorage.getItem("siteFontSize")
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize=fontSize+"px"
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36){fontSize=36};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function decreaseText(){fontSize-=4;if(fontSize<18){fontSize=18};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
+
+</script>
+
 </head>
 
 <body>
 
-<h1>Support for Carers</h1>
+<div class="accessibility-bar">
+Accessibility:
+<button onclick="increaseText()">A+</button>
+<button onclick="decreaseText()">A-</button>
+<button onclick="resetText()">Reset</button>
+</div>
+
+<header>
+<h1>Carer Support</h1>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="befriending.html">Befriending</a>
+<a href="equipment.html">Equipment Loan</a>
+<a href="carer-support.html">Carer Support</a>
+<a href="volunteer.html">Volunteer</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="content">
+
+<h2>Support for Those Caring for Loved Ones</h2>
 
 <p>
-Caring for a loved one can be rewarding, but it can also be difficult.
-You do not have to do it alone.
+Caring for someone can be rewarding but also challenging.
 </p>
 
-<div class="callbox">
+<p>
+Our service offers guidance, information and emotional support for carers in the community.
+</p>
 
-<h2>Need Support?</h2>
-
-<p>Speak to our team</p>
-
-<div class="phone">📞 634 316 573</div>
+<p>
+You do not have to face these challenges alone.
+</p>
 
 </div>
 
-<h2>How We Help Carers</h2>
+<footer>
 
-<ul>
-<li>Advice and guidance</li>
-<li>Emotional support</li>
-<li>Connection with local services</li>
-</ul>
+<p>Age Support Almanzora</p>
 
-<h2>Why Support Matters</h2>
+<div class="designer-credit">
+Designed by TerraLytics ©2026
+</div>
 
-<p>
-Looking after someone can be stressful. Talking to others who understand
-can make a big difference.
-</p>
-
-<h2>Contact Us</h2>
-
-<p>
-Our friendly team is here to help. Please call us or visit our centre
-to speak with someone.
-</p>
+</footer>
 
 </body>
 </html>
