@@ -1,87 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Befriending Service</title>
 
 <style>
 
 body{
-font-family: Arial;
+font-family: Arial, sans-serif;
 font-size:20px;
 line-height:1.7;
-max-width:900px;
-margin:auto;
+margin:0;
+}
+
+.accessibility-bar{
+background:black;
+color:white;
+text-align:center;
+padding:8px;
+}
+
+.accessibility-bar button{
+margin:0 6px;
+padding:6px 12px;
+font-size:16px;
+}
+
+header{
+background:#003366;
+color:white;
+text-align:center;
 padding:20px;
 }
 
-h1{
-font-size:40px;
+nav{
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+gap:25px;
+padding:15px;
+flex-wrap:wrap;
 }
 
-h2{
-font-size:28px;
-margin-top:40px;
-}
-
-.callbox{
-background:#003366;
-color:white;
-padding:25px;
-text-align:center;
-border-radius:8px;
-margin:30px 0;
-}
-
-.phone{
-font-size:30px;
+nav a{
+text-decoration:none;
+color:#003366;
 font-weight:bold;
 }
 
+.content{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+footer{
+background:#f2f2f2;
+padding:30px;
+}
+
+.designer-credit{
+font-size:12px;
+text-align:left;
+color:#666;
+}
+
 </style>
+
+<script>
+
+let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize=fontSize+"px"
+})
+
+function increaseText(){
+fontSize+=4
+if(fontSize>36){fontSize=36}
+document.body.style.fontSize=fontSize+"px"
+localStorage.setItem("siteFontSize",fontSize)
+}
+
+function decreaseText(){
+fontSize-=4
+if(fontSize<18){fontSize=18}
+document.body.style.fontSize=fontSize+"px"
+localStorage.setItem("siteFontSize",fontSize)
+}
+
+function resetText(){
+fontSize=20
+document.body.style.fontSize="20px"
+localStorage.setItem("siteFontSize",fontSize)
+}
+
+</script>
+
 </head>
 
 <body>
 
+<div class="accessibility-bar">
+Accessibility:
+<button onclick="increaseText()">A+</button>
+<button onclick="decreaseText()">A-</button>
+<button onclick="resetText()">Reset</button>
+</div>
+
+<header>
 <h1>Befriending Service</h1>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="befriending.html">Befriending</a>
+<a href="equipment.html">Equipment Loan</a>
+<a href="carer-support.html">Carer Support</a>
+<a href="volunteer.html">Volunteer</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="content">
+
+<h2>Friendly Support for Those Feeling Lonely</h2>
 
 <p>
-Many older people experience loneliness, especially if they live alone
-or are far from family. Our Befriending Service connects you with
-friendly volunteers who care.
+Our Befriending Service connects volunteers with people who would benefit from a friendly visit or phone call.
 </p>
 
-<div class="callbox">
+<p>
+Loneliness can affect anyone, especially as we grow older or experience changes in health or mobility.
+A friendly conversation can make a huge difference.
+</p>
 
-<h2>Would you like someone to talk to?</h2>
-
-<p>Call our team today</p>
-
-<div class="phone">📞 634 316 573</div>
+<p>
+Our volunteers provide companionship, conversation and support in a safe and caring way.
+</p>
 
 </div>
 
-<h2>How it Works</h2>
+<footer>
 
-<ul>
-<li>A friendly volunteer will contact you.</li>
-<li>You can arrange regular phone calls or visits.</li>
-<li>You decide what works best for you.</li>
-</ul>
+<p>Age Support Almanzora</p>
 
-<h2>Who Can Use This Service?</h2>
+<div class="designer-credit">
+Designed by TerraLytics ©2026
+</div>
 
-<ul>
-<li>Older people living alone</li>
-<li>People who feel isolated</li>
-<li>Carers who need support</li>
-</ul>
-
-<h2>Our Volunteers</h2>
-
-<p>
-All volunteers are caring members of the community who want to help
-older people feel connected and supported.
-</p>
+</footer>
 
 </body>
 </html>
