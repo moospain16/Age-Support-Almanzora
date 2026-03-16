@@ -5,6 +5,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Age Support Almanzora</title>
 
 <style>
@@ -72,7 +73,7 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO */
+/* HERO SECTION */
 
 .hero{
 background:#003366;
@@ -96,6 +97,7 @@ max-width:500px;
 
 .hero-text h2{
 font-size:42px;
+margin-top:0;
 }
 
 .hero-image img{
@@ -144,13 +146,21 @@ padding:30px;
 max-width:280px;
 text-align:center;
 border-radius:10px;
+text-decoration:none;
+color:#222;
+transition:transform 0.2s;
+}
+
+.card:hover{
+transform:scale(1.05);
 }
 
 .card h3{
 font-size:26px;
+margin-top:0;
 }
 
-/* HELP */
+/* HELP SECTION */
 
 .help{
 background:#003366;
@@ -200,21 +210,25 @@ document.body.style.fontSize = fontSize + "px";
 
 function increaseText(){
 fontSize += 4;
-if(fontSize>36){fontSize=36;}
-document.body.style.fontSize = fontSize+"px";
+if(fontSize > 36){
+fontSize = 36;
+}
+document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("siteFontSize",fontSize);
 }
 
 function decreaseText(){
 fontSize -= 4;
-if(fontSize<18){fontSize=18;}
-document.body.style.fontSize = fontSize+"px";
+if(fontSize < 18){
+fontSize = 18;
+}
+document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("siteFontSize",fontSize);
 }
 
 function resetText(){
 fontSize = 20;
-document.body.style.fontSize="20px";
+document.body.style.fontSize = "20px";
 localStorage.setItem("siteFontSize",fontSize);
 }
 
@@ -234,7 +248,9 @@ Accessibility:
 <header>
 
 <h1>Age Support Almanzora</h1>
+
 <p>Supporting Our Community in the Almanzora Valley</p>
+
 <div class="phone">📞 634 316 573</div>
 
 </header>
@@ -269,7 +285,7 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <div class="hero-image">
 
-<img src="group1-b.jpg" alt="Seniors enjoying time together">
+<img src="index_main_photo.png" alt="Smiling seniors enjoying time together in a sunny garden">
 
 </div>
 
@@ -279,20 +295,20 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <section class="services">
 
-<div class="card">
+<a class="card" href="befriending.html">
 <h3>🤝 Befriending</h3>
 <p>Friendly volunteers who visit or call people who feel lonely.</p>
-</div>
+</a>
 
-<div class="card">
+<a class="card" href="equipment.html">
 <h3>🦽 Equipment Loan</h3>
 <p>Wheelchairs and mobility aids available to borrow.</p>
-</div>
+</a>
 
-<div class="card">
+<a class="card" href="carer-support.html">
 <h3>💬 Carer Support</h3>
 <p>Support and advice for people caring for loved ones.</p>
-</div>
+</a>
 
 </section>
 
