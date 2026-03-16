@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equipment Loan | Age Support Almanzora</title>
 
-<!-- SAME STYLE AND SCRIPT AS OTHER PAGE -->
+<title>Equipment Loan | Age Support Almanzora</title>
 
 <style>
 
-/* identical styling for consistency */
+/* BODY */
 
-body{font-family:Arial;font-size:20px;margin:0;padding-top:50px;line-height:1.7}
+body{
+font-family: Arial, sans-serif;
+font-size:20px;
+line-height:1.7;
+margin:0;
+background:white;
+color:#222;
+padding-top:50px;
+}
 
-/* FLOATING ACCESSIBILITY BAR */
+/* ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -35,34 +44,152 @@ font-size:16px;
 cursor:pointer;
 }
 
-header{background:#003366;color:white;text-align:center;padding:20px}
+/* HEADER */
 
-nav{background:#f2f2f2;padding:15px;display:flex;justify-content:center;gap:25px;flex-wrap:wrap}
+header{
+background:#003366;
+color:white;
+text-align:center;
+padding:20px;
+}
 
-nav a{text-decoration:none;font-weight:bold;color:#003366}
+header h1{
+margin:0;
+font-size:40px;
+}
 
-.container{max-width:900px;margin:auto;padding:40px 20px}
+.phone{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
 
-footer{background:#f2f2f2;padding:30px;text-align:center}
+/* NAVIGATION */
 
-.charity-info{font-size:0.85em;color:#666;margin-top:15px}
+nav{
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+gap:25px;
+padding:15px;
+font-size:20px;
+flex-wrap:wrap;
+}
 
-.site-credit{text-align:center;font-size:12px;color:#777;padding:15px}
+nav a{
+text-decoration:none;
+color:#003366;
+font-weight:bold;
+}
 
-.call-button{position:fixed;bottom:20px;right:20px;background:#28a745;color:white;font-size:22px;padding:16px 22px;border-radius:50px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
+/* HERO */
+
+.hero{
+background:#003366;
+color:white;
+padding:60px 20px;
+}
+
+.hero-container{
+max-width:900px;
+margin:auto;
+text-align:center;
+}
+
+.hero h2{
+font-size:40px;
+margin-top:0;
+}
+
+/* CONTENT */
+
+.content{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+.content h2{
+color:#003366;
+}
+
+/* FOOTER */
+
+footer{
+background:#f2f2f2;
+padding:30px;
+text-align:center;
+}
+
+.charity-info{
+font-size:0.85em;
+color:#666;
+margin-top:20px;
+}
+
+.site-credit{
+text-align:center;
+font-size:12px;
+color:#777;
+padding:15px;
+}
+
+/* FLOATING CALL BUTTON */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+z-index:1000;
+}
+
+.call-button:hover{
+background:#218838;
+}
 
 </style>
 
 <script>
 
-let fontSize=localStorage.getItem("siteFontSize");
-if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+let fontSize = localStorage.getItem("siteFontSize");
 
-document.addEventListener("DOMContentLoaded",()=>{document.body.style.fontSize=fontSize+"px"})
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
 
-function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
-function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
-function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize = fontSize + "px";
+});
+
+function increaseText(){
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
+}
+
+function decreaseText(){
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
+}
+
+function resetText(){
+fontSize = 20;
+document.body.style.fontSize = "20px";
+localStorage.setItem("siteFontSize",fontSize);
+}
 
 </script>
 
@@ -78,42 +205,78 @@ Accessibility:
 </div>
 
 <header>
+
 <h1>Age Support Almanzora</h1>
-<p>Equipment Loan Service</p>
+
+<p>Supporting Our Community in the Almanzora Valley</p>
+
+<div class="phone">📞 634 316 573</div>
+
 </header>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="befriending.html">Befriending</a>
-<a href="equipment.html">Equipment Loan</a>
-<a href="carer-support.html">Carer Support</a>
-<a href="volunteer.html">Volunteer</a>
-<a href="contact.html">Contact</a>
+
+<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+
 </nav>
 
-<div class="container">
+<section class="hero">
 
-<h1>Equipment Loan</h1>
+<div class="hero-container">
 
-<p>
-We provide a range of mobility equipment to help people remain independent in their homes and communities.
-</p>
+<h2>Equipment Loan Service</h2>
 
 <p>
-Items may include wheelchairs, walkers and other mobility aids that can be borrowed when needed.
-</p>
-
-<p>
-If you require equipment or would like to know what is currently available, please contact our team.
+We provide mobility and support equipment to help people remain safe, independent and comfortable in their own homes.
 </p>
 
 </div>
+
+</section>
+
+<section class="content">
+
+<h2>Equipment We Can Provide</h2>
+
+<p>
+Through donations and community support, Age Support Almanzora is able to loan a range of useful mobility and support equipment.
+</p>
+
+<ul>
+
+<li>Wheelchairs</li>
+<li>Walking frames</li>
+<li>Mobility aids</li>
+<li>Other practical support equipment</li>
+
+</ul>
+
+<h2>How the Loan Service Works</h2>
+
+<p>
+Equipment is loaned to people who need temporary assistance due to illness, injury or reduced mobility. Our team will do their best to match available equipment with your needs.
+</p>
+
+<p>
+If the equipment is no longer required, we kindly ask that it is returned so it can help another member of the community.
+</p>
+
+<h2>Request Equipment</h2>
+
+<p>
+If you or someone you know may benefit from borrowing equipment, please contact us and we will do our best to assist.
+</p>
+
+</section>
 
 <footer>
 
 <p><strong>Age Support Almanzora</strong></p>
 
-<p>Albox Information Centre<br>Almanzora Valley</p>
+<p>
+Albox Information Centre<br>
+Almanzora Valley
+</p>
 
 <div class="charity-info">
 Registered Charity No. 5274 | CIF: G04742219
@@ -125,7 +288,9 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">📞 Call Us</a>
+<a href="tel:634316573" class="call-button">
+📞 Call Us
+</a>
 
 </body>
 </html>
