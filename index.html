@@ -5,7 +5,6 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Age Support Almanzora</title>
 
 <style>
@@ -15,27 +14,24 @@ font-family: Arial, sans-serif;
 font-size:20px;
 line-height:1.7;
 margin:0;
-background:#ffffff;
+background:white;
 color:#222;
 }
 
 /* ACCESSIBILITY BAR */
 
 .accessibility-bar{
-background:#000;
+background:black;
 color:white;
 text-align:center;
 padding:8px;
-font-size:16px;
 }
 
 .accessibility-bar button{
-margin:0 5px;
+margin:0 6px;
+padding:6px 12px;
 font-size:16px;
-padding:6px 10px;
 cursor:pointer;
-border:none;
-border-radius:4px;
 }
 
 /* HEADER */
@@ -43,8 +39,8 @@ border-radius:4px;
 header{
 background:#003366;
 color:white;
-padding:20px;
 text-align:center;
+padding:20px;
 }
 
 header h1{
@@ -56,18 +52,6 @@ font-size:40px;
 font-size:26px;
 font-weight:bold;
 margin-top:10px;
-}
-
-/* MOBILE MENU */
-
-.menu-button{
-display:none;
-background:#003366;
-color:white;
-padding:12px;
-font-size:22px;
-text-align:center;
-cursor:pointer;
 }
 
 /* NAVIGATION */
@@ -88,7 +72,7 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO SECTION */
+/* HERO */
 
 .hero{
 background:#003366;
@@ -101,9 +85,9 @@ display:flex;
 align-items:center;
 justify-content:center;
 gap:40px;
+flex-wrap:wrap;
 max-width:1100px;
 margin:auto;
-flex-wrap:wrap;
 }
 
 .hero-text{
@@ -112,11 +96,6 @@ max-width:500px;
 
 .hero-text h2{
 font-size:42px;
-margin-bottom:20px;
-}
-
-.hero-text p{
-font-size:22px;
 }
 
 .hero-image img{
@@ -129,8 +108,8 @@ border-radius:10px;
 
 .btn{
 display:inline-block;
-margin-top:25px;
-padding:18px 30px;
+margin-top:20px;
+padding:16px 28px;
 font-size:22px;
 border-radius:8px;
 text-decoration:none;
@@ -158,11 +137,6 @@ gap:30px;
 padding:60px 20px;
 }
 
-.services a{
-text-decoration:none;
-color:#222;
-}
-
 .card{
 background:white;
 border:1px solid #ddd;
@@ -176,7 +150,7 @@ border-radius:10px;
 font-size:26px;
 }
 
-/* HELP SECTION */
+/* HELP */
 
 .help{
 background:#003366;
@@ -195,7 +169,6 @@ font-weight:bold;
 footer{
 background:#f2f2f2;
 padding:30px;
-font-size:18px;
 }
 
 .footer-content{
@@ -205,107 +178,44 @@ text-align:center;
 .designer-credit{
 font-size:12px;
 color:#666;
-margin-top:20px;
 text-align:left;
-}
-
-/* CALL BUTTON */
-
-.call-button{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9900;
-color:white;
-font-size:22px;
-padding:16px 22px;
-border-radius:10px;
-text-decoration:none;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* MOBILE */
-
-@media (max-width:700px){
-
-.menu-button{
-display:block;
-}
-
-nav{
-display:none;
-flex-direction:column;
-}
-
-.hero-container{
-flex-direction:column;
-text-align:center;
-}
-
-.hero-text h2{
-font-size:32px;
-}
-
-.hero-text p{
-font-size:20px;
-}
-
-.services{
-flex-direction:column;
-align-items:center;
-}
-
-.card{
-max-width:90%;
-}
-
-.btn{
-width:90%;
-margin-left:0;
-}
-
+margin-top:20px;
 }
 
 </style>
 
 <script>
 
-/* FONT SIZE CONTROLS */
+let fontSize = localStorage.getItem("siteFontSize");
 
-let fontSize = 20;
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize = fontSize + "px";
+});
 
 function increaseText(){
 fontSize += 4;
-if(fontSize > 36){
-fontSize = 36;
-}
-document.body.style.fontSize = fontSize + "px";
+if(fontSize>36){fontSize=36;}
+document.body.style.fontSize = fontSize+"px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 function decreaseText(){
 fontSize -= 4;
-if(fontSize < 18){
-fontSize = 18;
-}
-document.body.style.fontSize = fontSize + "px";
+if(fontSize<18){fontSize=18;}
+document.body.style.fontSize = fontSize+"px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 function resetText(){
 fontSize = 20;
-document.body.style.fontSize = "20px";
-}
-
-/* MOBILE MENU */
-
-function toggleMenu(){
-var nav=document.getElementById("navMenu");
-
-if(nav.style.display==="flex"){
-nav.style.display="none";
-}else{
-nav.style.display="flex";
-}
+document.body.style.fontSize="20px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -324,16 +234,12 @@ Accessibility:
 <header>
 
 <h1>Age Support Almanzora</h1>
-
 <p>Supporting Our Community in the Almanzora Valley</p>
-
-<div class="phone">📞 Call Us: 634 316 573</div>
+<div class="phone">📞 634 316 573</div>
 
 </header>
 
-<div class="menu-button" onclick="toggleMenu()">☰ Menu</div>
-
-<nav id="navMenu">
+<nav>
 
 <a href="index.html">Home</a>
 <a href="befriending.html">Befriending</a>
@@ -373,31 +279,26 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <section class="services">
 
-<a href="befriending.html" class="card">
+<div class="card">
 <h3>🤝 Befriending</h3>
 <p>Friendly volunteers who visit or call people who feel lonely.</p>
-<p><strong>Learn more →</strong></p>
-</a>
+</div>
 
-<a href="equipment.html" class="card">
+<div class="card">
 <h3>🦽 Equipment Loan</h3>
-<p>Wheelchairs, walkers and mobility aids available to borrow.</p>
-<p><strong>Learn more →</strong></p>
-</a>
+<p>Wheelchairs and mobility aids available to borrow.</p>
+</div>
 
-<a href="carer-support.html" class="card">
+<div class="card">
 <h3>💬 Carer Support</h3>
 <p>Support and advice for people caring for loved ones.</p>
-<p><strong>Learn more →</strong></p>
-</a>
+</div>
 
 </section>
 
 <section class="help">
 
 <h2>Need Help or Someone to Talk To?</h2>
-
-<p>Our friendly team is here to help.</p>
 
 <div class="phone-big">📞 634 316 573</div>
 
@@ -413,12 +314,7 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <p>
 Albox Information Centre<br>
-Almanzora Valley, Spain
-</p>
-
-<p>
-📞 634 316 573<br>
-✉ info@agesupportalmanzora.com
+Almanzora Valley
 </p>
 
 </div>
@@ -428,8 +324,6 @@ Designed by TerraLytics ©2026
 </div>
 
 </footer>
-
-<a class="call-button" href="tel:634316573">📞 Call Us</a>
 
 </body>
 </html>
