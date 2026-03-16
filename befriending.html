@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 
-<header>
+<html lang="en">
 
-<h1>Age Support Almanzora</h1>
+<head>
 
-<p>Befriending Service</p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="phone">📞 634 316 573</div>
-
-</header>
+<title>Befriending | Age Support Almanzora</title>
 
 <style>
 
+/* BODY */
+
 body{
-font-family:Arial;
+font-family: Arial, sans-serif;
 font-size:20px;
-margin:0;
-padding-top:50px;
 line-height:1.7;
+margin:0;
+background:white;
+color:#222;
+padding-top:50px;
 }
 
-/* FLOATING ACCESSIBILITY BAR */
+/* ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -41,7 +44,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* Header */
+/* HEADER */
 
 header{
 background:#003366;
@@ -50,34 +53,67 @@ text-align:center;
 padding:20px;
 }
 
+header h1{
+margin:0;
+font-size:40px;
+}
+
+.phone{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* NAVIGATION */
+
 nav{
 background:#f2f2f2;
-padding:15px;
 display:flex;
 justify-content:center;
 gap:25px;
+padding:15px;
+font-size:20px;
 flex-wrap:wrap;
 }
 
 nav a{
 text-decoration:none;
-font-weight:bold;
 color:#003366;
+font-weight:bold;
 }
 
-/* Page Content */
+/* HERO SECTION */
 
-.container{
+.hero{
+background:#003366;
+color:white;
+padding:60px 20px;
+}
+
+.hero-container{
+max-width:900px;
+margin:auto;
+text-align:center;
+}
+
+.hero h2{
+font-size:40px;
+margin-top:0;
+}
+
+/* CONTENT */
+
+.content{
 max-width:900px;
 margin:auto;
 padding:40px 20px;
 }
 
-h1{
+.content h2{
 color:#003366;
 }
 
-/* Footer */
+/* FOOTER */
 
 footer{
 background:#f2f2f2;
@@ -88,7 +124,7 @@ text-align:center;
 .charity-info{
 font-size:0.85em;
 color:#666;
-margin-top:15px;
+margin-top:20px;
 }
 
 .site-credit{
@@ -98,7 +134,7 @@ color:#777;
 padding:15px;
 }
 
-/* Floating Call */
+/* FLOATING CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -110,39 +146,49 @@ font-size:22px;
 padding:16px 22px;
 border-radius:50px;
 text-decoration:none;
+font-weight:bold;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
+z-index:1000;
+}
+
+.call-button:hover{
+background:#218838;
 }
 
 </style>
 
 <script>
 
-let fontSize=localStorage.getItem("siteFontSize");
+let fontSize = localStorage.getItem("siteFontSize");
 
-if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
-document.body.style.fontSize=fontSize+"px"
-})
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize = fontSize + "px";
+});
 
 function increaseText(){
-fontSize+=4
-if(fontSize>36)fontSize=36
-document.body.style.fontSize=fontSize+"px"
-localStorage.setItem("siteFontSize",fontSize)
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 function decreaseText(){
-fontSize-=4
-if(fontSize<18)fontSize=18
-document.body.style.fontSize=fontSize+"px"
-localStorage.setItem("siteFontSize",fontSize)
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 function resetText(){
-fontSize=20
-document.body.style.fontSize="20px"
-localStorage.setItem("siteFontSize",fontSize)
+fontSize = 20;
+document.body.style.fontSize = "20px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -159,36 +205,69 @@ Accessibility:
 </div>
 
 <header>
+
 <h1>Age Support Almanzora</h1>
-<p>Befriending Service</p>
+
+<p>Supporting Our Community in the Almanzora Valley</p>
+
+<div class="phone">📞 634 316 573</div>
+
 </header>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="befriending.html">Befriending</a>
-<a href="equipment.html">Equipment Loan</a>
-<a href="carer-support.html">Carer Support</a>
-<a href="volunteer.html">Volunteer</a>
-<a href="contact.html">Contact</a>
+
+<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+
 </nav>
 
-<div class="container">
+<section class="hero">
 
-<h1>Befriending Service</h1>
+<div class="hero-container">
 
-<p>
-Loneliness can affect many people as they grow older. Our befriending service connects friendly volunteers with people in the community who would enjoy regular conversation and companionship.
-</p>
+<h2>Befriending Service</h2>
 
 <p>
-Volunteers may visit in person or stay in touch through regular phone calls. These small acts of kindness can make a huge difference to someone’s wellbeing.
-</p>
-
-<p>
-If you or someone you know would benefit from this service, please contact us.
+Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship.
 </p>
 
 </div>
+
+</section>
+
+<section class="content">
+
+<h2>What is Befriending?</h2>
+
+<p>
+Many older people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls.
+</p>
+
+<p>
+A simple chat, a friendly face or a regular phone call can make a big difference to someone’s wellbeing and sense of connection.
+</p>
+
+<h2>How It Works</h2>
+
+<p>
+Our volunteers are carefully matched with people who would benefit from companionship. The support may include:
+</p>
+
+<ul>
+
+<li>Regular friendly phone calls</li>
+<li>Occasional home visits</li>
+<li>Conversation and companionship</li>
+<li>Helping people stay connected with the community</li>
+
+</ul>
+
+<h2>Get in Touch</h2>
+
+<p>
+If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help.
+</p>
+
+</section>
 
 <footer>
 
@@ -209,7 +288,9 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">📞 Call Us</a>
+<a href="tel:634316573" class="call-button">
+📞 Call Us
+</a>
 
 </body>
 </html>
