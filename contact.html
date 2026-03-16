@@ -1,43 +1,149 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact</title>
+<title>Contact | Age Support Almanzora</title>
 
 <style>
 
-body{font-family:Arial;font-size:20px;margin:0}
+body{
+font-family:Arial,sans-serif;
+font-size:20px;
+line-height:1.7;
+margin:0;
+padding-top:50px;
+background:white;
+color:#222;
+}
 
-.accessibility-bar{background:black;color:white;text-align:center;padding:8px}
+/* Accessibility Bar */
 
-header{background:#003366;color:white;text-align:center;padding:20px}
+.accessibility-bar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:black;
+color:white;
+text-align:center;
+padding:8px;
+z-index:1000;
+}
 
-nav{background:#f2f2f2;display:flex;justify-content:center;gap:25px;padding:15px;flex-wrap:wrap}
+.accessibility-bar button{
+margin:0 6px;
+padding:6px 12px;
+}
 
-nav a{text-decoration:none;color:#003366;font-weight:bold}
+/* Header */
 
-.content{max-width:900px;margin:auto;padding:40px 20px}
+header{
+background:#003366;
+color:white;
+text-align:center;
+padding:20px;
+}
 
-footer{background:#f2f2f2;padding:30px}
+nav{
+background:#f2f2f2;
+padding:15px;
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+}
 
-.designer-credit{font-size:12px;text-align:left;color:#666}
+nav a{
+text-decoration:none;
+font-weight:bold;
+color:#003366;
+}
+
+/* Content */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+h1{
+color:#003366;
+}
+
+/* Footer */
+
+footer{
+background:#f2f2f2;
+padding:30px;
+text-align:center;
+}
+
+.charity-info{
+font-size:0.85em;
+color:#666;
+margin-top:15px;
+}
+
+.site-credit{
+text-align:center;
+font-size:12px;
+color:#777;
+padding:15px;
+}
+
+/* Floating Call Button */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:50px;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
 
 </style>
 
 <script>
 
-let fontSize=localStorage.getItem("siteFontSize")
-if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+let fontSize = localStorage.getItem("siteFontSize");
+
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
 
 document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize=fontSize+"px"
-})
+document.body.style.fontSize = fontSize + "px";
+});
 
-function increaseText(){fontSize+=4;if(fontSize>36){fontSize=36};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
-function decreaseText(){fontSize-=4;if(fontSize<18){fontSize=18};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
-function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
+function increaseText(){
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
+}
+
+function decreaseText(){
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
+}
+
+function resetText(){
+fontSize = 20;
+document.body.style.fontSize = "20px";
+localStorage.setItem("siteFontSize",fontSize);
+}
 
 </script>
 
@@ -53,7 +159,8 @@ Accessibility:
 </div>
 
 <header>
-<h1>Contact Us</h1>
+<h1>Age Support Almanzora</h1>
+<p>Contact Us</p>
 </header>
 
 <nav>
@@ -65,29 +172,57 @@ Accessibility:
 <a href="contact.html">Contact</a>
 </nav>
 
-<div class="content">
+<div class="container">
 
-<h2>Get in Touch</h2>
+<h1>Contact Age Support Almanzora</h1>
 
 <p>
-Phone: 634 316 573
+If you need help, would like to volunteer, or simply want more information about our services, please get in touch.
 </p>
 
 <p>
-Email: info@agesupportalmanzora.com
+<strong>Phone:</strong>  
+<a href="tel:634316573">634 316 573</a>
 </p>
 
 <p>
-Office hours: Tuesday – Friday, 10am – 2pm
+<strong>Opening Hours:</strong><br>
+Tuesday – Friday<br>
+10:00am – 2:00pm
+</p>
+
+<p>
+<strong>Location:</strong><br>
+Albox Information Centre<br>
+Almanzora Valley
+</p>
+
+<p>
+Our team will be happy to assist you and answer any questions you may have.
 </p>
 
 </div>
 
 <footer>
 
-<p>Age Support Almanzora</p>
+<p><strong>Age Support Almanzora</strong></p>
+
+<p>
+Albox Information Centre<br>
+Almanzora Valley
+</p>
+
+<div class="charity-info">
+Registered Charity No. 5274 | CIF: G04742219
+</div>
 
 </footer>
+
+<div class="site-credit">
+Designed by TerraLytics ©2026
+</div>
+
+<a href="tel:634316573" class="call-button">📞 Call Us</a>
 
 </body>
 </html>
