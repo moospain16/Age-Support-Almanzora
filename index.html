@@ -11,6 +11,8 @@
 
 <style>
 
+/* BODY */
+
 body{
 font-family: Arial, sans-serif;
 font-size:20px;
@@ -18,15 +20,21 @@ line-height:1.7;
 margin:0;
 background:white;
 color:#222;
+padding-top:50px;
 }
 
-/* ACCESSIBILITY BAR */
+/* FLOATING ACCESSIBILITY BAR */
 
 .accessibility-bar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
 background:black;
 color:white;
 text-align:center;
 padding:8px;
+z-index:1000;
 }
 
 .accessibility-bar button{
@@ -189,13 +197,34 @@ color:#666;
 margin-top:20px;
 }
 
-/* VERY BOTTOM CREDIT */
+/* SITE CREDIT */
 
 .site-credit{
 text-align:center;
 font-size:12px;
 color:#777;
 padding:15px 10px;
+}
+
+/* FLOATING CALL BUTTON */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+z-index:1000;
+}
+
+.call-button:hover{
+background:#218838;
 }
 
 </style>
@@ -281,7 +310,7 @@ We provide practical and emotional support for people in the Almanzora Valley wh
 
 <div class="hero-image">
 
-<img src="index_main_photo.webp">
+<img src="index_main_photo.png" alt="Smiling seniors enjoying time together in a sunny garden">
 
 </div>
 
@@ -336,6 +365,10 @@ Registered Charity No. 5274 | CIF: G04742219
 <div class="site-credit">
 Designed by TerraLytics ©2026
 </div>
+
+<a href="tel:634316573" class="call-button">
+📞 Call Us
+</a>
 
 </body>
 </html>
