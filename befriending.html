@@ -1,32 +1,40 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Befriending Service</title>
+<title>Befriending | Age Support Almanzora</title>
 
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
 font-size:20px;
-line-height:1.7;
 margin:0;
+padding-top:50px;
+line-height:1.7;
 }
 
+/* Floating Accessibility */
+
 .accessibility-bar{
+position:fixed;
+top:0;
+width:100%;
 background:black;
 color:white;
 text-align:center;
 padding:8px;
+z-index:1000;
 }
 
 .accessibility-bar button{
 margin:0 6px;
 padding:6px 12px;
-font-size:16px;
 }
+
+/* Header */
 
 header{
 background:#003366;
@@ -37,57 +45,89 @@ padding:20px;
 
 nav{
 background:#f2f2f2;
+padding:15px;
 display:flex;
 justify-content:center;
 gap:25px;
-padding:15px;
 flex-wrap:wrap;
 }
 
 nav a{
 text-decoration:none;
-color:#003366;
 font-weight:bold;
+color:#003366;
 }
 
-.content{
+/* Page Content */
+
+.container{
 max-width:900px;
 margin:auto;
 padding:40px 20px;
 }
 
+h1{
+color:#003366;
+}
+
+/* Footer */
+
 footer{
 background:#f2f2f2;
 padding:30px;
+text-align:center;
 }
 
-.designer-credit{
-font-size:12px;
-text-align:left;
+.charity-info{
+font-size:0.85em;
 color:#666;
+margin-top:15px;
+}
+
+.site-credit{
+text-align:center;
+font-size:12px;
+color:#777;
+padding:15px;
+}
+
+/* Floating Call */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:50px;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
 
 </style>
 
 <script>
 
-let fontSize = localStorage.getItem("siteFontSize");
+let fontSize=localStorage.getItem("siteFontSize");
+
 if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded",()=>{
 document.body.style.fontSize=fontSize+"px"
 })
 
 function increaseText(){
 fontSize+=4
-if(fontSize>36){fontSize=36}
+if(fontSize>36)fontSize=36
 document.body.style.fontSize=fontSize+"px"
 localStorage.setItem("siteFontSize",fontSize)
 }
 
 function decreaseText(){
 fontSize-=4
-if(fontSize<18){fontSize=18}
+if(fontSize<18)fontSize=18
 document.body.style.fontSize=fontSize+"px"
 localStorage.setItem("siteFontSize",fontSize)
 }
@@ -112,7 +152,8 @@ Accessibility:
 </div>
 
 <header>
-<h1>Befriending Service</h1>
+<h1>Age Support Almanzora</h1>
+<p>Befriending Service</p>
 </header>
 
 <nav>
@@ -124,30 +165,44 @@ Accessibility:
 <a href="contact.html">Contact</a>
 </nav>
 
-<div class="content">
+<div class="container">
 
-<h2>Friendly Support for Those Feeling Lonely</h2>
+<h1>Befriending Service</h1>
 
 <p>
-Our Befriending Service connects volunteers with people who would benefit from a friendly visit or phone call.
+Loneliness can affect many people as they grow older. Our befriending service connects friendly volunteers with people in the community who would enjoy regular conversation and companionship.
 </p>
 
 <p>
-Loneliness can affect anyone, especially as we grow older or experience changes in health or mobility.
-A friendly conversation can make a huge difference.
+Volunteers may visit in person or stay in touch through regular phone calls. These small acts of kindness can make a huge difference to someone’s wellbeing.
 </p>
 
 <p>
-Our volunteers provide companionship, conversation and support in a safe and caring way.
+If you or someone you know would benefit from this service, please contact us.
 </p>
 
 </div>
 
 <footer>
 
-<p>Age Support Almanzora</p>
+<p><strong>Age Support Almanzora</strong></p>
+
+<p>
+Albox Information Centre<br>
+Almanzora Valley
+</p>
+
+<div class="charity-info">
+Registered Charity No. 5274 | CIF: G04742219
+</div>
 
 </footer>
+
+<div class="site-credit">
+Designed by TerraLytics ©2026
+</div>
+
+<a href="tel:634316573" class="call-button">📞 Call Us</a>
 
 </body>
 </html>
