@@ -1,82 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Equipment Loan Service</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipment Loan</title>
 
 <style>
 
-body{
-font-family: Arial;
-font-size:20px;
-line-height:1.7;
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+body{font-family:Arial;font-size:20px;margin:0}
 
-h1{
-font-size:40px;
-}
+.accessibility-bar{background:black;color:white;text-align:center;padding:8px}
+.accessibility-bar button{margin:0 6px;padding:6px 12px}
 
-.callbox{
-background:#0066cc;
-color:white;
-padding:25px;
-text-align:center;
-border-radius:8px;
-margin:30px 0;
-}
+header{background:#003366;color:white;text-align:center;padding:20px}
 
-.phone{
-font-size:30px;
-font-weight:bold;
-}
+nav{background:#f2f2f2;display:flex;justify-content:center;gap:25px;padding:15px;flex-wrap:wrap}
+
+nav a{text-decoration:none;color:#003366;font-weight:bold}
+
+.content{max-width:900px;margin:auto;padding:40px 20px}
+
+footer{background:#f2f2f2;padding:30px}
+
+.designer-credit{font-size:12px;text-align:left;color:#666}
 
 </style>
+
+<script>
+
+let fontSize=localStorage.getItem("siteFontSize")
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+
+document.addEventListener("DOMContentLoaded",function(){
+document.body.style.fontSize=fontSize+"px"
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36){fontSize=36};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function decreaseText(){fontSize-=4;if(fontSize<18){fontSize=18};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
+
+</script>
+
 </head>
 
 <body>
 
-<h1>Equipment Loan Service</h1>
-
-<p>
-We provide mobility equipment that can help older people stay safe,
-comfortable and independent at home.
-</p>
-
-<div class="callbox">
-
-<h2>Need Equipment?</h2>
-
-<p>Call us to check availability</p>
-
-<div class="phone">📞 634 316 573</div>
-
+<div class="accessibility-bar">
+Accessibility:
+<button onclick="increaseText()">A+</button>
+<button onclick="decreaseText()">A-</button>
+<button onclick="resetText()">Reset</button>
 </div>
 
-<h2>Equipment Available</h2>
+<header>
+<h1>Equipment Loan</h1>
+</header>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="befriending.html">Befriending</a>
+<a href="equipment.html">Equipment Loan</a>
+<a href="carer-support.html">Carer Support</a>
+<a href="volunteer.html">Volunteer</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="content">
+
+<h2>Mobility Equipment When You Need It</h2>
+
+<p>
+We provide mobility equipment to help people remain independent and safe at home.
+</p>
+
+<p>
+Items available may include:
+</p>
 
 <ul>
 <li>Wheelchairs</li>
 <li>Walking frames</li>
-<li>Walking sticks</li>
 <li>Mobility aids</li>
 </ul>
 
-<h2>How the Loan Works</h2>
-
-<ul>
-<li>Call or visit our centre.</li>
-<li>We check what equipment is available.</li>
-<li>You can borrow items for short-term use.</li>
-</ul>
-
-<h2>Where to Collect</h2>
-
 <p>
-Equipment can be collected from the
-Albox Information Centre during opening hours.
+If you need help or advice, please contact us.
 </p>
+
+</div>
+
+<footer>
+
+<p>Age Support Almanzora</p>
+
+<div class="designer-credit">
+Designed by TerraLytics ©2026
+</div>
+
+</footer>
 
 </body>
 </html>
