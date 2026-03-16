@@ -1,61 +1,46 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carer Support</title>
+<title>Carer Support | Age Support Almanzora</title>
 
 <style>
 
-body{font-family:Arial;font-size:20px;margin:0}
+body{font-family:Arial;font-size:20px;margin:0;padding-top:50px;line-height:1.7}
 
-/* FLOATING ACCESSIBILITY BAR */
+.accessibility-bar{position:fixed;top:0;width:100%;background:black;color:white;text-align:center;padding:8px;z-index:1000}
 
-.accessibility-bar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:black;
-color:white;
-text-align:center;
-padding:8px;
-z-index:1000;
-}
-
-.accessibility-bar button{
-margin:0 6px;
-padding:6px 12px;
-font-size:16px;
-cursor:pointer;
-}
+.accessibility-bar button{margin:0 6px;padding:6px 12px}
 
 header{background:#003366;color:white;text-align:center;padding:20px}
 
-nav{background:#f2f2f2;display:flex;justify-content:center;gap:25px;padding:15px;flex-wrap:wrap}
+nav{background:#f2f2f2;padding:15px;display:flex;justify-content:center;gap:25px;flex-wrap:wrap}
 
-nav a{text-decoration:none;color:#003366;font-weight:bold}
+nav a{text-decoration:none;font-weight:bold;color:#003366}
 
-.content{max-width:900px;margin:auto;padding:40px 20px}
+.container{max-width:900px;margin:auto;padding:40px 20px}
 
-footer{background:#f2f2f2;padding:30px}
+footer{background:#f2f2f2;padding:30px;text-align:center}
 
-.designer-credit{font-size:12px;text-align:left;color:#666}
+.charity-info{font-size:0.85em;color:#666;margin-top:15px}
+
+.site-credit{text-align:center;font-size:12px;color:#777;padding:15px}
+
+.call-button{position:fixed;bottom:20px;right:20px;background:#28a745;color:white;font-size:22px;padding:16px 22px;border-radius:50px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3)}
 
 </style>
 
 <script>
 
-let fontSize=localStorage.getItem("siteFontSize")
+let fontSize=localStorage.getItem("siteFontSize");
 if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize=fontSize+"px"
-})
+document.addEventListener("DOMContentLoaded",()=>{document.body.style.fontSize=fontSize+"px"})
 
-function increaseText(){fontSize+=4;if(fontSize>36){fontSize=36};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
-function decreaseText(){fontSize-=4;if(fontSize<18){fontSize=18};document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;document.body.style.fontSize=fontSize+"px";localStorage.setItem("siteFontSize",fontSize)}
 function resetText(){fontSize=20;document.body.style.fontSize="20px";localStorage.setItem("siteFontSize",fontSize)}
 
 </script>
@@ -72,7 +57,8 @@ Accessibility:
 </div>
 
 <header>
-<h1>Carer Support</h1>
+<h1>Age Support Almanzora</h1>
+<p>Carer Support</p>
 </header>
 
 <nav>
@@ -84,29 +70,37 @@ Accessibility:
 <a href="contact.html">Contact</a>
 </nav>
 
-<div class="content">
+<div class="container">
 
-<h2>Support for Those Caring for Loved Ones</h2>
+<h1>Carer Support</h1>
 
 <p>
-Caring for someone can be rewarding but also challenging.
+Caring for someone can be rewarding but also challenging. We provide advice and support to people caring for family members or friends.
 </p>
 
 <p>
-Our service offers guidance, information and emotional support for carers in the community.
-</p>
-
-<p>
-You do not have to face these challenges alone.
+Our team can offer guidance, information and a listening ear to help carers feel supported and connected.
 </p>
 
 </div>
 
 <footer>
 
-<p>Age Support Almanzora</p>
+<p><strong>Age Support Almanzora</strong></p>
+
+<p>Albox Information Centre<br>Almanzora Valley</p>
+
+<div class="charity-info">
+Registered Charity No. 5274 | CIF: G04742219
+</div>
 
 </footer>
+
+<div class="site-credit">
+Designed by TerraLytics ©2026
+</div>
+
+<a href="tel:634316573" class="call-button">📞 Call Us</a>
 
 </body>
 </html>
