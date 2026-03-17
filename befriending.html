@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -44,6 +43,33 @@ font-size:16px;
 cursor:pointer;
 }
 
+/* LANGUAGE TOGGLE */
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+background:none;
+border:none;
+padding:0;
+margin-left:5px;
+cursor:pointer;
+}
+
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+.flag:hover{
+transform:scale(1.1);
+}
+
 /* HEADER */
 
 header{
@@ -82,7 +108,7 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO SECTION */
+/* HERO */
 
 .hero{
 background:#003366;
@@ -134,7 +160,7 @@ color:#777;
 padding:15px;
 }
 
-/* FLOATING CALL BUTTON */
+/* CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -159,36 +185,43 @@ background:#218838;
 
 <script>
 
+/* FONT SIZE */
+
 let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+document.addEventListener("DOMContentLoaded",()=>{
+document.body.style.fontSize = fontSize + "px";
+loadLanguage();
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
+function resetText(){fontSize=20;applyFont()}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize = fontSize + "px";
+/* LANGUAGE SYSTEM */
+
+let lang = localStorage.getItem("siteLang");
+
+if(!lang){
+lang="en";
+}
+
+function setLang(selected){
+lang = selected;
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+}
+
+function loadLanguage(){
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.innerText = el.getAttribute("data-" + lang);
 });
-
-function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function resetText(){
-fontSize = 20;
-document.body.style.fontSize = "20px";
-localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -204,11 +237,24 @@ Accessibility:
 <button onclick="resetText()">Reset</button>
 </div>
 
+<div class="lang-toggle">
+
+<button onclick="setLang('en')">
+<img src="flag_uk.webp" alt="English" title="English" class="flag">
+</button>
+
+<button onclick="setLang('es')">
+<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+</button>
+
+</div>
+
 <header>
 
 <h1>Age Support Almanzora</h1>
 
-<p>Supporting Our Community in the Almanzora Valley</p>
+<p data-en="Supporting Our Community in the Almanzora Valley"
+   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -216,7 +262,12 @@ Accessibility:
 
 <nav>
 
-<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a>
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
+<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
@@ -224,11 +275,11 @@ Accessibility:
 
 <div class="hero-container">
 
-<h2>Befriending Service</h2>
+<h2 data-en="Befriending Service"
+    data-es="Servicio de Acompañamiento"></h2>
 
-<p>
-Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship.
-</p>
+<p data-en="Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship."
+   data-es="Nuestro servicio de acompañamiento ayuda a reducir la soledad conectando voluntarios con personas que se beneficiarían de conversación y compañía regular."></p>
 
 </div>
 
@@ -236,36 +287,42 @@ Our befriending service helps reduce loneliness by connecting volunteers with pe
 
 <section class="content">
 
-<h2>What is Befriending?</h2>
+<h2 data-en="What is Befriending?"
+    data-es="¿Qué es el Acompañamiento?"></h2>
 
-<p>
-Many older people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls.
-</p>
+<p data-en="Many older people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls."
+   data-es="Muchas personas mayores de la comunidad viven solas o no tienen oportunidades frecuentes de socializar. Nuestros voluntarios ofrecen contacto amistoso mediante visitas o llamadas telefónicas."></p>
 
-<p>
-A simple chat, a friendly face or a regular phone call can make a big difference to someone’s wellbeing and sense of connection.
-</p>
+<p data-en="A simple chat, a friendly face or a regular phone call can make a big difference to someone’s wellbeing and sense of connection."
+   data-es="Una simple conversación, una cara amable o una llamada regular pueden marcar una gran diferencia en el bienestar y la sensación de conexión de alguien."></p>
 
-<h2>How It Works</h2>
+<h2 data-en="How It Works"
+    data-es="Cómo Funciona"></h2>
 
-<p>
-Our volunteers are carefully matched with people who would benefit from companionship. The support may include:
-</p>
+<p data-en="Our volunteers are carefully matched with people who would benefit from companionship. The support may include:"
+   data-es="Nuestros voluntarios se asignan cuidadosamente a personas que se beneficiarían de compañía. El apoyo puede incluir:"></p>
 
 <ul>
 
-<li>Regular friendly phone calls</li>
-<li>Occasional home visits</li>
-<li>Conversation and companionship</li>
-<li>Helping people stay connected with the community</li>
+<li data-en="Regular friendly phone calls"
+    data-es="Llamadas telefónicas amistosas regulares"></li>
+
+<li data-en="Occasional home visits"
+    data-es="Visitas ocasionales al domicilio"></li>
+
+<li data-en="Conversation and companionship"
+    data-es="Conversación y compañía"></li>
+
+<li data-en="Helping people stay connected with the community"
+    data-es="Ayudar a las personas a mantenerse conectadas con la comunidad"></li>
 
 </ul>
 
-<h2>Get in Touch</h2>
+<h2 data-en="Get in Touch"
+    data-es="Ponte en Contacto"></h2>
 
-<p>
-If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help.
-</p>
+<p data-en="If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help."
+   data-es="Si usted o alguien que conoce podría beneficiarse de nuestro servicio de acompañamiento, por favor póngase en contacto con nosotros. Estaremos encantados de hablar sobre cómo podemos ayudar."></p>
 
 </section>
 
@@ -288,9 +345,7 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">
-📞 Call Us
-</a>
+<a href="tel:634316573" class="call-button">📞</a>
 
 </body>
 </html>
