@@ -23,7 +23,7 @@ color:#222;
 padding-top:50px;
 }
 
-/* FLOATING ACCESSIBILITY BAR */
+/* ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -37,10 +37,18 @@ padding:8px;
 z-index:1000;
 }
 
-.accessibility-bar button{
-margin:0 6px;
-padding:6px 12px;
-font-size:16px;
+/* LANGUAGE TOGGLE */
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+padding:6px 10px;
+margin-left:5px;
 cursor:pointer;
 }
 
@@ -64,7 +72,7 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* NAVIGATION */
+/* NAV */
 
 nav{
 background:#f2f2f2;
@@ -72,7 +80,6 @@ display:flex;
 justify-content:center;
 gap:25px;
 padding:15px;
-font-size:20px;
 flex-wrap:wrap;
 }
 
@@ -88,99 +95,15 @@ font-weight:bold;
 background:#003366;
 color:white;
 padding:60px 20px;
+text-align:center;
 }
 
-.hero-container{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:40px;
-flex-wrap:wrap;
-max-width:1100px;
+/* CONTENT */
+
+.content{
+max-width:900px;
 margin:auto;
-}
-
-.hero-text{
-max-width:500px;
-}
-
-.hero-text h2{
-font-size:42px;
-margin-top:0;
-}
-
-.hero-image img{
-width:420px;
-max-width:100%;
-border-radius:10px;
-}
-
-/* BUTTONS */
-
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:16px 28px;
-font-size:22px;
-border-radius:8px;
-text-decoration:none;
-font-weight:bold;
-}
-
-.btn-help{
-background:#ff9900;
-color:white;
-}
-
-.btn-volunteer{
-background:#0066cc;
-color:white;
-margin-left:10px;
-}
-
-/* SERVICES */
-
-.services{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:30px;
-padding:60px 20px;
-}
-
-.card{
-background:white;
-border:1px solid #ddd;
-padding:30px;
-max-width:280px;
-text-align:center;
-border-radius:10px;
-text-decoration:none;
-color:#222;
-transition:transform 0.2s;
-}
-
-.card:hover{
-transform:scale(1.05);
-}
-
-.card h3{
-font-size:26px;
-margin-top:0;
-}
-
-/* HELP SECTION */
-
-.help{
-background:#003366;
-color:white;
-text-align:center;
-padding:50px 20px;
-}
-
-.phone-big{
-font-size:34px;
-font-weight:bold;
+padding:40px 20px;
 }
 
 /* FOOTER */
@@ -197,16 +120,14 @@ color:#666;
 margin-top:20px;
 }
 
-/* SITE CREDIT */
-
 .site-credit{
 text-align:center;
 font-size:12px;
 color:#777;
-padding:15px 10px;
+padding:15px;
 }
 
-/* FLOATING CALL BUTTON */
+/* CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -218,49 +139,47 @@ font-size:22px;
 padding:16px 22px;
 border-radius:50px;
 text-decoration:none;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-z-index:1000;
-}
-
-.call-button:hover{
-background:#218838;
 }
 
 </style>
 
 <script>
 
-let fontSize = localStorage.getItem("siteFontSize");
+/* FONT SIZE */
 
-if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
+
+document.addEventListener("DOMContentLoaded",()=>{
+document.body.style.fontSize = fontSize + "px";
+loadLanguage();
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
+function resetText(){fontSize=20;applyFont()}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize = fontSize + "px";
+/* LANGUAGE SYSTEM */
+
+let lang = localStorage.getItem("siteLang") || "en";
+
+function setLang(selected){
+lang = selected;
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+}
+
+function loadLanguage(){
+
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.innerText = el.getAttribute("data-" + lang);
 });
 
-function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function resetText(){
-fontSize = 20;
-document.body.style.fontSize = "20px";
-localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -276,11 +195,17 @@ Accessibility:
 <button onclick="resetText()">Reset</button>
 </div>
 
+<div class="lang-toggle">
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('es')">ES</button>
+</div>
+
 <header>
 
 <h1>Age Support Almanzora</h1>
 
-<p>Supporting Our Community in the Almanzora Valley</p>
+<p data-en="Supporting Our Community in the Almanzora Valley"
+   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -288,62 +213,24 @@ Accessibility:
 
 <nav>
 
-<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a> <a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a> <a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a> <a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a> <a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a> <a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
 <section class="hero">
 
-<div class="hero-container">
+<h2 data-en="Supporting Seniors in Our Community"
+    data-es="Apoyando a las personas mayores en nuestra comunidad"></h2>
 
-<div class="hero-text">
-
-<h2>Supporting Seniors in Our Community</h2>
-
-<p>
-We provide practical and emotional support for people in the Almanzora Valley who need a helping hand.
-</p>
-
-<a class="btn btn-help" href="befriending.html">Get Help</a> <a class="btn btn-volunteer" href="volunteer.html">Volunteer</a>
-
-</div>
-
-<div class="hero-image">
-
-<img src="index_main_photo.webp" alt="Smiling seniors enjoying time together in a sunny garden">
-
-</div>
-
-</div>
+<p data-en="We provide practical and emotional support for people in the Almanzora Valley who need a helping hand."
+   data-es="Ofrecemos apoyo práctico y emocional a las personas del Valle del Almanzora que necesitan ayuda."></p>
 
 </section>
 
-<section class="services">
+<section class="content">
 
-<a class="card" href="befriending.html">
-<h3>🤝 Befriending</h3>
-<p>Friendly volunteers who visit or call people who feel lonely.</p>
-</a>
-
-<a class="card" href="equipment.html">
-<h3>🦽 Equipment Loan</h3>
-<p>Wheelchairs and mobility aids available to borrow.</p>
-</a>
-
-<a class="card" href="carer-support.html">
-<h3>💬 Carer Support</h3>
-<p>Support and advice for people caring for loved ones.</p>
-</a>
-
-</section>
-
-<section class="help">
-
-<h2>Need Help or Someone to Talk To?</h2>
-
-<div class="phone-big">📞 634 316 573</div>
-
-<p>Open Tuesday – Friday | 10am – 2pm</p>
+<p data-en="Age Support Almanzora is a local charity dedicated to helping older people live independently and stay connected."
+   data-es="Age Support Almanzora es una organización benéfica local dedicada a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas."></p>
 
 </section>
 
@@ -366,9 +253,7 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">
-📞 Call Us
-</a>
+<a href="tel:634316573" class="call-button">📞</a>
 
 </body>
 </html>
