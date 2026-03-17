@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -42,6 +42,33 @@ margin:0 6px;
 padding:6px 12px;
 font-size:16px;
 cursor:pointer;
+}
+
+/* LANGUAGE TOGGLE */
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+background:none;
+border:none;
+padding:0;
+margin-left:5px;
+cursor:pointer;
+}
+
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+.flag:hover{
+transform:scale(1.1);
 }
 
 /* HEADER */
@@ -168,36 +195,43 @@ background:#218838;
 
 <script>
 
+/* FONT SIZE */
+
 let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+document.addEventListener("DOMContentLoaded",()=>{
+document.body.style.fontSize = fontSize + "px";
+loadLanguage();
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
+function resetText(){fontSize=20;applyFont()}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize = fontSize + "px";
+/* LANGUAGE SYSTEM */
+
+let lang = localStorage.getItem("siteLang");
+
+if(!lang){
+lang="en";
+}
+
+function setLang(selected){
+lang = selected;
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+}
+
+function loadLanguage(){
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.innerText = el.getAttribute("data-" + lang);
 });
-
-function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function resetText(){
-fontSize = 20;
-document.body.style.fontSize = "20px";
-localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -213,11 +247,24 @@ Accessibility:
 <button onclick="resetText()">Reset</button>
 </div>
 
+<div class="lang-toggle">
+
+<button onclick="setLang('en')">
+<img src="flag_uk.webp" alt="English" title="English" class="flag">
+</button>
+
+<button onclick="setLang('es')">
+<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+</button>
+
+</div>
+
 <header>
 
 <h1>Age Support Almanzora</h1>
 
-<p>Supporting Our Community in the Almanzora Valley</p>
+<p data-en="Supporting Our Community in the Almanzora Valley"
+   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -225,7 +272,12 @@ Accessibility:
 
 <nav>
 
-<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a>
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
+<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
@@ -233,11 +285,11 @@ Accessibility:
 
 <div class="hero-container">
 
-<h2>Contact Us</h2>
+<h2 data-en="Contact Us"
+    data-es="Contáctanos"></h2>
 
-<p>
-If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.
-</p>
+<p data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help."
+   data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar."></p>
 
 </div>
 
@@ -245,31 +297,35 @@ If you need support, would like to volunteer, or simply want to learn more about
 
 <section class="content">
 
-<h2>How to Reach Us</h2>
+<h2 data-en="How to Reach Us"
+    data-es="Cómo Contactarnos"></h2>
 
 <div class="contact-box">
 
-<p><strong>Phone:</strong><br>
+<p>
+<strong data-en="Phone:" data-es="Teléfono:"></strong><br>
 <a href="tel:634316573">634 316 573</a>
 </p>
 
-<p><strong>Opening Hours:</strong><br>
-Tuesday – Friday<br>
+<p>
+<strong data-en="Opening Hours:" data-es="Horario de Apertura:"></strong><br>
+<span data-en="Tuesday – Friday" data-es="Martes – Viernes"></span><br>
 10:00am – 2:00pm
 </p>
 
-<p><strong>Location:</strong><br>
+<p>
+<strong data-en="Location:" data-es="Ubicación:"></strong><br>
 Albox Information Centre<br>
 Almanzora Valley
 </p>
 
 </div>
 
-<h2>We Are Here to Help</h2>
+<h2 data-en="We Are Here to Help"
+    data-es="Estamos Aquí para Ayudar"></h2>
 
-<p>
-If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.
-</p>
+<p data-en="If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible."
+   data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible."></p>
 
 </section>
 
@@ -292,9 +348,8 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">
-📞 Call Us
-</a>
+<a href="tel:634316573" class="call-button">📞</a>
 
 </body>
 </html>
+```

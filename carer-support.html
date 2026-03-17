@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -42,6 +42,33 @@ margin:0 6px;
 padding:6px 12px;
 font-size:16px;
 cursor:pointer;
+}
+
+/* LANGUAGE TOGGLE */
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+background:none;
+border:none;
+padding:0;
+margin-left:5px;
+cursor:pointer;
+}
+
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+.flag:hover{
+transform:scale(1.1);
 }
 
 /* HEADER */
@@ -159,36 +186,43 @@ background:#218838;
 
 <script>
 
+/* FONT SIZE */
+
 let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+document.addEventListener("DOMContentLoaded",()=>{
+document.body.style.fontSize = fontSize + "px";
+loadLanguage();
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
+function resetText(){fontSize=20;applyFont()}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize = fontSize + "px";
+/* LANGUAGE SYSTEM */
+
+let lang = localStorage.getItem("siteLang");
+
+if(!lang){
+lang="en";
+}
+
+function setLang(selected){
+lang = selected;
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+}
+
+function loadLanguage(){
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.innerText = el.getAttribute("data-" + lang);
 });
-
-function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function resetText(){
-fontSize = 20;
-document.body.style.fontSize = "20px";
-localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -204,11 +238,24 @@ Accessibility:
 <button onclick="resetText()">Reset</button>
 </div>
 
+<div class="lang-toggle">
+
+<button onclick="setLang('en')">
+<img src="flag_uk.webp" alt="English" title="English" class="flag">
+</button>
+
+<button onclick="setLang('es')">
+<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+</button>
+
+</div>
+
 <header>
 
 <h1>Age Support Almanzora</h1>
 
-<p>Supporting Our Community in the Almanzora Valley</p>
+<p data-en="Supporting Our Community in the Almanzora Valley"
+   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -216,7 +263,12 @@ Accessibility:
 
 <nav>
 
-<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a>
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
+<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
@@ -224,11 +276,11 @@ Accessibility:
 
 <div class="hero-container">
 
-<h2>Carer Support</h2>
+<h2 data-en="Carer Support"
+    data-es="Apoyo para Cuidadores"></h2>
 
-<p>
-Caring for a loved one can be rewarding but also challenging. Our carer support services provide guidance, information and understanding for those supporting others.
-</p>
+<p data-en="Caring for a loved one can be rewarding but also challenging. Our carer support services provide guidance, information and understanding for those supporting others."
+   data-es="Cuidar de un ser querido puede ser gratificante pero también desafiante. Nuestros servicios de apoyo para cuidadores ofrecen orientación, información y comprensión a quienes cuidan de otros."></p>
 
 </div>
 
@@ -236,36 +288,42 @@ Caring for a loved one can be rewarding but also challenging. Our carer support 
 
 <section class="content">
 
-<h2>Supporting Those Who Care</h2>
+<h2 data-en="Supporting Those Who Care"
+    data-es="Apoyando a Quienes Cuidan"></h2>
 
-<p>
-Many people in our community provide care for family members, partners or friends. While this is an important and generous role, it can sometimes feel overwhelming.
-</p>
+<p data-en="Many people in our community provide care for family members, partners or friends. While this is an important and generous role, it can sometimes feel overwhelming."
+   data-es="Muchas personas en nuestra comunidad cuidan de familiares, parejas o amigos. Aunque es un papel importante y generoso, a veces puede resultar abrumador."></p>
 
-<p>
-Age Support Almanzora aims to provide practical information and friendly support for carers who may need advice or simply someone to talk to.
-</p>
+<p data-en="Age Support Almanzora aims to provide practical information and friendly support for carers who may need advice or simply someone to talk to."
+   data-es="Age Support Almanzora tiene como objetivo ofrecer información práctica y apoyo amistoso para cuidadores que puedan necesitar asesoramiento o simplemente alguien con quien hablar."></p>
 
-<h2>How We Help</h2>
+<h2 data-en="How We Help"
+    data-es="Cómo Ayudamos"></h2>
 
-<p>
-Our team may be able to provide support through:
-</p>
+<p data-en="Our team may be able to provide support through:"
+   data-es="Nuestro equipo puede ofrecer apoyo mediante:"></p>
 
 <ul>
 
-<li>Friendly conversation and understanding</li>
-<li>Information about local services</li>
-<li>Guidance on support available to carers</li>
-<li>Connecting carers with community resources</li>
+<li data-en="Friendly conversation and understanding"
+    data-es="Conversación amistosa y comprensión"></li>
+
+<li data-en="Information about local services"
+    data-es="Información sobre servicios locales"></li>
+
+<li data-en="Guidance on support available to carers"
+    data-es="Orientación sobre el apoyo disponible para cuidadores"></li>
+
+<li data-en="Connecting carers with community resources"
+    data-es="Conectar a los cuidadores con recursos comunitarios"></li>
 
 </ul>
 
-<h2>Talk to Us</h2>
+<h2 data-en="Talk to Us"
+    data-es="Hable con Nosotros"></h2>
 
-<p>
-If you are caring for someone and would like information or support, please contact us. Our team will be happy to listen and help where possible.
-</p>
+<p data-en="If you are caring for someone and would like information or support, please contact us. Our team will be happy to listen and help where possible."
+   data-es="Si está cuidando a alguien y desea información o apoyo, por favor póngase en contacto con nosotros. Nuestro equipo estará encantado de escucharle y ayudar en lo que sea posible."></p>
 
 </section>
 
@@ -288,9 +346,8 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">
-📞 Call Us
-</a>
+<a href="tel:634316573" class="call-button">📞</a>
 
 </body>
 </html>
+```

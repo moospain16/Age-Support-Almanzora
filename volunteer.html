@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -42,6 +41,33 @@ margin:0 6px;
 padding:6px 12px;
 font-size:16px;
 cursor:pointer;
+}
+
+/* LANGUAGE TOGGLE */
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+background:none;
+border:none;
+padding:0;
+margin-left:5px;
+cursor:pointer;
+}
+
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+.flag:hover{
+transform:scale(1.1);
 }
 
 /* HEADER */
@@ -159,36 +185,39 @@ background:#218838;
 
 <script>
 
+/* FONT SIZE */
+
 let fontSize = localStorage.getItem("siteFontSize");
+if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+document.addEventListener("DOMContentLoaded",()=>{
+document.body.style.fontSize = fontSize + "px";
+loadLanguage();
+})
+
+function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
+function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
+function resetText(){fontSize=20;applyFont()}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize",fontSize);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-document.body.style.fontSize = fontSize + "px";
+/* LANGUAGE SYSTEM */
+
+let lang = localStorage.getItem("siteLang") || "en";
+
+function setLang(selected){
+lang = selected;
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+}
+
+function loadLanguage(){
+document.querySelectorAll("[data-en]").forEach(el=>{
+el.innerText = el.getAttribute("data-" + lang);
 });
-
-function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
-}
-
-function resetText(){
-fontSize = 20;
-document.body.style.fontSize = "20px";
-localStorage.setItem("siteFontSize",fontSize);
 }
 
 </script>
@@ -204,11 +233,22 @@ Accessibility:
 <button onclick="resetText()">Reset</button>
 </div>
 
+<div class="lang-toggle">
+<button onclick="setLang('en')">
+<img src="flag_uk.webp" alt="English" title="English" class="flag">
+</button>
+
+<button onclick="setLang('es')">
+<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+</button>
+</div>
+
 <header>
 
 <h1>Age Support Almanzora</h1>
 
-<p>Supporting Our Community in the Almanzora Valley</p>
+<p data-en="Supporting Our Community in the Almanzora Valley"
+   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -216,7 +256,12 @@ Accessibility:
 
 <nav>
 
-<a href="index.html">Home</a> <a href="befriending.html">Befriending</a> <a href="equipment.html">Equipment Loan</a> <a href="carer-support.html">Carer Support</a> <a href="volunteer.html">Volunteer</a> <a href="contact.html">Contact</a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a>
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
+<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
@@ -224,11 +269,11 @@ Accessibility:
 
 <div class="hero-container">
 
-<h2>Volunteer With Us</h2>
+<h2 data-en="Volunteer With Us"
+    data-es="Haz Voluntariado con Nosotros"></h2>
 
-<p>
-Our volunteers are the heart of Age Support Almanzora. By giving a little of your time, you can help improve the lives of older people in the community.
-</p>
+<p data-en="Our volunteers are the heart of Age Support Almanzora. By giving a little of your time, you can help improve the lives of older people in the community."
+   data-es="Nuestros voluntarios son el corazón de Age Support Almanzora. Al dedicar un poco de tu tiempo, puedes ayudar a mejorar la vida de las personas mayores de la comunidad."></p>
 
 </div>
 
@@ -236,28 +281,36 @@ Our volunteers are the heart of Age Support Almanzora. By giving a little of you
 
 <section class="content">
 
-<h2>Why Volunteer?</h2>
+<h2 data-en="Why Volunteer?"
+    data-es="¿Por Qué Ser Voluntario?"></h2>
 
-<p>
-Volunteering is a rewarding way to support others while becoming part of a friendly and supportive community network. Even a small amount of time can make a meaningful difference to someone who may feel isolated or in need of support.
-</p>
+<p data-en="Volunteering is a rewarding way to support others while becoming part of a friendly and supportive community network. Even a small amount of time can make a meaningful difference to someone who may feel isolated or in need of support."
+   data-es="El voluntariado es una forma gratificante de ayudar a los demás y formar parte de una comunidad solidaria. Incluso un pequeño aporte de tiempo puede marcar una gran diferencia para alguien que se siente solo o necesita apoyo."></p>
 
-<h2>Ways You Can Help</h2>
+<h2 data-en="Ways You Can Help"
+    data-es="Formas en que Puedes Ayudar"></h2>
 
 <ul>
 
-<li>Provide friendly conversation and companionship</li>
-<li>Help with community activities or events</li>
-<li>Assist with equipment loans</li>
-<li>Support fundraising and awareness activities</li>
+<li data-en="Provide friendly conversation and companionship"
+    data-es="Ofrecer conversación y compañía amistosa"></li>
+
+<li data-en="Help with community activities or events"
+    data-es="Ayudar en actividades o eventos comunitarios"></li>
+
+<li data-en="Assist with equipment loans"
+    data-es="Ayudar con el préstamo de equipos"></li>
+
+<li data-en="Support fundraising and awareness activities"
+    data-es="Apoyar actividades de recaudación de fondos y concienciación"></li>
 
 </ul>
 
-<h2>Get Involved</h2>
+<h2 data-en="Get Involved"
+    data-es="Participa"></h2>
 
-<p>
-If you would like to volunteer or simply learn more about how you can help, please contact us. Our team will be happy to talk with you about opportunities to get involved.
-</p>
+<p data-en="If you would like to volunteer or simply learn more about how you can help, please contact us. Our team will be happy to talk with you about opportunities to get involved."
+   data-es="Si te gustaría ser voluntario o simplemente saber más sobre cómo puedes ayudar, por favor contáctanos. Nuestro equipo estará encantado de hablar contigo sobre las oportunidades disponibles."></p>
 
 </section>
 
@@ -280,9 +333,7 @@ Registered Charity No. 5274 | CIF: G04742219
 Designed by TerraLytics ©2026
 </div>
 
-<a href="tel:634316573" class="call-button">
-📞 Call Us
-</a>
+<a href="tel:634316573" class="call-button">📞</a>
 
 </body>
 </html>
