@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Age Support Almanzora</title>
 
 <style>
-
-/* BODY */
 
 body{
 font-family: Arial, sans-serif;
@@ -22,8 +16,6 @@ background:white;
 color:#222;
 padding-top:50px;
 }
-
-/* FLOATING ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -44,8 +36,6 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* LANGUAGE TOGGLE */
-
 .lang-toggle{
 position:fixed;
 top:8px;
@@ -54,12 +44,22 @@ z-index:1100;
 }
 
 .lang-toggle button{
-padding:6px 10px;
+background:none;
+border:none;
+padding:0;
 margin-left:5px;
 cursor:pointer;
 }
 
-/* HEADER */
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+.flag:hover{
+transform:scale(1.1);
+}
 
 header{
 background:#003366;
@@ -79,8 +79,6 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* NAV */
-
 nav{
 background:#f2f2f2;
 display:flex;
@@ -96,8 +94,6 @@ color:#003366;
 font-weight:bold;
 }
 
-/* HERO */
-
 .hero{
 background:#003366;
 color:white;
@@ -105,15 +101,11 @@ padding:60px 20px;
 text-align:center;
 }
 
-/* CONTENT */
-
 .content{
 max-width:900px;
 margin:auto;
 padding:40px 20px;
 }
-
-/* FOOTER */
 
 footer{
 background:#f2f2f2;
@@ -134,8 +126,6 @@ color:#777;
 padding:15px;
 }
 
-/* CALL BUTTON */
-
 .call-button{
 position:fixed;
 bottom:20px;
@@ -151,8 +141,6 @@ text-decoration:none;
 </style>
 
 <script>
-
-/* FONT SIZE */
 
 let fontSize = localStorage.getItem("siteFontSize");
 if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
@@ -171,8 +159,6 @@ document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("siteFontSize",fontSize);
 }
 
-/* LANGUAGE SYSTEM */
-
 let lang = localStorage.getItem("siteLang") || "en";
 
 function setLang(selected){
@@ -182,11 +168,9 @@ loadLanguage();
 }
 
 function loadLanguage(){
-
 document.querySelectorAll("[data-en]").forEach(el=>{
 el.innerText = el.getAttribute("data-" + lang);
 });
-
 }
 
 </script>
@@ -203,57 +187,51 @@ Accessibility:
 </div>
 
 <div class="lang-toggle">
-<button onclick="setLang('en')">EN</button>
-<button onclick="setLang('es')">ES</button>
+<button onclick="setLang('en')">
+<img src="flag_uk.webp" alt="English" title="English" class="flag">
+</button>
+<button onclick="setLang('es')">
+<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+</button>
 </div>
 
 <header>
-
 <h1>Age Support Almanzora</h1>
-
 <p data-en="Supporting Our Community in the Almanzora Valley"
    data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
-
 <div class="phone">📞 634 316 573</div>
-
 </header>
 
 <nav>
-
-<a href="index.html" data-en="Home" data-es="Inicio"></a> <a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a> <a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a> <a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a> <a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a> <a href="contact.html" data-en="Contact" data-es="Contacto"></a>
-
+<a href="index.html" data-en="Home" data-es="Inicio"></a>
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
+<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 </nav>
 
 <section class="hero">
-
 <h2 data-en="Supporting Seniors in Our Community"
     data-es="Apoyando a las personas mayores en nuestra comunidad"></h2>
-
 <p data-en="We provide practical and emotional support for people in the Almanzora Valley who need a helping hand."
    data-es="Ofrecemos apoyo práctico y emocional a las personas del Valle del Almanzora que necesitan ayuda."></p>
-
 </section>
 
 <section class="content">
-
 <p data-en="Age Support Almanzora is a local charity dedicated to helping older people live independently and stay connected."
    data-es="Age Support Almanzora es una organización benéfica local dedicada a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas."></p>
-
 </section>
 
 <footer>
-
 <p><strong>Age Support Almanzora</strong></p>
-
 <p>
 Albox Information Centre<br>
 Almanzora Valley
 </p>
-
 <div class="charity-info">
 Registered Charity No. 5274 | CIF: G04742219
 </div>
-
 </footer>
 
 <div class="site-credit">
