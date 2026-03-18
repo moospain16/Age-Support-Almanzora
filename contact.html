@@ -48,7 +48,7 @@ cursor:pointer;
 .lang-toggle{
 position:fixed;
 top:8px;
-right:10px;
+left:10px;
 z-index:1100;
 }
 
@@ -224,6 +224,7 @@ if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 document.addEventListener("DOMContentLoaded",()=>{
 document.body.style.fontSize = fontSize + "px";
 loadLanguage();
+updateLangFlag();
 })
 
 function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
@@ -243,10 +244,23 @@ if(!lang){
 lang="en";
 }
 
-function setLang(selected){
-lang = selected;
+function toggleLang(){
+lang = (lang === "en") ? "es" : "en";
 localStorage.setItem("siteLang", lang);
 loadLanguage();
+updateLangFlag();
+}
+
+function updateLangFlag(){
+let img = document.getElementById("langFlagImg");
+if(!img) return;
+if(lang === "en"){
+img.src = "flag_spain.webp";
+img.alt = "Español";
+}else{
+img.src = "flag_uk.webp";
+img.alt = "English";
+}
 }
 
 function loadLanguage(){
@@ -326,6 +340,10 @@ speech.lang = "en-GB";
 speech.rate = 0.95;
 speech.pitch = 1;
 
+speech.onstart = function(){ isReading = true; updateReadButton(); };
+speech.onend = function(){ isReading = false; updateReadButton(); };
+speech.onerror = function(){ isReading = false; updateReadButton(); };
+
 function speakWithVoice(){
 cacheVoices();
 let femaleVoice = (speech.lang === "es-ES") ? cachedFemaleVoiceES : cachedFemaleVoiceEN;
@@ -345,8 +363,30 @@ speechSynthesis.getVoices();
 
 }
 
+
+let isReading = false;
+
+function updateReadButton(){
+let btn = document.getElementById("readBtn");
+if(!btn) return;
+if(isReading){
+btn.innerHTML = "⏹ Stop";
+}else{
+btn.innerHTML = "🔊 Listen";
+}
+}
+
+function toggleReading(){
+if(isReading){
+stopReading();
+}else{
+readPage();
+}
+}
 function stopReading(){
 speechSynthesis.cancel();
+isReading = false;
+updateReadButton();
 }
 
 </script>
@@ -363,15 +403,9 @@ Accessibility:
 </div>
 
 <div class="lang-toggle">
-
-<button onclick="setLang('en')">
-<img src="flag_uk.webp" alt="English" title="English" class="flag">
+<button onclick="toggleLang()" title="Switch language">
+<img id="langFlagImg" src="flag_spain.webp" alt="Español" class="flag">
 </button>
-
-<button onclick="setLang('es')">
-<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
-</button>
-
 </div>
 
 <header>
@@ -411,8 +445,7 @@ Accessibility:
 </section>
 
 <div class="read-controls">
-<button onclick="readPage()">🔊 Listen</button>
-<button onclick="stopReading()">⏹ Stop</button>
+<button id="readBtn" onclick="toggleReading()">🔊 Listen</button>
 </div>
 
 <section class="content">
