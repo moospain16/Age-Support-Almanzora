@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -22,7 +23,7 @@ color:#222;
 padding-top:50px;
 }
 
-/* ACCESSIBILITY BAR */
+/* FLOATING ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -43,12 +44,12 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* LANGUAGE TOGGLE */
+/* LANGUAGE FLAGS (LEFT SIDE) */
 
 .lang-toggle{
 position:fixed;
 top:8px;
-right:10px;
+left:10px;
 z-index:1100;
 }
 
@@ -56,7 +57,7 @@ z-index:1100;
 background:none;
 border:none;
 padding:0;
-margin-left:5px;
+margin-right:6px;
 cursor:pointer;
 }
 
@@ -127,6 +128,28 @@ font-size:40px;
 margin-top:0;
 }
 
+/* READ CONTROLS */
+
+.read-controls{
+text-align:center;
+margin:30px 0;
+}
+
+.read-controls button{
+font-size:20px;
+padding:12px 20px;
+margin:10px;
+cursor:pointer;
+border-radius:8px;
+border:none;
+background:#003366;
+color:white;
+}
+
+.read-controls button:hover{
+background:#0055aa;
+}
+
 /* CONTENT */
 
 .content{
@@ -185,32 +208,45 @@ background:#218838;
 
 <script>
 
-/* FONT SIZE */
+/* =========================
+FONT SIZE SYSTEM
+========================= */
 
 let fontSize = localStorage.getItem("siteFontSize");
-if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-document.addEventListener("DOMContentLoaded",()=>{
-document.body.style.fontSize = fontSize + "px";
-loadLanguage();
-})
-
-function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
-function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
-function resetText(){fontSize=20;applyFont()}
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
 
 function applyFont(){
 document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
+localStorage.setItem("siteFontSize", fontSize);
 }
 
-/* LANGUAGE SYSTEM */
-
-let lang = localStorage.getItem("siteLang");
-
-if(!lang){
-lang="en";
+function increaseText(){
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+applyFont();
 }
+
+function decreaseText(){
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+applyFont();
+}
+
+function resetText(){
+fontSize = 20;
+applyFont();
+}
+
+/* =========================
+LANGUAGE SYSTEM
+========================= */
+
+let lang = localStorage.getItem("siteLang") || "en";
 
 function setLang(selected){
 lang = selected;
@@ -219,10 +255,68 @@ loadLanguage();
 }
 
 function loadLanguage(){
-document.querySelectorAll("[data-en]").forEach(el=>{
-el.innerText = el.getAttribute("data-" + lang);
-});
+
+let elements = document.querySelectorAll("[data-en]");
+
+elements.forEach(function(el){
+
+let text = el.getAttribute("data-" + lang);
+
+if(text){
+el.innerText = text;
 }
+
+});
+
+}
+
+/* =========================
+READ ALOUD SYSTEM
+========================= */
+
+let speech;
+
+function readPage(){
+
+stopReading();
+
+let content = document.querySelector(".content");
+
+if(!content) return;
+
+let text = content.innerText;
+
+speech = new SpeechSynthesisUtterance(text);
+
+let lang = localStorage.getItem("siteLang") || "en";
+
+if(lang === "es"){
+speech.lang = "es-ES";
+}else{
+speech.lang = "en-GB";
+}
+
+speech.rate = 0.95;
+speech.pitch = 1;
+
+speechSynthesis.speak(speech);
+
+}
+
+function stopReading(){
+speechSynthesis.cancel();
+}
+
+/* =========================
+INITIAL PAGE LOAD
+========================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+applyFont();
+loadLanguage();
+
+});
 
 </script>
 
@@ -240,11 +334,11 @@ Accessibility:
 <div class="lang-toggle">
 
 <button onclick="setLang('en')">
-<img src="flag_uk.webp" alt="English" title="English" class="flag">
+<img src="flag_uk.webp" alt="English" class="flag">
 </button>
 
 <button onclick="setLang('es')">
-<img src="flag_spain.webp" alt="Español" title="Español" class="flag">
+<img src="flag_spain.webp" alt="Español" class="flag">
 </button>
 
 </div>
@@ -254,7 +348,7 @@ Accessibility:
 <h1>Age Support Almanzora</h1>
 
 <p data-en="Supporting Our Community in the Almanzora Valley"
-   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
+data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
 
 <div class="phone">📞 634 316 573</div>
 
@@ -262,12 +356,7 @@ Accessibility:
 
 <nav>
 
-<a href="index.html" data-en="Home" data-es="Inicio"></a>
-<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
-<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
-<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
-<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
-<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
+<a href="index.html" data-en="Home" data-es="Inicio"></a> <a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a> <a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a> <a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a> <a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a> <a href="contact.html" data-en="Contact" data-es="Contacto"></a>
 
 </nav>
 
@@ -276,53 +365,51 @@ Accessibility:
 <div class="hero-container">
 
 <h2 data-en="Equipment Loan Service"
-    data-es="Servicio de Préstamo de Equipos"></h2>
+data-es="Servicio de Préstamo de Equipos"></h2>
 
 <p data-en="We provide mobility and support equipment to help people remain safe, independent and comfortable in their own homes."
-   data-es="Proporcionamos equipos de movilidad y apoyo para ayudar a las personas a mantenerse seguras, independientes y cómodas en sus propios hogares."></p>
+data-es="Proporcionamos equipos de movilidad y apoyo para ayudar a las personas a mantenerse seguras, independientes y cómodas en sus propios hogares."></p>
 
 </div>
 
 </section>
 
+<div class="read-controls">
+<button onclick="readPage()">🔊 Listen</button>
+<button onclick="stopReading()">⏹ Stop</button>
+</div>
+
 <section class="content">
 
 <h2 data-en="Equipment We Can Provide"
-    data-es="Equipos que Podemos Proporcionar"></h2>
+data-es="Equipos que Podemos Proporcionar"></h2>
 
 <p data-en="Through donations and community support, Age Support Almanzora is able to loan a range of useful mobility and support equipment."
-   data-es="Gracias a donaciones y al apoyo de la comunidad, Age Support Almanzora puede prestar una variedad de equipos de movilidad y apoyo."></p>
+data-es="Gracias a donaciones y al apoyo de la comunidad, Age Support Almanzora puede prestar una variedad de equipos de movilidad y apoyo."></p>
 
 <ul>
 
-<li data-en="Wheelchairs"
-    data-es="Sillas de ruedas"></li>
-
-<li data-en="Walking frames"
-    data-es="Andadores"></li>
-
-<li data-en="Mobility aids"
-    data-es="Ayudas de movilidad"></li>
-
-<li data-en="Other practical support equipment"
-    data-es="Otros equipos de apoyo práctico"></li>
+<li data-en="Wheelchairs" data-es="Sillas de ruedas"></li>
+<li data-en="Walking frames" data-es="Andadores"></li>
+<li data-en="Mobility aids" data-es="Ayudas de movilidad"></li>
+<li data-en="Other practical support equipment" data-es="Otros equipos de apoyo práctico"></li>
 
 </ul>
 
 <h2 data-en="How the Loan Service Works"
-    data-es="Cómo Funciona el Servicio de Préstamo"></h2>
+data-es="Cómo Funciona el Servicio de Préstamo"></h2>
 
-<p data-en="Equipment is loaned to people who need temporary assistance due to illness, injury or reduced mobility. Our team will do their best to match available equipment with your needs."
-   data-es="El equipo se presta a personas que necesitan ayuda temporal debido a enfermedad, lesión o movilidad reducida. Nuestro equipo hará todo lo posible para encontrar el equipo adecuado para sus necesidades."></p>
+<p data-en="Equipment is loaned to people who need temporary assistance due to illness, injury or reduced mobility."
+data-es="El equipo se presta a personas que necesitan ayuda temporal debido a enfermedad, lesión o movilidad reducida."></p>
 
 <p data-en="If the equipment is no longer required, we kindly ask that it is returned so it can help another member of the community."
-   data-es="Si el equipo ya no se necesita, le pedimos amablemente que lo devuelva para que pueda ayudar a otro miembro de la comunidad."></p>
+data-es="Si el equipo ya no se necesita, le pedimos amablemente que lo devuelva para que pueda ayudar a otro miembro de la comunidad."></p>
 
 <h2 data-en="Request Equipment"
-    data-es="Solicitar Equipo"></h2>
+data-es="Solicitar Equipo"></h2>
 
 <p data-en="If you or someone you know may benefit from borrowing equipment, please contact us and we will do our best to assist."
-   data-es="Si usted o alguien que conoce podría beneficiarse de pedir equipo prestado, por favor contáctenos y haremos todo lo posible por ayudar."></p>
+data-es="Si usted o alguien que conoce podría beneficiarse de pedir equipo prestado, por favor contáctenos y haremos todo lo posible por ayudar."></p>
 
 </section>
 
