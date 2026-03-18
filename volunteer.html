@@ -160,6 +160,28 @@ color:#777;
 padding:15px;
 }
 
+/* READ CONTROLS */
+
+.read-controls{
+text-align:center;
+margin:30px 0;
+}
+
+.read-controls button{
+font-size:20px;
+padding:12px 20px;
+margin:10px;
+cursor:pointer;
+border-radius:8px;
+border:none;
+background:#003366;
+color:white;
+}
+
+.read-controls button:hover{
+background:#0055aa;
+}
+
 /* FLOATING CALL BUTTON */
 
 .call-button{
@@ -220,6 +242,100 @@ el.innerText = el.getAttribute("data-" + lang);
 });
 }
 
+/* =========================
+READ ALOUD SYSTEM
+========================= */
+
+let speech;
+let cachedFemaleVoiceEN = null;
+let cachedFemaleVoiceES = null;
+let voicesReady = false;
+
+const femaleKeywords = [
+"Female","female","Zira","Susan","Sarah","Libby","Aria",
+"Samantha","Victoria","Karen","Moira","Fiona","Tessa",
+"Alice","Allison","Ava","Catherine","Emily","Emma",
+"Google UK English Female","Google US English Female",
+"Helena","Julie","Laura","Lucia","Maria","Monica",
+"Paulina","Princess","Rosa","Sandy","Shelley","Siri",
+"Veena","Vicki","Yelena","Yuna"
+];
+
+function pickFemaleVoice(voices, langCode){
+let voice = voices.find(v =>
+v.lang === langCode &&
+femaleKeywords.some(k => v.name.includes(k))
+);
+if(!voice){
+voice = voices.find(v =>
+v.lang.startsWith(langCode.substring(0,2)) &&
+femaleKeywords.some(k => v.name.includes(k))
+);
+}
+if(!voice){
+voice = voices.find(v =>
+femaleKeywords.some(k => v.name.includes(k))
+);
+}
+return voice || null;
+}
+
+function cacheVoices(){
+let voices = speechSynthesis.getVoices();
+if(voices.length === 0) return;
+cachedFemaleVoiceEN = pickFemaleVoice(voices, "en-GB");
+cachedFemaleVoiceES = pickFemaleVoice(voices, "es-ES");
+voicesReady = true;
+}
+
+/* Trigger voice loading as early as possible */
+speechSynthesis.getVoices();
+speechSynthesis.addEventListener("voiceschanged", cacheVoices);
+
+function readPage(){
+
+stopReading();
+
+let content = document.querySelector(".content");
+if(!content) return;
+
+let text = content.innerText;
+speech = new SpeechSynthesisUtterance(text);
+
+let siteLang = localStorage.getItem("siteLang") || "en";
+
+if(siteLang === "es"){
+speech.lang = "es-ES";
+}else{
+speech.lang = "en-GB";
+}
+
+speech.rate = 0.95;
+speech.pitch = 1;
+
+function speakWithVoice(){
+cacheVoices();
+let femaleVoice = (speech.lang === "es-ES") ? cachedFemaleVoiceES : cachedFemaleVoiceEN;
+if(femaleVoice){ speech.voice = femaleVoice; }
+speechSynthesis.speak(speech);
+}
+
+if(voicesReady){
+speakWithVoice();
+}else{
+speechSynthesis.addEventListener("voiceschanged", function onReady(){
+speechSynthesis.removeEventListener("voiceschanged", onReady);
+speakWithVoice();
+}, {once: true});
+speechSynthesis.getVoices();
+}
+
+}
+
+function stopReading(){
+speechSynthesis.cancel();
+}
+
 </script>
 
 </head>
@@ -278,6 +394,11 @@ Accessibility:
 </div>
 
 </section>
+
+<div class="read-controls">
+<button onclick="readPage()">🔊 Listen</button>
+<button onclick="stopReading()">⏹ Stop</button>
+</div>
 
 <section class="content">
 
