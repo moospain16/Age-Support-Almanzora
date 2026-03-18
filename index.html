@@ -45,12 +45,10 @@ font-size:15px;
 cursor:pointer;
 }
 
-/* LANGUAGE FLAGS */
-
 .lang-toggle{
 position:fixed;
-top:4px;
-right:10px;
+top:0;
+right:0;
 z-index:1100;
 }
 
@@ -60,11 +58,13 @@ background:none;
 border:none;
 padding:0;
 cursor:pointer;
+height:100%;
 }
 
 .flag{
-width:26px;
-height:auto;
+height:37px;
+width:auto;
+display:block;
 transition:0.2s;
 }
 
@@ -231,15 +231,15 @@ updateLangFlag();
 }
 
 function updateLangFlag(){
-/* Show the flag of the OTHER language (the one you'd switch TO) */
+/* Show the flag of the CURRENT language */
 let img = document.getElementById("langFlagImg");
 if(!img) return;
 if(lang === "en"){
-img.src = "flag_spain.webp";
-img.alt = "Español";
-}else{
 img.src = "flag_uk.webp";
 img.alt = "English";
+}else{
+img.src = "flag_spain.webp";
+img.alt = "Español";
 }
 }
 
