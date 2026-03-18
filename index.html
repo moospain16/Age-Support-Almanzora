@@ -273,8 +273,28 @@ speech.lang = "en-GB";
 speech.rate = 0.95;
 speech.pitch = 1;
 
-speechSynthesis.speak(speech);
+/* try to use female voice */
 
+let voices = speechSynthesis.getVoices();
+
+let female = voices.find(v =>
+v.lang.startsWith(speech.lang) &&
+(
+v.name.includes("Female") ||
+v.name.includes("Zira") ||
+v.name.includes("Susan") ||
+v.name.includes("Sarah") ||
+v.name.includes("Libby") ||
+v.name.includes("Aria")
+)
+);
+
+if(female){
+speech.voice = female;
+}
+
+speechSynthesis.speak(speech);
+   
 }
 
 function stopReading(){
