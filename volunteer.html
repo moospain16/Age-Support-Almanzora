@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -22,7 +21,7 @@ color:#222;
 padding-top:50px;
 }
 
-/* ACCESSIBILITY BAR */
+/* FLOATING ACCESSIBILITY BAR */
 
 .accessibility-bar{
 position:fixed;
@@ -33,8 +32,8 @@ background:black;
 color:white;
 text-align:left;
 padding:8px 12px;
-box-sizing:border-box;
 z-index:1000;
+box-sizing:border-box;
 }
 
 .accessibility-bar button{
@@ -43,8 +42,6 @@ padding:6px 12px;
 font-size:16px;
 cursor:pointer;
 }
-
-/* LANGUAGE TOGGLE */
 
 .lang-toggle{
 position:fixed;
@@ -64,10 +61,6 @@ cursor:pointer;
 width:32px;
 height:auto;
 transition:0.2s;
-}
-
-.flag:hover{
-transform:scale(1.1);
 }
 
 /* HEADER */
@@ -100,7 +93,7 @@ font-weight:bold;
 margin-top:10px;
 }
 
-/* NAVIGATION */
+/* NAV */
 
 nav{
 background:#f2f2f2;
@@ -108,7 +101,6 @@ display:flex;
 justify-content:center;
 gap:25px;
 padding:15px;
-font-size:20px;
 flex-wrap:wrap;
 }
 
@@ -124,29 +116,97 @@ font-weight:bold;
 background:#003366;
 color:white;
 padding:60px 20px;
-}
-
-.hero-container{
-max-width:900px;
-margin:auto;
 text-align:center;
 }
 
-.hero h2{
-font-size:40px;
-margin-top:0;
+/* SPEAKER BUTTONS */
+
+.spk{
+background:none;
+border:none;
+cursor:pointer;
+font-size:1em;
+padding:0 0 0 6px;
+vertical-align:middle;
+line-height:1;
+display:inline-flex;
+align-items:center;
 }
 
-/* CONTENT */
+.spk svg{
+width:1.4em;
+height:1.4em;
+fill:#ffd700;
+transition:transform 0.15s;
+}
+
+.spk:hover svg{
+transform:scale(1.2);
+}
+
+.spk.active svg{
+fill:#ff9900;
+}
+
+.spk.nav-spk{
+background:#003366;
+border-radius:50%;
+padding:4px;
+width:28px;
+height:28px;
+justify-content:center;
+}
+
+.spk.nav-spk svg{
+fill:#ffd700;
+width:18px;
+height:18px;
+}
+
+/* CONTENT CARDS */
 
 .content{
-max-width:900px;
-margin:auto;
+background:#003366;
+color:white;
 padding:40px 20px;
 }
 
-.content h2{
-color:#003366;
+.content-grid{
+max-width:900px;
+margin:auto;
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
+
+.content-card{
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.3);
+border-radius:10px;
+padding:24px 28px 48px;
+width:100%;
+max-width:860px;
+text-align:left;
+position:relative;
+}
+
+.content-card h2{
+margin:0 0 10px;
+font-size:1.1em;
+color:#ffdd99;
+}
+
+.content-card p,
+.content-card ul{
+margin:0.4em 0 0;
+font-size:0.9em;
+line-height:1.6;
+color:white;
+}
+
+.content-card ul{
+padding-left:1.4em;
 }
 
 /* FOOTER */
@@ -170,29 +230,7 @@ color:#777;
 padding:15px;
 }
 
-/* READ CONTROLS */
-
-.read-controls{
-text-align:center;
-margin:30px 0;
-}
-
-.read-controls button{
-font-size:20px;
-padding:12px 20px;
-margin:10px;
-cursor:pointer;
-border-radius:8px;
-border:none;
-background:#003366;
-color:white;
-}
-
-.read-controls button:hover{
-background:#0055aa;
-}
-
-/* FLOATING CALL BUTTON */
+/* CALL BUTTON */
 
 .call-button{
 position:fixed;
@@ -204,40 +242,49 @@ font-size:22px;
 padding:16px 22px;
 border-radius:50px;
 text-decoration:none;
-font-weight:bold;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-z-index:1000;
-}
-
-.call-button:hover{
-background:#218838;
 }
 
 </style>
 
 <script>
 
-/* FONT SIZE */
+/* ==============================
+   FONT SIZE SYSTEM
+============================== */
 
 let fontSize = localStorage.getItem("siteFontSize");
-if(!fontSize){fontSize=20}else{fontSize=parseInt(fontSize)}
 
-document.addEventListener("DOMContentLoaded",()=>{
-document.body.style.fontSize = fontSize + "px";
-loadLanguage();
-updateLangFlag();
-})
-
-function increaseText(){fontSize+=4;if(fontSize>36)fontSize=36;applyFont()}
-function decreaseText(){fontSize-=4;if(fontSize<18)fontSize=18;applyFont()}
-function resetText(){fontSize=20;applyFont()}
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
 
 function applyFont(){
 document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize",fontSize);
+localStorage.setItem("siteFontSize", fontSize);
 }
 
-/* LANGUAGE SYSTEM */
+function increaseText(){
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+applyFont();
+}
+
+function decreaseText(){
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+applyFont();
+}
+
+function resetText(){
+fontSize = 20;
+applyFont();
+}
+
+/* ==============================
+   LANGUAGE SYSTEM
+============================== */
 
 let lang = localStorage.getItem("siteLang") || "en";
 
@@ -261,16 +308,34 @@ img.alt = "English";
 }
 
 function loadLanguage(){
-document.querySelectorAll("[data-en]").forEach(el=>{
-el.innerText = el.getAttribute("data-" + lang);
+
+let elements = document.querySelectorAll("[data-en]");
+
+elements.forEach(function(el){
+
+let text = el.getAttribute("data-" + lang);
+if(!text) return;
+
+let btn = el.querySelector(".spk");
+if(btn){
+Array.from(el.childNodes).forEach(function(node){
+if(node.nodeType === 3){ el.removeChild(node); }
 });
+el.insertBefore(document.createTextNode(text + " "), btn);
+}else{
+el.innerText = text;
 }
 
-/* =========================
-READ ALOUD SYSTEM
-========================= */
+});
+
+}
+
+/* ==============================
+   READ ALOUD SYSTEM
+============================== */
 
 let speech;
+let activeBtn = null;
 let cachedFemaleVoiceEN = null;
 let cachedFemaleVoiceES = null;
 let voicesReady = false;
@@ -312,36 +377,43 @@ cachedFemaleVoiceES = pickFemaleVoice(voices, "es-ES");
 voicesReady = true;
 }
 
-/* Trigger voice loading as early as possible */
 speechSynthesis.getVoices();
 speechSynthesis.addEventListener("voiceschanged", cacheVoices);
 
-function readPage(){
+function speakText(text, btn){
 
-stopReading();
+speechSynthesis.cancel();
 
-let content = document.querySelector(".content");
-if(!content) return;
+if(activeBtn){
+activeBtn.classList.remove("active");
+}
 
-let text = content.innerText;
+if(activeBtn === btn){
+activeBtn = null;
+return;
+}
+
+activeBtn = btn;
+btn.classList.add("active");
+
 speech = new SpeechSynthesisUtterance(text);
 
 let siteLang = localStorage.getItem("siteLang") || "en";
-
-if(siteLang === "es"){
-speech.lang = "es-ES";
-}else{
-speech.lang = "en-GB";
-}
-
+speech.lang = (siteLang === "es") ? "es-ES" : "en-GB";
 speech.rate = 0.95;
 speech.pitch = 1;
 
-speech.onstart = function(){ isReading = true; updateReadButton(); };
-speech.onend = function(){ isReading = false; updateReadButton(); };
-speech.onerror = function(){ isReading = false; updateReadButton(); };
+speech.onend = function(){
+btn.classList.remove("active");
+if(activeBtn === btn) activeBtn = null;
+};
 
-function speakWithVoice(){
+speech.onerror = function(){
+btn.classList.remove("active");
+if(activeBtn === btn) activeBtn = null;
+};
+
+function go(){
 cacheVoices();
 let femaleVoice = (speech.lang === "es-ES") ? cachedFemaleVoiceES : cachedFemaleVoiceEN;
 if(femaleVoice){ speech.voice = femaleVoice; }
@@ -349,42 +421,49 @@ speechSynthesis.speak(speech);
 }
 
 if(voicesReady){
-speakWithVoice();
+go();
 }else{
 speechSynthesis.addEventListener("voiceschanged", function onReady(){
 speechSynthesis.removeEventListener("voiceschanged", onReady);
-speakWithVoice();
+go();
 }, {once: true});
 speechSynthesis.getVoices();
 }
 
 }
 
+function speakSection(headingEl, btn){
+var l = localStorage.getItem('siteLang') || 'en';
+var parts = [];
 
-let isReading = false;
+parts.push(headingEl.getAttribute('data-' + l));
 
-function updateReadButton(){
-let btn = document.getElementById("readBtn");
-if(!btn) return;
-if(isReading){
-btn.innerHTML = "⏹ Stop";
-}else{
-btn.innerHTML = "🔊 Listen";
+var el = headingEl.nextElementSibling;
+while(el && el.tagName !== 'H2'){
+if(el.tagName === 'P'){
+parts.push(el.getAttribute('data-' + l) || el.innerText.replace(/\s+/g,' ').trim());
+}else if(el.tagName === 'UL'){
+el.querySelectorAll('li').forEach(function(li){
+parts.push(li.getAttribute('data-' + l) || li.innerText.replace(/\s+/g,' ').trim());
+});
 }
+el = el.nextElementSibling;
 }
 
-function toggleReading(){
-if(isReading){
-stopReading();
-}else{
-readPage();
+speakText(parts.join('. '), btn);
 }
-}
-function stopReading(){
-speechSynthesis.cancel();
-isReading = false;
-updateReadButton();
-}
+
+/* ==============================
+   INITIAL PAGE LOAD
+============================== */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+applyFont();
+loadLanguage();
+updateLangFlag();
+
+});
 
 </script>
 
@@ -407,77 +486,66 @@ Accessibility:
 
 <header>
 
-<h1><img src="age_support_almanzoa_logo.webp" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora</h1>
+<h1><img src="age_support_almanzoa_logo.webp" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="speakText('Age Support Almanzora',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
 
-<p data-en="Supporting Our Community in the Almanzora Valley"
-   data-es="Apoyando a nuestra comunidad en el Valle del Almanzora"></p>
+<p data-en="Dedicated to helping elderly people live independently and stay connected."
+data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to helping elderly people live independently and stay connected. <button class="spk" onclick="speakText(this.parentElement.getAttribute('data-'+(localStorage.getItem('siteLang')||'en')),this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></p>
 
-<div class="phone">📞 634 316 573</div>
+<div class="phone">📞 634 316 573<button class="spk" onclick="speakText('6 3 4. 3 1 6. 5 7 3',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></div>
 
 </header>
 
 <nav>
 
-<a href="index.html" data-en="Home" data-es="Inicio"></a>
-<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento"></a>
-<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos"></a>
-<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores"></a>
-<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado"></a>
-<a href="contact.html" data-en="Contact" data-es="Contacto"></a>
+<a href="index.html" data-en="Home" data-es="Inicio">Home</a><button class="spk nav-spk" onclick="speakText('Home',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a><button class="spk nav-spk" onclick="speakText('Befriending',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="speakText('Equipment Loan',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="speakText('Carer Support',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="speakText('Volunteer',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a><button class="spk nav-spk" onclick="speakText('Contact',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 
 </nav>
 
 <section class="hero">
 
-<div class="hero-container">
-
-<h2 data-en="Volunteer With Us"
-    data-es="Haz Voluntariado con Nosotros"></h2>
+<h2 data-en="Volunteer With Us" data-es="Haz Voluntariado con Nosotros">Volunteer With Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
 
 <p data-en="Our volunteers are the heart of Age Support Almanzora. By giving a little of your time, you can help improve the lives of older people in the community."
-   data-es="Nuestros voluntarios son el corazón de Age Support Almanzora. Al dedicar un poco de tu tiempo, puedes ayudar a mejorar la vida de las personas mayores de la comunidad."></p>
-
-</div>
+data-es="Nuestros voluntarios son el corazón de Age Support Almanzora. Al dedicar un poco de tu tiempo, puedes ayudar a mejorar la vida de las personas mayores de la comunidad.">Our volunteers are the heart of Age Support Almanzora. By giving a little of your time, you can help improve the lives of older people in the community.</p>
 
 </section>
 
-<div class="read-controls">
-<button id="readBtn" onclick="toggleReading()">🔊 Listen</button>
+<section class="content">
+<div class="content-grid">
+
+<div class="content-card">
+<h2 data-en="Why Volunteer?" data-es="¿Por Qué Ser Voluntario?">Why Volunteer? <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="Volunteering is a rewarding way to support others while becoming part of a friendly and supportive community network. Even a small amount of time can make a meaningful difference to someone who may feel isolated or in need of support."
+data-es="El voluntariado es una forma gratificante de ayudar a los demás y formar parte de una comunidad solidaria. Incluso un pequeño aporte de tiempo puede marcar una gran diferencia para alguien que se siente solo o necesita apoyo.">Volunteering is a rewarding way to support others while becoming part of a friendly and supportive community network. Even a small amount of time can make a meaningful difference to someone who may feel isolated or in need of support.</p>
 </div>
 
-<section class="content">
-
-<h2 data-en="Why Volunteer?"
-    data-es="¿Por Qué Ser Voluntario?"></h2>
-
-<p data-en="Volunteering is a rewarding way to support others while becoming part of a friendly and supportive community network. Even a small amount of time can make a meaningful difference to someone who may feel isolated or in need of support."
-   data-es="El voluntariado es una forma gratificante de ayudar a los demás y formar parte de una comunidad solidaria. Incluso un pequeño aporte de tiempo puede marcar una gran diferencia para alguien que se siente solo o necesita apoyo."></p>
-
-<h2 data-en="Ways You Can Help"
-    data-es="Formas en que Puedes Ayudar"></h2>
-
+<div class="content-card">
+<h2 data-en="Ways You Can Help" data-es="Formas en que Puedes Ayudar">Ways You Can Help <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
 <ul>
-
-<li data-en="Provide friendly conversation and companionship"
-    data-es="Ofrecer conversación y compañía amistosa"></li>
-
-<li data-en="Help with community activities or events"
-    data-es="Ayudar en actividades o eventos comunitarios"></li>
-
-<li data-en="Assist with equipment loans"
-    data-es="Ayudar con el préstamo de equipos"></li>
-
-<li data-en="Support fundraising and awareness activities"
-    data-es="Apoyar actividades de recaudación de fondos y concienciación"></li>
-
+<li data-en="Provide friendly conversation and companionship" data-es="Ofrecer conversación y compañía amistosa">Provide friendly conversation and companionship</li>
+<li data-en="Help with community activities or events" data-es="Ayudar en actividades o eventos comunitarios">Help with community activities or events</li>
+<li data-en="Assist with equipment loans" data-es="Ayudar con el préstamo de equipos">Assist with equipment loans</li>
+<li data-en="Support fundraising and awareness activities" data-es="Apoyar actividades de recaudación de fondos y concienciación">Support fundraising and awareness activities</li>
 </ul>
+</div>
 
-<h2 data-en="Get Involved"
-    data-es="Participa"></h2>
-
+<div class="content-card">
+<h2 data-en="Get Involved" data-es="Participa">Get Involved <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
 <p data-en="If you would like to volunteer or simply learn more about how you can help, please contact us. Our team will be happy to talk with you about opportunities to get involved."
-   data-es="Si te gustaría ser voluntario o simplemente saber más sobre cómo puedes ayudar, por favor contáctanos. Nuestro equipo estará encantado de hablar contigo sobre las oportunidades disponibles."></p>
+data-es="Si te gustaría ser voluntario o simplemente saber más sobre cómo puedes ayudar, por favor contáctanos. Nuestro equipo estará encantado de hablar contigo sobre las oportunidades disponibles.">If you would like to volunteer or simply learn more about how you can help, please contact us. Our team will be happy to talk with you about opportunities to get involved.</p>
+</div>
 
+</div>
 </section>
 
 <footer>
@@ -487,6 +555,7 @@ Accessibility:
 <p>
 Albox Information Centre<br>
 Almanzora Valley
+<button class="spk nav-spk" onclick="speakText('Age Support Almanzora. Albox Information Centre, Almanzora Valley.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </p>
 
 <div class="charity-info">
