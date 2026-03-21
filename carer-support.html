@@ -163,16 +163,50 @@ width:18px;
 height:18px;
 }
 
-/* CONTENT */
+/* CONTENT CARDS */
 
 .content{
-max-width:900px;
-margin:auto;
+background:#003366;
+color:white;
 padding:40px 20px;
 }
 
-.content h2{
-color:#003366;
+.content-grid{
+max-width:900px;
+margin:auto;
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
+
+.content-card{
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.3);
+border-radius:10px;
+padding:24px 28px 48px;
+width:100%;
+max-width:860px;
+text-align:left;
+position:relative;
+}
+
+.content-card h2{
+margin:0 0 10px;
+font-size:1.1em;
+color:#ffdd99;
+}
+
+.content-card p,
+.content-card ul{
+margin:0.4em 0 0;
+font-size:0.9em;
+line-height:1.6;
+color:white;
+}
+
+.content-card ul{
+padding-left:1.4em;
 }
 
 /* FOOTER */
@@ -487,32 +521,35 @@ data-es="Cuidar de un ser querido puede ser gratificante pero también desafiant
 </section>
 
 <section class="content">
+<div class="content-grid">
 
+<div class="content-card">
 <h2 data-en="Supporting Those Who Care" data-es="Apoyando a Quienes Cuidan">Supporting Those Who Care <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-
 <p data-en="Many people in our community provide care for family members, partners or friends. While this is an important and generous role, it can sometimes feel overwhelming."
 data-es="Muchas personas en nuestra comunidad cuidan de familiares, parejas o amigos. Aunque es un papel importante y generoso, a veces puede resultar abrumador.">Many people in our community provide care for family members, partners or friends. While this is an important and generous role, it can sometimes feel overwhelming.</p>
-
 <p data-en="Age Support Almanzora aims to provide practical information and friendly support for carers who may need advice or simply someone to talk to."
 data-es="Age Support Almanzora tiene como objetivo ofrecer información práctica y apoyo amistoso para cuidadores que puedan necesitar asesoramiento o simplemente alguien con quien hablar.">Age Support Almanzora aims to provide practical information and friendly support for carers who may need advice or simply someone to talk to.</p>
+</div>
 
+<div class="content-card">
 <h2 data-en="How We Help" data-es="Cómo Ayudamos">How We Help <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-
 <p data-en="Our team may be able to provide support through:"
 data-es="Nuestro equipo puede ofrecer apoyo mediante:">Our team may be able to provide support through:</p>
-
 <ul>
 <li data-en="Friendly conversation and understanding" data-es="Conversación amistosa y comprensión">Friendly conversation and understanding</li>
 <li data-en="Information about local services" data-es="Información sobre servicios locales">Information about local services</li>
 <li data-en="Guidance on support available to carers" data-es="Orientación sobre el apoyo disponible para cuidadores">Guidance on support available to carers</li>
 <li data-en="Connecting carers with community resources" data-es="Conectar a los cuidadores con recursos comunitarios">Connecting carers with community resources</li>
 </ul>
+</div>
 
+<div class="content-card">
 <h2 data-en="Talk to Us" data-es="Hable con Nosotros">Talk to Us <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-
 <p data-en="If you are caring for someone and would like information or support, please contact us. Our team will be happy to listen and help where possible."
 data-es="Si está cuidando a alguien y desea información o apoyo, por favor póngase en contacto con nosotros. Nuestro equipo estará encantado de escucharle y ayudar en lo que sea posible.">If you are caring for someone and would like information or support, please contact us. Our team will be happy to listen and help where possible.</p>
+</div>
 
+</div>
 </section>
 
 <footer>
