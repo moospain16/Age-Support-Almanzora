@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Befriending | Age Support Almanzora</title>
+<title>Age Support Almanzora</title>
 
 <style>
 
@@ -119,6 +120,14 @@ padding:60px 20px;
 text-align:center;
 }
 
+.hero-image{
+display:block;
+width:100%;
+max-width:900px;
+margin:30px auto 0;
+border-radius:10px;
+}
+
 /* SPEAKER BUTTONS */
 
 .spk{
@@ -163,50 +172,12 @@ width:18px;
 height:18px;
 }
 
-/* CONTENT CARDS */
+/* CONTENT */
 
 .content{
-background:#003366;
-color:white;
-padding:40px 20px;
-}
-
-.content-grid{
 max-width:900px;
 margin:auto;
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-justify-content:center;
-}
-
-.content-card{
-background:rgba(255,255,255,0.12);
-border:1px solid rgba(255,255,255,0.3);
-border-radius:10px;
-padding:24px 28px 48px;
-width:100%;
-max-width:860px;
-text-align:left;
-position:relative;
-}
-
-.content-card h2{
-margin:0 0 10px;
-font-size:1.1em;
-color:#ffdd99;
-}
-
-.content-card p,
-.content-card ul{
-margin:0.4em 0 0;
-font-size:0.9em;
-line-height:1.6;
-color:white;
-}
-
-.content-card ul{
-padding-left:1.4em;
+padding:40px 20px;
 }
 
 /* FOOTER */
@@ -228,6 +199,37 @@ text-align:center;
 font-size:12px;
 color:#777;
 padding:15px;
+}
+
+/* WHY US CARDS */
+
+.why-us-grid{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+margin-top:30px;
+}
+
+.why-us-card{
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.3);
+border-radius:10px;
+padding:20px 24px;
+max-width:400px;
+text-align:left;
+}
+
+.why-us-card h3{
+margin:0 0 8px;
+font-size:1em;
+color:#ffdd99;
+}
+
+.why-us-card p{
+margin:0;
+font-size:0.85em;
+line-height:1.5;
 }
 
 /* CALL BUTTON */
@@ -319,9 +321,11 @@ if(!text) return;
 /* If there's a child .spk button, preserve it and only update the text node */
 let btn = el.querySelector(".spk");
 if(btn){
+/* Remove all text nodes, keep elements */
 Array.from(el.childNodes).forEach(function(node){
 if(node.nodeType === 3){ el.removeChild(node); }
 });
+/* Prepend the translated text */
 el.insertBefore(document.createTextNode(text + " "), btn);
 }else{
 el.innerText = text;
@@ -383,12 +387,14 @@ speechSynthesis.addEventListener("voiceschanged", cacheVoices);
 
 function speakText(text, btn){
 
+/* Stop anything already playing */
 speechSynthesis.cancel();
 
 if(activeBtn){
 activeBtn.classList.remove("active");
 }
 
+/* If clicking the same button that was active, just stop */
 if(activeBtn === btn){
 activeBtn = null;
 return;
@@ -433,28 +439,9 @@ speechSynthesis.getVoices();
 
 }
 
-function speakSection(headingEl, btn){
-var l = localStorage.getItem('siteLang') || 'en';
-var parts = [];
-
-/* Collect text from this heading */
-parts.push(headingEl.getAttribute('data-' + l));
-
-/* Walk siblings until the next h2 or end of section */
-var el = headingEl.nextElementSibling;
-while(el && el.tagName !== 'H2'){
-if(el.tagName === 'P'){
-parts.push(el.getAttribute('data-' + l) || el.innerText.replace(/\s+/g,' ').trim());
-}else if(el.tagName === 'UL'){
-el.querySelectorAll('li').forEach(function(li){
-parts.push(li.getAttribute('data-' + l) || li.innerText.replace(/\s+/g,' ').trim());
-});
-}
-el = el.nextElementSibling;
-}
-
-speakText(parts.join('. '), btn);
-}
+/* ==============================
+   INITIAL PAGE LOAD
+============================== */
 
 document.addEventListener("DOMContentLoaded",function(){
 
@@ -512,44 +499,41 @@ data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to he
 
 <section class="hero">
 
-<h2 data-en="Befriending Service" data-es="Servicio de Acompañamiento">Befriending Service <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<h2 data-en="Why Us?" data-es="¿Por qué nosotros?"></h2>
 
-<p data-en="Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship."
-data-es="Nuestro servicio de acompañamiento ayuda a reducir la soledad conectando voluntarios con personas que se beneficiarían de conversación y compañía regular.">Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship.</p>
+<img src="index_main_photo.webp" alt="A group of smiling elderly people together in a sunny garden" class="hero-image">
+
+<div class="why-us-grid">
+
+<div class="why-us-card" style="position:relative;padding-bottom:36px;">
+<h3 data-en="We provide real help for everyday needs" data-es="Ofrecemos ayuda real para las necesidades cotidianas">We provide real help for everyday needs</h3>
+<p data-en="Practical and emotional support (like advice, information and mobility aids)." data-es="Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad).">Practical and emotional support (like advice, information and mobility aids).</p>
+<button class="spk" style="position:absolute;bottom:10px;right:10px;" onclick="(function(btn){var c=btn.closest('.why-us-card'),l=localStorage.getItem('siteLang')||'en';speakText(c.querySelector('h3').getAttribute('data-'+l)+'. '+c.querySelector('p').getAttribute('data-'+l),btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</div>
+
+<div class="why-us-card" style="position:relative;padding-bottom:36px;">
+<h3 data-en="Focus on independence and dignity" data-es="Enfoque en la independencia y la dignidad">Focus on independence and dignity</h3>
+<p data-en="Our charity is built around helping elderly people stay independent and live with dignity." data-es="Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad.">Our charity is built around helping elderly people stay independent and live with dignity.</p>
+<button class="spk" style="position:absolute;bottom:10px;right:10px;" onclick="(function(btn){var c=btn.closest('.why-us-card'),l=localStorage.getItem('siteLang')||'en';speakText(c.querySelector('h3').getAttribute('data-'+l)+'. '+c.querySelector('p').getAttribute('data-'+l),btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</div>
+
+<div class="why-us-card" style="position:relative;padding-bottom:36px;">
+<h3 data-en="Compassionate, person-centred approach" data-es="Enfoque compasivo y centrado en la persona">Compassionate, person-centred approach</h3>
+<p data-en="We emphasise being caring, supportive and attentive to individual needs." data-es="Hacemos hincapié en ser atentos, solidarios y sensibles a las necesidades individuales.">We emphasise being caring, supportive and attentive to individual needs.</p>
+<button class="spk" style="position:absolute;bottom:10px;right:10px;" onclick="(function(btn){var c=btn.closest('.why-us-card'),l=localStorage.getItem('siteLang')||'en';speakText(c.querySelector('h3').getAttribute('data-'+l)+'. '+c.querySelector('p').getAttribute('data-'+l),btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</div>
+
+<div class="why-us-card" style="position:relative;padding-bottom:36px;">
+<h3 data-en="Support for vulnerable or isolated people" data-es="Apoyo a personas vulnerables o aisladas">Support for vulnerable or isolated people</h3>
+<p data-en="We actively create opportunities for connection and help to reduce loneliness." data-es="Creamos activamente oportunidades de conexión y ayudamos a reducir la soledad.">We actively create opportunities for connection and help to reduce loneliness.</p>
+<button class="spk" style="position:absolute;bottom:10px;right:10px;" onclick="(function(btn){var c=btn.closest('.why-us-card'),l=localStorage.getItem('siteLang')||'en';speakText(c.querySelector('h3').getAttribute('data-'+l)+'. '+c.querySelector('p').getAttribute('data-'+l),btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</div>
+
+</div>
 
 </section>
 
-<section class="content">
-<div class="content-grid">
 
-<div class="content-card">
-<h2 data-en="What is Befriending?" data-es="¿Qué es el Acompañamiento?">What is Befriending? <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Many older people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls."
-data-es="Muchas personas mayores de la comunidad viven solas o no tienen oportunidades frecuentes de socializar. Nuestros voluntarios ofrecen contacto amistoso mediante visitas o llamadas telefónicas.">Many older people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls.</p>
-<p data-en="A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection."
-data-es="Una simple conversación, una cara amable o una llamada regular pueden marcar una gran diferencia en el bienestar y la sensación de conexión de alguien.">A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection.</p>
-</div>
-
-<div class="content-card">
-<h2 data-en="How It Works" data-es="Cómo Funciona">How It Works <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Our volunteers are carefully matched with people who would benefit from companionship. The support may include:"
-data-es="Nuestros voluntarios se asignan cuidadosamente a personas que se beneficiarían de compañía. El apoyo puede incluir:">Our volunteers are carefully matched with people who would benefit from companionship. The support may include:</p>
-<ul>
-<li data-en="Regular friendly phone calls" data-es="Llamadas telefónicas amistosas regulares">Regular friendly phone calls</li>
-<li data-en="Occasional home visits" data-es="Visitas ocasionales al domicilio">Occasional home visits</li>
-<li data-en="Conversation and companionship" data-es="Conversación y compañía">Conversation and companionship</li>
-<li data-en="Helping people stay connected with the community" data-es="Ayudar a las personas a mantenerse conectadas con la comunidad">Helping people stay connected with the community</li>
-</ul>
-</div>
-
-<div class="content-card">
-<h2 data-en="Get in Touch" data-es="Ponte en Contacto">Get in Touch <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help."
-data-es="Si usted o alguien que conoce podría beneficiarse de nuestro servicio de acompañamiento, por favor póngase en contacto con nosotros. Estaremos encantados de hablar sobre cómo podemos ayudar.">If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help.</p>
-</div>
-
-</div>
-</section>
 
 <footer>
 
