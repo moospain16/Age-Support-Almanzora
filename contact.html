@@ -119,6 +119,14 @@ padding:60px 20px;
 text-align:center;
 }
 
+.hero-image{
+display:block;
+width:100%;
+max-width:900px;
+margin:30px auto 0;
+border-radius:10px;
+}
+
 /* SPEAKER BUTTONS */
 
 .spk{
@@ -482,7 +490,7 @@ data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to he
 
 <a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="speakText('Equipment Loan',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 
-<a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="speakText('Carer Support',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="speakText('Carer Support',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 
 <a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="speakText('Volunteer',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 
@@ -492,7 +500,9 @@ data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to he
 
 <section class="hero">
 
-<h2 data-en="Contact Us" data-es="Contáctanos">Contact Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<h2 data-en="Contact Us" data-es="Contáctanos">Contact Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+
+<img src="contact.webp" alt="A friendly woman wearing a headset ready to help" class="hero-image">
 
 <p data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help."
 data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar.">If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.</p>
