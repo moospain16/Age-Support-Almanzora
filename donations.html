@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Donations | Age Support Almanzora</title>
+
+<style>
+
+/* BODY */
+
+body{
+font-family: Arial, sans-serif;
+font-size:20px;
+line-height:1.7;
+margin:0;
+background:white;
+color:#222;
+padding-top:50px;
+}
+
+/* FLOATING ACCESSIBILITY BAR */
+
+.accessibility-bar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:black;
+color:white;
+text-align:left;
+padding:8px 12px;
+z-index:1000;
+box-sizing:border-box;
+}
+
+.accessibility-bar button{
+margin:0 6px;
+padding:6px 12px;
+font-size:16px;
+cursor:pointer;
+}
+
+.lang-toggle{
+position:fixed;
+top:8px;
+right:10px;
+z-index:1100;
+}
+
+.lang-toggle button{
+background:none;
+border:none;
+padding:0;
+cursor:pointer;
+}
+
+.flag{
+width:32px;
+height:auto;
+transition:0.2s;
+}
+
+/* HEADER */
+
+header{
+background:#003366;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+header h1{
+margin:0;
+font-size:40px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+}
+
+.header-logo{
+height:1.4em;
+width:auto;
+display:inline-block;
+vertical-align:middle;
+}
+
+.phone{
+font-size:26px;
+font-weight:bold;
+margin-top:10px;
+}
+
+/* NAV */
+
+nav{
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+gap:25px;
+padding:15px;
+flex-wrap:wrap;
+}
+
+nav a{
+text-decoration:none;
+color:#003366;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+background:#003366;
+color:white;
+padding:60px 20px;
+text-align:center;
+}
+
+.hero-image{
+display:block;
+width:100%;
+max-width:900px;
+margin:30px auto 0;
+border-radius:10px;
+}
+
+/* SPEAKER BUTTONS */
+
+.spk{
+background:none;
+border:none;
+cursor:pointer;
+font-size:1em;
+padding:0 0 0 6px;
+vertical-align:middle;
+line-height:1;
+display:inline-flex;
+align-items:center;
+}
+
+.spk svg{
+width:1.4em;
+height:1.4em;
+fill:#ffd700;
+transition:transform 0.15s;
+}
+
+.spk:hover svg{
+transform:scale(1.2);
+}
+
+.spk.active svg{
+fill:#ff9900;
+}
+
+.spk.nav-spk{
+background:#003366;
+border-radius:50%;
+padding:4px;
+width:28px;
+height:28px;
+justify-content:center;
+}
+
+.spk.nav-spk svg{
+fill:#ffd700;
+width:18px;
+height:18px;
+}
+
+/* CONTENT CARDS */
+
+.content{
+background:#003366;
+color:white;
+padding:40px 20px;
+}
+
+.content-grid{
+max-width:900px;
+margin:auto;
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
+
+.content-card{
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.3);
+border-radius:10px;
+padding:24px 28px 48px;
+width:100%;
+max-width:860px;
+text-align:left;
+position:relative;
+}
+
+.content-card h2{
+margin:0 0 10px;
+font-size:1.1em;
+color:#ffdd99;
+}
+
+.content-card p,
+.content-card ul{
+margin:0.4em 0 0;
+font-size:0.9em;
+line-height:1.6;
+color:white;
+}
+
+.content-card ul{
+padding-left:1.4em;
+}
+
+.content-card li{
+margin-bottom:0.3em;
+}
+
+.content-card a{
+color:#ffd700;
+}
+
+.content-card .note{
+background:rgba(255,255,255,0.1);
+border-left:4px solid #ffd700;
+padding:10px 16px;
+margin-top:16px;
+border-radius:4px;
+font-size:0.88em;
+}
+
+/* DONATE HIGHLIGHT BOX */
+
+.donate-box{
+background:rgba(255,215,0,0.15);
+border:2px solid #ffd700;
+border-radius:10px;
+padding:20px 24px;
+margin-top:20px;
+text-align:center;
+}
+
+.donate-box p{
+font-size:0.9em;
+margin:0 0 12px;
+}
+
+.donate-box .bank-detail{
+font-size:1em;
+font-weight:bold;
+color:#ffd700;
+letter-spacing:0.03em;
+}
+
+/* FOOTER */
+
+footer{
+background:#f2f2f2;
+padding:30px;
+text-align:center;
+}
+
+.charity-info{
+font-size:0.85em;
+color:#666;
+margin-top:20px;
+}
+
+.site-credit{
+text-align:center;
+font-size:12px;
+color:#777;
+padding:15px;
+}
+
+/* CALL BUTTON */
+
+.call-button{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+font-size:22px;
+padding:16px 22px;
+border-radius:50px;
+text-decoration:none;
+}
+
+</style>
+
+<script>
+
+/* ==============================
+   FONT SIZE SYSTEM
+============================== */
+
+let fontSize = localStorage.getItem("siteFontSize");
+
+if(!fontSize){
+fontSize = 20;
+}else{
+fontSize = parseInt(fontSize);
+}
+
+function applyFont(){
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("siteFontSize", fontSize);
+}
+
+function increaseText(){
+fontSize += 4;
+if(fontSize > 36){fontSize = 36;}
+applyFont();
+}
+
+function decreaseText(){
+fontSize -= 4;
+if(fontSize < 18){fontSize = 18;}
+applyFont();
+}
+
+function resetText(){
+fontSize = 20;
+applyFont();
+}
+
+/* ==============================
+   LANGUAGE SYSTEM
+============================== */
+
+let lang = localStorage.getItem("siteLang") || "en";
+
+function toggleLang(){
+lang = (lang === "en") ? "es" : "en";
+localStorage.setItem("siteLang", lang);
+loadLanguage();
+updateLangFlag();
+}
+
+function updateLangFlag(){
+let img = document.getElementById("langFlagImg");
+if(!img) return;
+if(lang === "en"){
+img.src = "flag_spain.avif";
+img.alt = "Español";
+}else{
+img.src = "flag_uk.avif";
+img.alt = "English";
+}
+}
+
+function loadLanguage(){
+
+let elements = document.querySelectorAll("[data-en]");
+
+elements.forEach(function(el){
+
+let text = el.getAttribute("data-" + lang);
+if(!text) return;
+
+let btn = el.querySelector(".spk");
+if(btn){
+Array.from(el.childNodes).forEach(function(node){
+if(node.nodeType === 3){ el.removeChild(node); }
+});
+el.insertBefore(document.createTextNode(text + " "), btn);
+}else{
+el.innerText = text;
+}
+
+});
+
+}
+
+/* ==============================
+   READ ALOUD SYSTEM
+============================== */
+
+let speech;
+let activeBtn = null;
+let cachedFemaleVoiceEN = null;
+let cachedFemaleVoiceES = null;
+let voicesReady = false;
+
+const femaleKeywords = [
+"Female","female","Zira","Susan","Sarah","Libby","Aria",
+"Samantha","Victoria","Karen","Moira","Fiona","Tessa",
+"Alice","Allison","Ava","Catherine","Emily","Emma",
+"Google UK English Female","Google US English Female",
+"Helena","Julie","Laura","Lucia","Maria","Monica",
+"Paulina","Princess","Rosa","Sandy","Shelley","Siri",
+"Veena","Vicki","Yelena","Yuna"
+];
+
+function pickFemaleVoice(voices, langCode){
+let voice = voices.find(v =>
+v.lang === langCode &&
+femaleKeywords.some(k => v.name.includes(k))
+);
+if(!voice){
+voice = voices.find(v =>
+v.lang.startsWith(langCode.substring(0,2)) &&
+femaleKeywords.some(k => v.name.includes(k))
+);
+}
+if(!voice){
+voice = voices.find(v =>
+femaleKeywords.some(k => v.name.includes(k))
+);
+}
+return voice || null;
+}
+
+function cacheVoices(){
+let voices = speechSynthesis.getVoices();
+if(voices.length === 0) return;
+cachedFemaleVoiceEN = pickFemaleVoice(voices, "en-GB");
+cachedFemaleVoiceES = pickFemaleVoice(voices, "es-ES");
+voicesReady = true;
+}
+
+speechSynthesis.getVoices();
+speechSynthesis.addEventListener("voiceschanged", cacheVoices);
+
+function speakText(text, btn){
+
+speechSynthesis.cancel();
+
+if(activeBtn){
+activeBtn.classList.remove("active");
+}
+
+if(activeBtn === btn){
+activeBtn = null;
+return;
+}
+
+activeBtn = btn;
+btn.classList.add("active");
+
+speech = new SpeechSynthesisUtterance(text);
+
+let siteLang = localStorage.getItem("siteLang") || "en";
+speech.lang = (siteLang === "es") ? "es-ES" : "en-GB";
+speech.rate = 0.95;
+speech.pitch = 1;
+
+speech.onend = function(){
+btn.classList.remove("active");
+if(activeBtn === btn) activeBtn = null;
+};
+
+speech.onerror = function(){
+btn.classList.remove("active");
+if(activeBtn === btn) activeBtn = null;
+};
+
+function go(){
+cacheVoices();
+let femaleVoice = (speech.lang === "es-ES") ? cachedFemaleVoiceES : cachedFemaleVoiceEN;
+if(femaleVoice){ speech.voice = femaleVoice; }
+speechSynthesis.speak(speech);
+}
+
+if(voicesReady){
+go();
+}else{
+speechSynthesis.addEventListener("voiceschanged", function onReady(){
+speechSynthesis.removeEventListener("voiceschanged", onReady);
+go();
+}, {once: true});
+speechSynthesis.getVoices();
+}
+
+}
+
+/* ==============================
+   INITIAL PAGE LOAD
+============================== */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+applyFont();
+loadLanguage();
+updateLangFlag();
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<div class="accessibility-bar">
+Accessibility:
+<button onclick="decreaseText()">A-</button>
+<button onclick="increaseText()">A+</button>
+<button onclick="resetText()">Reset</button>
+</div>
+
+<div class="lang-toggle">
+<button onclick="toggleLang()" title="Switch language">
+<img id="langFlagImg" src="flag_spain.avif" alt="Español" class="flag">
+</button>
+</div>
+
+<header>
+
+<h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="speakText('Age Support Almanzora',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
+
+<p data-en="Dedicated to helping elderly people live independently and stay connected."
+data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to helping elderly people live independently and stay connected. <button class="spk" onclick="speakText(this.parentElement.getAttribute('data-'+(localStorage.getItem('siteLang')||'en')),this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></p>
+
+<div class="phone">📞 634 316 573<button class="spk" onclick="speakText('6 3 4. 3 1 6. 5 7 3',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></div>
+
+</header>
+
+<nav>
+
+<a href="index.html" data-en="Home" data-es="Inicio">Home</a><button class="spk nav-spk" onclick="speakText('Home',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a><button class="spk nav-spk" onclick="speakText('Befriending',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="speakText('Equipment Loan',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="carer-support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="speakText('Carer Support',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="speakText('Volunteer',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a><button class="spk nav-spk" onclick="speakText('Contact',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+<a href="donations.html" data-en="Donations" data-es="Donaciones" style="color:#003366;font-weight:bold;">Donations</a><button class="spk nav-spk" onclick="speakText('Donations',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+
+</nav>
+
+<section class="hero">
+
+<h2 data-en="Support Us" data-es="Apóyanos">Support Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var text=h.getAttribute('data-'+l);var el=h.nextElementSibling;while(el){if(el.tagName==='P'&&el.getAttribute('data-'+l))text+='. '+el.getAttribute('data-'+l);el=el.nextElementSibling;}speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+
+<img src="donate.avif" alt="Supporting elderly people in the Almanzora Valley" class="hero-image">
+
+<p data-en="Age Support Almanzora is a registered charity run entirely by volunteers."
+data-es="Age Support Almanzora es una organización benéfica registrada gestionada íntegramente por voluntarios.">Age Support Almanzora is a registered charity run entirely by volunteers.</p>
+
+<p data-en="Every donation we receive goes directly towards supporting elderly people in the Almanzora Valley."
+data-es="Cada donación que recibimos va directamente a apoyar a las personas mayores del Valle del Almanzora.">Every donation we receive goes directly towards supporting elderly people in the Almanzora Valley.</p>
+
+</section>
+
+<section class="content">
+<div class="content-grid">
+
+<!-- WHY DONATE -->
+<div class="content-card">
+<h2 data-en="Why Your Support Matters" data-es="Por Qué Su Apoyo Es Importante">Why Your Support Matters <button class="spk nav-spk" onclick="speakText('Why your support matters. We are entirely self-funded and rely on the generosity of people like you. Your donation helps us provide befriending visits, equipment loans, carer support, and information services to elderly people across the Almanzora Valley. Without donations, we simply could not continue. Every amount, however small, makes a real difference.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="We are entirely self-funded and rely on the generosity of people like you. Your donation helps us provide:"
+data-es="Nos financiamos completamente y dependemos de la generosidad de personas como usted. Su donación nos ayuda a proporcionar:">We are entirely self-funded and rely on the generosity of people like you. Your donation helps us provide:</p>
+<ul>
+<li data-en="Befriending visits and telephone support for isolated elderly people" data-es="Visitas de acompañamiento y apoyo telefónico a personas mayores aisladas">Befriending visits and telephone support for isolated elderly people</li>
+<li data-en="Mobility equipment loans such as wheelchairs, walkers and walking frames" data-es="Préstamo de equipos de movilidad como sillas de ruedas, andadores y marcos de caminar">Mobility equipment loans such as wheelchairs, walkers and walking frames</li>
+<li data-en="Carer support groups for those looking after a loved one" data-es="Grupos de apoyo para cuidadores de personas que cuidan a un ser querido">Carer support groups for those looking after a loved one</li>
+<li data-en="Information and advice on benefits and local services" data-es="Información y asesoramiento sobre prestaciones y servicios locales">Information and advice on benefits and local services</li>
+</ul>
+<p data-en="Without donations, we simply could not continue. Every amount, however small, makes a real difference."
+data-es="Sin donaciones, simplemente no podríamos continuar. Cada cantidad, por pequeña que sea, marca una diferencia real.">Without donations, we simply could not continue. Every amount, however small, makes a real difference.</p>
+</div>
+
+<!-- DONATE BY BANK TRANSFER -->
+<div class="content-card">
+<h2 data-en="Donate by Bank Transfer" data-es="Donar por Transferencia Bancaria">Donate by Bank Transfer <button class="spk nav-spk" onclick="speakText('Donate by bank transfer. You can make a donation directly to our bank account. Account name: Age Support Almanzora. Bank: Caja Rural. I B A N: E S 6 7 3 0 5 8 0 0 6 4 2 3 2 0 6 4 0 0 3 2 5 4. Please use the reference Donation when making your transfer.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="You can make a donation directly to our bank account. Please use the reference 'Donation' when making your transfer."
+data-es="Puede hacer una donación directamente a nuestra cuenta bancaria. Por favor use la referencia 'Donación' al realizar su transferencia.">You can make a donation directly to our bank account. Please use the reference 'Donation' when making your transfer.</p>
+<div class="donate-box">
+<p data-en="Account Name:" data-es="Nombre de la Cuenta:">Account Name:</p>
+<p class="bank-detail">Age Support Almanzora</p>
+<p style="margin-top:12px;" data-en="Bank:" data-es="Banco:">Bank:</p>
+<p class="bank-detail">Caja Rural</p>
+<p style="margin-top:12px;">IBAN:</p>
+<p class="bank-detail">ES67 3058 0064 2320 6400 3254</p>
+</div>
+</div>
+
+<!-- DONATE IN PERSON -->
+<div class="content-card">
+<h2 data-en="Donate in Person" data-es="Donar en Persona">Donate in Person <button class="spk nav-spk" onclick="speakText('Donate in person. You are welcome to drop in a cash donation at our Information Centre in Albox. Our friendly team will be happy to receive your gift and answer any questions. We are open Tuesday to Friday, 10am to 2pm. Our Address. Cam Segovias, 04800, Albox, Almería.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="You are welcome to drop in a cash donation at our Information Centre in Albox. Our friendly team will be happy to receive your gift and answer any questions."
+data-es="Le invitamos a entregar una donación en efectivo en nuestro Centro de Información en Albox. Nuestro amable equipo estará encantado de recibir su donación y responder a sus preguntas.">You are welcome to drop in a cash donation at our Information Centre in Albox. Our friendly team will be happy to receive your gift and answer any questions.</p>
+<p style="margin-top:14px;">
+<strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br>
+<span data-en="Tuesday – Friday" data-es="Martes – Viernes">Tuesday – Friday</span><br>
+10:00am – 2:00pm
+</p>
+<p style="margin-top:14px;">
+<strong data-en="Our Address:" data-es="Dirección:">Our Address:</strong><br>
+Cam. Segovias,<br>
+04800<br>
+Albox<br>
+Almería
+</p>
+</div>
+
+<!-- DONATE EQUIPMENT -->
+<div class="content-card">
+<h2 data-en="Donate Mobility Equipment" data-es="Donar Equipos de Movilidad">Donate Mobility Equipment <button class="spk nav-spk" onclick="speakText('Donate mobility equipment. We also welcome donations of mobility aids and equipment. If you have items that are no longer in use, please consider donating them so that others in the Almanzora Valley can benefit. We are particularly in need of walking sticks, crutches, walking frames, rollators, wheelchairs, and bath seats.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="We also welcome donations of mobility aids and equipment. If you have items that are no longer in use and gathering dust, please consider donating them so that others in the Almanzora Valley can benefit."
+data-es="También agradecemos las donaciones de ayudas a la movilidad y equipos. Si tiene artículos que ya no utiliza y que están acumulando polvo, por favor considere donarlos para que otros en el Valle del Almanzora puedan beneficiarse.">We also welcome donations of mobility aids and equipment. If you have items that are no longer in use and gathering dust, please consider donating them so that others in the Almanzora Valley can benefit.</p>
+<p style="margin-top:10px;" data-en="We are particularly in need of:" data-es="Especialmente necesitamos:">We are particularly in need of:</p>
+<ul>
+<li data-en="Walking sticks and crutches" data-es="Bastones y muletas">Walking sticks and crutches</li>
+<li data-en="Walking frames and rollators" data-es="Andadores y rollators">Walking frames and rollators</li>
+<li data-en="Wheelchairs and ramps" data-es="Sillas de ruedas y rampas">Wheelchairs and ramps</li>
+<li data-en="Bath seats and raised toilet seats" data-es="Asientos de baño y alzadores de inodoro">Bath seats and raised toilet seats</li>
+<li data-en="Commodes and bed tables" data-es="Cuñas y mesas de cama">Commodes and bed tables</li>
+</ul>
+<div class="note">
+<strong data-en="To arrange a donation of equipment, please call us on 634 316 573." data-es="Para organizar una donación de equipos, llámenos al 634 316 573.">To arrange a donation of equipment, please call us on 634 316 573.</strong>
+</div>
+</div>
+
+<!-- THANK YOU -->
+<div class="content-card">
+<h2 data-en="Thank You" data-es="Gracias">Thank You <button class="spk nav-spk" onclick="speakText('Thank you. Your generosity truly makes a difference to the lives of elderly people across the Almanzora Valley. On behalf of everyone at Age Support Almanzora, and all those we support, thank you.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="Your generosity truly makes a difference to the lives of elderly people across the Almanzora Valley. On behalf of everyone at Age Support Almanzora — and all those we support — thank you."
+data-es="Su generosidad marca verdaderamente una diferencia en la vida de las personas mayores del Valle del Almanzora. En nombre de todos en Age Support Almanzora, y de todas las personas a las que apoyamos, gracias.">Your generosity truly makes a difference to the lives of elderly people across the Almanzora Valley. On behalf of everyone at Age Support Almanzora — and all those we support — thank you.</p>
+<p style="margin-top:14px;">
+<strong data-en="Any questions? Get in touch:" data-es="¿Alguna pregunta? Contáctenos:">Any questions? Get in touch:</strong><br>
+<a href="tel:634316573">634 316 573</a> &nbsp;|&nbsp; <a href="contact.html" data-en="Contact page" data-es="Página de contacto">Contact page</a>
+</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+
+<p><strong>Age Support Almanzora</strong></p>
+
+<p>
+Cam. Segovias, 04800<br>
+Albox, Almería
+<button class="spk nav-spk" onclick="speakText('Age Support Almanzora. Cam Segovias, 04800, Albox, Almería.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</p>
+
+<div class="charity-info">
+Registered Charity No. 5274 | CIF: G04742219
+</div>
+
+</footer>
+
+<div class="site-credit">
+Designed by TerraLytics ©2026
+</div>
+
+<a href="tel:634316573" class="call-button">📞</a>
+
+</body>
+</html>

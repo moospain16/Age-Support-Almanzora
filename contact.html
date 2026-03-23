@@ -307,10 +307,10 @@ function updateLangFlag(){
 let img = document.getElementById("langFlagImg");
 if(!img) return;
 if(lang === "en"){
-img.src = "flag_spain.webp";
+img.src = "flag_spain.avif";
 img.alt = "Español";
 }else{
-img.src = "flag_uk.webp";
+img.src = "flag_uk.avif";
 img.alt = "English";
 }
 }
@@ -467,13 +467,13 @@ Accessibility:
 
 <div class="lang-toggle">
 <button onclick="toggleLang()" title="Switch language">
-<img id="langFlagImg" src="flag_spain.webp" alt="Español" class="flag">
+<img id="langFlagImg" src="flag_spain.avif" alt="Español" class="flag">
 </button>
 </div>
 
 <header>
 
-<h1><img src="age_support_almanzoa_logo.webp" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="speakText('Age Support Almanzora',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
+<h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="speakText('Age Support Almanzora',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
 
 <p data-en="Dedicated to helping elderly people live independently and stay connected."
 data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to helping elderly people live independently and stay connected. <button class="spk" onclick="speakText(this.parentElement.getAttribute('data-'+(localStorage.getItem('siteLang')||'en')),this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></p>
@@ -502,7 +502,7 @@ data-es="Apoyando a nuestra comunidad en el Valle del Almanzora">Dedicated to he
 
 <h2 data-en="Contact Us" data-es="Contáctanos">Contact Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
 
-<img src="contact.webp" alt="A friendly woman wearing a headset ready to help" class="hero-image">
+<img src="contact.avif" alt="A friendly woman wearing a headset ready to help" class="hero-image">
 
 <p data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help."
 data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar.">If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.</p>
@@ -528,8 +528,12 @@ data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere sab
 
 <p>
 <strong data-en="Location:" data-es="Ubicación:">Location:</strong><br>
-Albox Information Centre<br>
-Almanzora Valley
+Cam. Segovias,<br>
+04800<br>
+Albox<br>
+Almería<br>
+<a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/@37.381783,-2.1368119,3a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2165636836471379%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.2281652190158!7i16384!8i8192!4m22!1m15!4m14!1m6!1m2!1s0xd6535f178ec23b5:0x3391d363642f9f7c!2sAlmanzora,+04815,+Almer%C3%ADa,+Spain!2m2!1d-2.1363598!2d37.3502323!1m6!1m2!1s0xd65362062ed19a7:0x904ac88dc59c2ed8!2sAlbox,+Almer%C3%ADa,+Spain!2m2!1d-2.1417503!2d37.3881024!3m5!1s0xd653619a95eab59:0x2622ae463a520c0a!8m2!3d37.3819269!4d-2.1374287!16s%2Fg%2F11bw449lts?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View on Google Maps" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;text-decoration:underline;color:#ffd700;"><img src="google_maps_icon.avif" alt="View on Google Maps" style="width:50px;height:auto;">View on Google Maps</a><br>
+<a href="https://www.facebook.com/ASAheretohelp/" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;text-decoration:underline;color:#ffd700;"><img src="facebook-logo.avif" alt="Follow us on Facebook" style="width:50px;height:auto;">Follow us on Facebook</a>
 </p>
 </div>
 
@@ -547,9 +551,9 @@ data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude e
 <p><strong>Age Support Almanzora</strong></p>
 
 <p>
-Albox Information Centre<br>
-Almanzora Valley
-<button class="spk nav-spk" onclick="speakText('Age Support Almanzora. Albox Information Centre, Almanzora Valley.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+Cam. Segovias, 04800<br>
+Albox, Almería
+<button class="spk nav-spk" onclick="speakText('Age Support Almanzora. Cam Segovias, 04800, Albox, Almería.',this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </p>
 
 <div class="charity-info">
