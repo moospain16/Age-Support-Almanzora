@@ -301,11 +301,11 @@ function updateLangFlag(){
 let img = document.getElementById("langFlagImg");
 if(!img) return;
 if(lang === "en"){
-img.src = "flag_spain.avif";
-img.alt = "Español";
-}else{
 img.src = "flag_uk.avif";
 img.alt = "English";
+}else{
+img.src = "flag_spain.avif";
+img.alt = "Español";
 }
 }
 
@@ -423,13 +423,23 @@ if(activeBtn === btn) activeBtn = null;
 };
 
 function go(){
-cacheVoices();
-let femaleVoice = (speech.lang === "es-ES") ? cachedFemaleVoiceES : cachedFemaleVoiceEN;
-if(femaleVoice){ speech.voice = femaleVoice; }
+/* Always do a fresh voice lookup — mobile needs this */
+let voices = speechSynthesis.getVoices();
+if(speech.lang === "es-ES"){
+/* Try exact es-ES first, then any Spanish voice */
+let esVoice = voices.find(v => v.lang === "es-ES") ||
+              voices.find(v => v.lang.startsWith("es"));
+if(esVoice){ speech.voice = esVoice; }
+} else {
+let enVoice = voices.find(v => v.lang === "en-GB") ||
+              voices.find(v => v.lang.startsWith("en"));
+if(enVoice){ speech.voice = enVoice; }
+}
 speechSynthesis.speak(speech);
 }
 
-if(voicesReady){
+let voices = speechSynthesis.getVoices();
+if(voices && voices.length > 0){
 go();
 }else{
 speechSynthesis.addEventListener("voiceschanged", function onReady(){
@@ -468,7 +478,7 @@ Accessibility:
 
 <div class="lang-toggle">
 <button onclick="toggleLang()" title="Switch language">
-<img id="langFlagImg" src="flag_spain.avif" alt="Español" class="flag">
+<img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
 </button>
 </div>
 
