@@ -503,7 +503,17 @@ footer{
   
   // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
   let activeBtn = null;
-  
+
+  // Expanded female keywords including Spanish-specific voices
+  const femaleKeywords = [
+    "Female", "female", "Femenino", "femenino",
+    "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
+    "Google UK English Female", "Google US English Female",
+    "Monica", "Paulina", "Rosa", "Maria", "Lucia", "Elena", "Carmen", "Sofia",
+    "Isabel", "Juana", "Teresa", "Gabriela", "Valeria", "Laura", "Claudia",
+    "es-ES Female", "Spanish Female", "Google español femenino"
+  ];
+
   function speakText(text, btn) {
     if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
       window.speechSynthesis.cancel();
@@ -523,17 +533,7 @@ footer{
     utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
     utterance.rate = 0.95;
     utterance.pitch = 1;
-    
-    // Expanded female keywords including Spanish-specific voices
-    const femaleKeywords = [
-      "Female", "female", "Femenino", "femenino",
-      "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
-      "Google UK English Female", "Google US English Female",
-      "Monica", "Paulina", "Rosa", "Maria", "Lucia", "Elena", "Carmen", "Sofia",
-      "Isabel", "Juana", "Teresa", "Gabriela", "Valeria", "Laura", "Claudia",
-      "es-ES Female", "Spanish Female", "Google español femenino"
-    ];
-    
+
     function setVoiceAndSpeak() {
       let voices = speechSynthesis.getVoices();
       if(!voices.length) {
