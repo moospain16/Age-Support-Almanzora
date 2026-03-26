@@ -425,16 +425,21 @@ if(activeBtn === btn) activeBtn = null;
 function go(){
 /* Always do a fresh voice lookup — mobile needs this */
 let voices = speechSynthesis.getVoices();
+let chosenVoice = null;
 if(speech.lang === "es-ES"){
-/* Try exact es-ES first, then any Spanish voice */
-let esVoice = voices.find(v => v.lang === "es-ES") ||
-              voices.find(v => v.lang.startsWith("es"));
-if(esVoice){ speech.voice = esVoice; }
+/* 1. Female Spanish (es-ES) */
+chosenVoice = pickFemaleVoice(voices, "es-ES");
+/* 2. Any Spanish voice as fallback */
+if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES") ||
+                               voices.find(v => v.lang.startsWith("es"));
 } else {
-let enVoice = voices.find(v => v.lang === "en-GB") ||
-              voices.find(v => v.lang.startsWith("en"));
-if(enVoice){ speech.voice = enVoice; }
+/* 1. Female English (en-GB) */
+chosenVoice = pickFemaleVoice(voices, "en-GB");
+/* 2. Any English voice as fallback */
+if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB") ||
+                               voices.find(v => v.lang.startsWith("en"));
 }
+if(chosenVoice){ speech.voice = chosenVoice; }
 speechSynthesis.speak(speech);
 }
 
