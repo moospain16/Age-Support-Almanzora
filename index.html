@@ -497,6 +497,16 @@ Accessibility:
 <img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
 </button>
 </div>
+<script>
+(function(){
+var l = localStorage.getItem("siteLang") || "en";
+var img = document.getElementById("langFlagImg");
+if(img){
+img.src = (l === "es") ? "flag_spain.avif" : "flag_uk.avif";
+img.alt = (l === "es") ? "Español" : "English";
+}
+})();
+</script>
 
 <header>
 
