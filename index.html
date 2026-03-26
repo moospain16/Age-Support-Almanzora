@@ -330,11 +330,30 @@ if(node.nodeType === 3){ el.removeChild(node); }
 /* Prepend the translated text */
 el.insertBefore(document.createTextNode(text + " "), btn);
 }else{
-el.innerText = text;
+/* Use textContent — more reliable than innerText on mobile */
+/* Preserve any child elements (e.g. anchor tags) */
+let hasChildElements = Array.from(el.childNodes).some(n => n.nodeType === 1);
+if(!hasChildElements){
+el.textContent = text;
+}
 }
 
 });
 
+}
+
+/* Run immediately for any elements already in the DOM (mobile reliability) */
+if(document.readyState === "loading"){
+document.addEventListener("DOMContentLoaded", function(){
+loadLanguage();
+updateLangFlag();
+applyFont();
+});
+}else{
+/* DOM already ready (e.g. script deferred or at bottom) */
+loadLanguage();
+updateLangFlag();
+applyFont();
 }
 
 /* ==============================
@@ -460,19 +479,11 @@ speechSynthesis.getVoices();
    INITIAL PAGE LOAD
 ============================== */
 
-document.addEventListener("DOMContentLoaded",function(){
-
-applyFont();
-loadLanguage();
-updateLangFlag();
-
-});
-
 </script>
 
 </head>
 
-<body>
+<body onload="loadLanguage();updateLangFlag();">
 
 <div class="accessibility-bar">
 Accessibility:
