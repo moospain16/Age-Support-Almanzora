@@ -4,10 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Age Support Almanzora | Bilingual Accessibility</title>
+
+<!-- CRITICAL: Force English before any rendering -->
+<script>
+  (function() {
+    // Get saved language, but ONLY use it if it's Spanish
+    let saved = null;
+    try { saved = localStorage.getItem("siteLang"); } catch(e) {}
+    
+    // FORCE to "en" unless explicitly saved as "es"
+    let lang = (saved === "es") ? "es" : "en";
+    
+    // Store decision
+    try { localStorage.setItem("siteLang", lang); } catch(e) {}
+    
+    // Save to global BEFORE rendering
+    window.__LANG__ = lang;
+    
+    // IMMEDIATELY update DOM before page renders
+    document.documentElement.lang = lang;
+    document.documentElement.setAttribute("data-lang", lang);
+  })();
+</script>
+
 <style>
 * {
   box-sizing: border-box;
 }
+
+/* Hide Spanish text by default */
+[data-lang="en"] .lang-es { display: none !important; }
+[data-lang="es"] .lang-en { display: none !important; }
 
 /* BODY */
 body{
@@ -234,34 +261,12 @@ footer{
   z-index:1200;
 }
 </style>
-
-<!-- EARLY LANGUAGE INITIALIZATION -->
-<script>
-  // Force English on page load to prevent Spanish flash
-  // This runs BEFORE the rest of the DOM loads
-  (function() {
-    let savedLang = null;
-    try {
-      savedLang = localStorage.getItem("siteLang");
-    } catch(e) {}
-    
-    // Only use saved language if it's explicitly Spanish, otherwise default to English
-    let langToUse = (savedLang === "es") ? "es" : "en";
-    
-    // Store it back to ensure consistency
-    try {
-      localStorage.setItem("siteLang", langToUse);
-    } catch(e) {}
-    
-    // Set a global variable that the main script will use
-    window.__INITIAL_LANG__ = langToUse;
-  })();
-</script>
 </head>
 <body>
 
 <div class="accessibility-bar">
-  <span id="a11yLabel">Accessibility:</span>
+  <span class="lang-en">Accessibility:</span>
+  <span class="lang-es">Accesibilidad:</span>
   <button onclick="decreaseText()" aria-label="Decrease font size">A-</button>
   <button onclick="increaseText()" aria-label="Increase font size">A+</button>
   <button onclick="resetText()" aria-label="Reset font size">Reset</button>
@@ -276,39 +281,42 @@ footer{
 <header>
   <h1>
     <img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">
-    <span id="orgNameSpan">Age Support Almanzora</span>
+    <span>Age Support Almanzora</span>
     <button class="spk" id="orgNameSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h1>
-  <p id="taglineP">Dedicated to helping elderly people live independently and stay connected.</p>
+  <p>
+    <span class="lang-en">Dedicated to helping elderly people live independently and stay connected.</span>
+    <span class="lang-es">Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.</span>
+  </p>
   <div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
     <button class="spk" id="phoneSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </div>
 </header>
 
 <nav id="mainNav">
-  <div style="display:contents;" data-nav-group>
-    <a href="befriending.html" id="navBefriending">Befriending</a>
-    <button class="spk nav-spk" data-nav-speaker="befriending" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
-    <a href="equipment.html" id="navEquipment">Equipment Loan</a>
-    <button class="spk nav-spk" data-nav-speaker="equipment" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
-    <a href="carer_support.html" id="navCarer">Carer Support</a>
-    <button class="spk nav-spk" data-nav-speaker="carer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
-    <a href="volunteer.html" id="navVolunteer">Volunteer</a>
-    <button class="spk nav-spk" data-nav-speaker="volunteer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
-    <a href="donations.html" id="navDonations">Donations</a>
-    <button class="spk nav-spk" data-nav-speaker="donations" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
-    <a href="contact.html" id="navContact">Contact</a>
-    <button class="spk nav-spk" data-nav-speaker="contact" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-  </div>
+  <a href="befriending.html"><span class="lang-en">Befriending</span><span class="lang-es">Acompañamiento</span></a>
+  <button class="spk nav-spk" data-nav-speaker="befriending" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  
+  <a href="equipment.html"><span class="lang-en">Equipment Loan</span><span class="lang-es">Préstamo de Equipos</span></a>
+  <button class="spk nav-spk" data-nav-speaker="equipment" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  
+  <a href="carer_support.html"><span class="lang-en">Carer Support</span><span class="lang-es">Apoyo a Cuidadores</span></a>
+  <button class="spk nav-spk" data-nav-speaker="carer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  
+  <a href="volunteer.html"><span class="lang-en">Volunteer</span><span class="lang-es">Voluntariado</span></a>
+  <button class="spk nav-spk" data-nav-speaker="volunteer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  
+  <a href="donations.html"><span class="lang-en">Donations</span><span class="lang-es">Donaciones</span></a>
+  <button class="spk nav-spk" data-nav-speaker="donations" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  
+  <a href="contact.html"><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></a>
+  <button class="spk nav-spk" data-nav-speaker="contact" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </nav>
 
 <section class="hero">
-  <h2 id="whyUsHeading">Why Us? 
+  <h2>
+    <span class="lang-en">Why Us?</span>
+    <span class="lang-es">¿Por qué nosotros?</span>
     <button class="spk" id="whyUsSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
   <img src="index_main_photo.avif" alt="A group of smiling elderly people together in a sunny garden" class="hero-image">
@@ -316,10 +324,10 @@ footer{
 </section>
 
 <footer>
-  <p><strong id="footerOrgName">Age Support Almanzora</strong></p>
-  <p id="footerAddress">
-    Albox Information Centre<br>
-    Almanzora Valley
+  <p><strong>Age Support Almanzora</strong></p>
+  <p>
+    <span class="lang-en">Albox Information Centre<br>Almanzora Valley</span>
+    <span class="lang-es">Centro de Información de Albox<br>Valle del Almanzora</span>
     <button class="spk nav-spk" id="footerAddressSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </p>
   <div class="charity-info">
@@ -346,10 +354,8 @@ footer{
   applyFont();
 
   // ========== LANGUAGE SYSTEM ==========
-  // Use the pre-initialized language from the early script block
-  let currentLang = window.__INITIAL_LANG__ || "en";
+  let currentLang = window.__LANG__ || "en";
   
-  // Card dataset (static for Why Us)
   const whyUsCardsData = [
     { h3_en: "We provide real help for everyday needs", h3_es: "Ofrecemos ayuda real para las necesidades cotidianas", p_en: "Practical and emotional support (like advice, information and mobility aids).", p_es: "Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad)." },
     { h3_en: "Focus on independence and dignity", h3_es: "Enfoque en la independencia y la dignidad", p_en: "Our charity is built around helping elderly people stay independent and live with dignity.", p_es: "Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad." },
@@ -361,30 +367,41 @@ footer{
     const container = document.getElementById("whyUsGrid");
     if(!container) return;
     container.innerHTML = "";
-    whyUsCardsData.forEach((card, idx) => {
+    whyUsCardsData.forEach((card) => {
       const cardDiv = document.createElement("div");
       cardDiv.className = "why-us-card";
+      
       const h3 = document.createElement("h3");
-      h3.setAttribute("data-en", card.h3_en);
-      h3.setAttribute("data-es", card.h3_es);
-      h3.textContent = currentLang === "en" ? card.h3_en : card.h3_es;
+      const h3En = document.createElement("span");
+      h3En.className = "lang-en";
+      h3En.textContent = card.h3_en;
+      const h3Es = document.createElement("span");
+      h3Es.className = "lang-es";
+      h3Es.textContent = card.h3_es;
+      h3.appendChild(h3En);
+      h3.appendChild(h3Es);
+      
       const p = document.createElement("p");
-      p.setAttribute("data-en", card.p_en);
-      p.setAttribute("data-es", card.p_es);
-      p.textContent = currentLang === "en" ? card.p_en : card.p_es;
+      const pEn = document.createElement("span");
+      pEn.className = "lang-en";
+      pEn.textContent = card.p_en;
+      const pEs = document.createElement("span");
+      pEs.className = "lang-es";
+      pEs.textContent = card.p_es;
+      p.appendChild(pEn);
+      p.appendChild(pEs);
+      
       const speakerDiv = document.createElement("div");
       speakerDiv.className = "card-speaker";
       const spkBtn = document.createElement("button");
       spkBtn.className = "spk";
       spkBtn.setAttribute("aria-label", "Listen to card");
       spkBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
-      spkBtn.onclick = (function(h3El, pEl) {
-        return function() {
-          const titleText = h3El.getAttribute("data-" + currentLang);
-          const descText = pEl.getAttribute("data-" + currentLang);
-          speakText(titleText + ". " + descText, this);
-        };
-      })(h3, p);
+      spkBtn.onclick = function() {
+        const titleText = currentLang === "en" ? card.h3_en : card.h3_es;
+        const descText = currentLang === "en" ? card.p_en : card.p_es;
+        speakText(titleText + ". " + descText, this);
+      };
       speakerDiv.appendChild(spkBtn);
       cardDiv.appendChild(h3);
       cardDiv.appendChild(p);
@@ -393,134 +410,14 @@ footer{
     });
   }
 
-  // Update all translatable fields without duplication
-  function updateAllTexts() {
-    document.documentElement.lang = (currentLang === "es") ? "es" : "en";
-    
-    // Update accessibility label
-    const a11yLabel = document.getElementById("a11yLabel");
-    if(a11yLabel) {
-      a11yLabel.textContent = currentLang === "es" ? "Accesibilidad:" : "Accessibility:";
-    }
-    
-    // Update tagline
-    const tagline = document.getElementById("taglineP");
-    if(tagline) {
-      const text = currentLang === "es" 
-        ? "Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas."
-        : "Dedicated to helping elderly people live independently and stay connected.";
-      tagline.textContent = text;
-    }
-    
-    // Organization Name (both header & footer)
-    const orgSpan = document.getElementById("orgNameSpan");
-    if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
-    const footerOrg = document.getElementById("footerOrgName");
-    if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
-    
-    // Update Why Us Heading
-    const whyHeading = document.getElementById("whyUsHeading");
-    if(whyHeading) {
-      const headingText = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-      const speakerBtn = whyHeading.querySelector(".spk");
-      // Remove all text nodes cleanly
-      Array.from(whyHeading.childNodes).forEach(node => {
-        if(node.nodeType === 3) whyHeading.removeChild(node);
-      });
-      whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
-    }
-    
-    // Update Nav links
-    const navLinks = [
-      { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
-      { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
-      { id: "navCarer", en: "Carer Support", es: "Apoyo a Cuidadores" },
-      { id: "navVolunteer", en: "Volunteer", es: "Voluntariado" },
-      { id: "navDonations", en: "Donations", es: "Donaciones" },
-      { id: "navContact", en: "Contact", es: "Contacto" }
-    ];
-    navLinks.forEach(link => {
-      const el = document.getElementById(link.id);
-      if(el) {
-        el.textContent = currentLang === "en" ? link.en : link.es;
-      }
-    });
-    
-    // Update Footer Address text
-    const footerAddr = document.getElementById("footerAddress");
-    if(footerAddr) {
-      const speakerBtnInside = footerAddr.querySelector(".spk");
-      const lines_en = "Albox Information Centre<br>Almanzora Valley";
-      const lines_es = "Centro de Información de Albox<br>Valle del Almanzora";
-      const newHtml = (currentLang === "en") ? lines_en : lines_es;
-      // Remove all children except speaker button
-      while(footerAddr.firstChild && footerAddr.firstChild !== speakerBtnInside) {
-        footerAddr.removeChild(footerAddr.firstChild);
-      }
-      const spanLines = document.createElement("span");
-      spanLines.innerHTML = newHtml;
-      footerAddr.insertBefore(spanLines, speakerBtnInside);
-    }
-    
-    // Rebuild why-us cards to avoid duplication
+  function updateLanguage() {
+    document.documentElement.setAttribute("data-lang", currentLang);
+    document.documentElement.lang = currentLang;
     buildWhyUsCards();
-    
-    // Update speaker event handlers
-    const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
-    if(phoneSpeaker) {
-      phoneSpeaker.onclick = function() {
-        const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
-        speakText(digitsText, this);
-      };
-    }
-    
-    const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
-    if(orgSpeaker) {
-      orgSpeaker.onclick = function() {
-        const msg = currentLang === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
-        speakText(msg, this);
-      };
-    }
-    
-    const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
-    if(footerAddrSpeaker) {
-      footerAddrSpeaker.onclick = function() {
-        const msg = currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
-        speakText(msg, this);
-      };
-    }
-    
-    const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
-    if(whyUsSpeakerBtn) {
-      whyUsSpeakerBtn.onclick = function() {
-        const text = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-        speakText(text, this);
-      };
-    }
-    
-    // Update nav speakers
-    const navSpeakerMap = {
-      befriending: { en: "Befriending", es: "Acompañamiento" },
-      equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
-      carer: { en: "Carer Support", es: "Apoyo a Cuidadores" },
-      volunteer: { en: "Volunteer", es: "Voluntariado" },
-      donations: { en: "Donations", es: "Donaciones" },
-      contact: { en: "Contact", es: "Contacto" }
-    };
-    document.querySelectorAll("[data-nav-speaker]").forEach(btn => {
-      const key = btn.getAttribute("data-nav-speaker");
-      if(key && navSpeakerMap[key]) {
-        btn.onclick = function() {
-          const word = currentLang === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
-          speakText(word, this);
-        };
-      }
-    });
   }
   
-  // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
+  // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
-
   const femaleKeywords = [
     "Female", "female", "Femenino", "femenino",
     "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
@@ -590,15 +487,54 @@ footer{
     }
   }
   
+  // Setup speaker buttons
+  document.getElementById("orgNameSpeakerBtn").onclick = function() {
+    const msg = currentLang === "es" 
+      ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." 
+      : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
+    speakText(msg, this);
+  };
+  
+  document.getElementById("phoneSpeakerBtn").onclick = function() {
+    const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
+    speakText(digitsText, this);
+  };
+  
+  document.getElementById("whyUsSpeaker").onclick = function() {
+    const text = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
+    speakText(text, this);
+  };
+  
+  document.getElementById("footerAddressSpeaker").onclick = function() {
+    const msg = currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
+    speakText(msg, this);
+  };
+  
+  const navSpeakerMap = {
+    befriending: { en: "Befriending", es: "Acompañamiento" },
+    equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
+    carer: { en: "Carer Support", es: "Apoyo a Cuidadores" },
+    volunteer: { en: "Volunteer", es: "Voluntariado" },
+    donations: { en: "Donations", es: "Donaciones" },
+    contact: { en: "Contact", es: "Contacto" }
+  };
+  
+  document.querySelectorAll("[data-nav-speaker]").forEach(btn => {
+    const key = btn.getAttribute("data-nav-speaker");
+    if(key && navSpeakerMap[key]) {
+      btn.onclick = function() {
+        const word = currentLang === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
+        speakText(word, this);
+      };
+    }
+  });
+  
   // Language toggle
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
     try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
-    updateAllTexts();
-    updateFlagImage();
-  }
-  
-  function updateFlagImage() {
+    updateLanguage();
+    
     const flagImg = document.getElementById("langFlagImg");
     if(flagImg) {
       flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
@@ -606,18 +542,15 @@ footer{
     }
   }
   
-  function initialLoad() {
-    // Flag should already be set correctly based on currentLang
-    updateFlagImage();
-    // Build all content in the correct language from the start
-    updateAllTexts();
-  }
-  
-  if(document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialLoad);
-  } else {
-    initialLoad();
-  }
+  // Initialize on load
+  document.addEventListener("DOMContentLoaded", function() {
+    updateLanguage();
+    const flagImg = document.getElementById("langFlagImg");
+    if(flagImg) {
+      flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
+      flagImg.alt = currentLang === "es" ? "Español" : "English";
+    }
+  });
 </script>
 </body>
 </html>
