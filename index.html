@@ -5,25 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Age Support Almanzora | Bilingual Accessibility</title>
 
-<!-- CRITICAL: Force English before any rendering -->
+<!-- CRITICAL: Force English IMMEDIATELY before any rendering -->
 <script>
+  // Synchronous, blocking script that runs before HEAD finishes parsing
   (function() {
-    // Get saved language, but ONLY use it if it's Spanish
     let saved = null;
     try { saved = localStorage.getItem("siteLang"); } catch(e) {}
-    
-    // FORCE to "en" unless explicitly saved as "es"
     let lang = (saved === "es") ? "es" : "en";
-    
-    // Store decision
     try { localStorage.setItem("siteLang", lang); } catch(e) {}
-    
-    // Save to global BEFORE rendering
     window.__LANG__ = lang;
-    
-    // IMMEDIATELY update DOM before page renders
     document.documentElement.lang = lang;
     document.documentElement.setAttribute("data-lang", lang);
+    // Critical: apply CSS immediately to prevent render flashing
+    document.documentElement.style.visibility = "hidden";
   })();
 </script>
 
@@ -32,9 +26,27 @@
   box-sizing: border-box;
 }
 
-/* Hide Spanish text by default */
-[data-lang="en"] .lang-es { display: none !important; }
-[data-lang="es"] .lang-en { display: none !important; }
+/* CRITICAL: Force English by default in HTML */
+html { visibility: visible !important; }
+
+/* Hide Spanish text by default - browser applies this DURING parse, before layout */
+html[data-lang="en"] .lang-es { 
+  display: none !important; 
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-lang="es"] .lang-en { 
+  display: none !important; 
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 /* BODY */
 body{
@@ -340,6 +352,11 @@ footer{
 <a href="tel:634316573" class="call-button">📞</a>
 
 <script>
+  // Make page visible ONLY after CSS has been parsed and applied
+  window.addEventListener("load", function() {
+    document.documentElement.style.visibility = "visible";
+  }, { once: true });
+  
   // ========== FONT SIZE SYSTEM ==========
   let fontSize = localStorage.getItem("siteFontSize");
   if(!fontSize) fontSize = 20;
