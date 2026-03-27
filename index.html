@@ -323,7 +323,9 @@ footer{
   applyFont();
 
   // ========== MULTILINGUAL CORE (FIXED FOR MOBILE) ==========
-  let currentLang = localStorage.getItem("siteLang") || "en";
+  // Default to "en" immediately so the page never flashes Spanish on load.
+  // The stored preference is applied in initialLoad() once the DOM is ready.
+  let currentLang = "en";
   
   // Card dataset (static for Why Us)
   const whyUsCardsData = [
