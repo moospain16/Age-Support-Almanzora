@@ -356,9 +356,8 @@ footer{
       spkBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
       spkBtn.onclick = (function(h3El, pEl) {
         return function() {
-          const langNow = localStorage.getItem("siteLang") || "en";
-          const titleText = h3El.getAttribute("data-" + langNow);
-          const descText = pEl.getAttribute("data-" + langNow);
+          const titleText = h3El.getAttribute("data-" + currentLang);
+          const descText = pEl.getAttribute("data-" + currentLang);
           speakText(titleText + ". " + descText, this);
         };
       })(h3, p);
@@ -372,7 +371,6 @@ footer{
 
   // Update all translatable fields without duplication
   function updateAllTexts() {
-    currentLang = localStorage.getItem("siteLang") || "en";
     document.documentElement.lang = (currentLang === "es") ? "es" : "en";
     
     // Update tagline
@@ -394,9 +392,9 @@ footer{
       const headingText = whyHeading.getAttribute("data-" + currentLang);
       if(headingText) {
         const speakerBtn = whyHeading.querySelector(".spk");
-        // Clear only text nodes
-        whyHeading.childNodes.forEach(node => {
-          if(node.nodeType === 3) node.textContent = "";
+        // Remove all text nodes cleanly
+        Array.from(whyHeading.childNodes).forEach(node => {
+          if(node.nodeType === 3) whyHeading.removeChild(node);
         });
         whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
       }
@@ -444,8 +442,7 @@ footer{
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
     if(phoneSpeaker) {
       phoneSpeaker.onclick = function() {
-        const l = localStorage.getItem("siteLang") || "en";
-        const digitsText = l === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
+        const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
         speakText(digitsText, this);
       };
     }
@@ -454,8 +451,7 @@ footer{
     const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
     if(orgSpeaker) {
       orgSpeaker.onclick = function() {
-        const l = localStorage.getItem("siteLang") || "en";
-        const msg = l === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
+        const msg = currentLang === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
         speakText(msg, this);
       };
     }
@@ -464,8 +460,7 @@ footer{
     const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
     if(footerAddrSpeaker) {
       footerAddrSpeaker.onclick = function() {
-        const l = localStorage.getItem("siteLang") || "en";
-        const msg = l === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
+        const msg = currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
         speakText(msg, this);
       };
     }
@@ -474,8 +469,7 @@ footer{
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
     if(whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = function() {
-        const l = localStorage.getItem("siteLang") || "en";
-        const text = l === "es" ? "¿Por qué nosotros?" : "Why Us?";
+        const text = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
         speakText(text, this);
       };
     }
@@ -493,8 +487,7 @@ footer{
       const key = btn.getAttribute("data-nav-speaker");
       if(key && navSpeakerMap[key]) {
         btn.onclick = function() {
-          const l = localStorage.getItem("siteLang") || "en";
-          const word = l === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
+          const word = currentLang === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
           speakText(word, this);
         };
       }
@@ -529,8 +522,7 @@ footer{
     activeBtn = btn;
     btn.classList.add("active");
     const utterance = new SpeechSynthesisUtterance(text);
-    const siteLang = localStorage.getItem("siteLang") || "en";
-    utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
+    utterance.lang = currentLang === "es" ? "es-ES" : "en-GB";
     utterance.rate = 0.95;
     utterance.pitch = 1;
 
@@ -579,11 +571,10 @@ footer{
     }
   }
   
-  // Language toggle (fixed for mobile)
+  // Language toggle (fixed for mobile + Chrome file://)
   function toggleLanguageUI() {
-    const newLang = (localStorage.getItem("siteLang") || "en") === "en" ? "es" : "en";
-    localStorage.setItem("siteLang", newLang);
-    currentLang = newLang;
+    currentLang = currentLang === "en" ? "es" : "en";
+    try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
     updateAllTexts();
     updateFlagImage();
   }
@@ -591,17 +582,15 @@ footer{
   function updateFlagImage() {
     const flagImg = document.getElementById("langFlagImg");
     if(flagImg) {
-      const langNow = localStorage.getItem("siteLang") || "en";
-      flagImg.src = langNow === "es" ? "flag_spain.avif" : "flag_uk.avif";
-      flagImg.alt = langNow === "es" ? "Español" : "English";
+      flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
+      flagImg.alt = currentLang === "es" ? "Español" : "English";
     }
   }
   
   function initialLoad() {
     if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", "en");
-    currentLang = localStorage.getItem("siteLang");
+    currentLang = localStorage.getItem("siteLang") || "en";
     updateFlagImage();
-    buildWhyUsCards();
     updateAllTexts();
   }
   
