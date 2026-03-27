@@ -445,7 +445,7 @@ footer{
     if(phoneSpeaker) {
       phoneSpeaker.onclick = function() {
         const l = localStorage.getItem("siteLang") || "en";
-        const digitsText = l === "es" ? "seis...... tres...... cuatro...... tres...... uno...... seis...... cinco...... siete...... tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
+        const digitsText = l === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
         speakText(digitsText, this);
       };
     }
