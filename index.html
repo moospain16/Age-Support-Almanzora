@@ -234,11 +234,34 @@ footer{
   z-index:1200;
 }
 </style>
+
+<!-- EARLY LANGUAGE INITIALIZATION -->
+<script>
+  // Force English on page load to prevent Spanish flash
+  // This runs BEFORE the rest of the DOM loads
+  (function() {
+    let savedLang = null;
+    try {
+      savedLang = localStorage.getItem("siteLang");
+    } catch(e) {}
+    
+    // Only use saved language if it's explicitly Spanish, otherwise default to English
+    let langToUse = (savedLang === "es") ? "es" : "en";
+    
+    // Store it back to ensure consistency
+    try {
+      localStorage.setItem("siteLang", langToUse);
+    } catch(e) {}
+    
+    // Set a global variable that the main script will use
+    window.__INITIAL_LANG__ = langToUse;
+  })();
+</script>
 </head>
 <body>
 
 <div class="accessibility-bar">
-  Accessibility:
+  <span id="a11yLabel">Accessibility:</span>
   <button onclick="decreaseText()" aria-label="Decrease font size">A-</button>
   <button onclick="increaseText()" aria-label="Increase font size">A+</button>
   <button onclick="resetText()" aria-label="Reset font size">Reset</button>
@@ -256,7 +279,7 @@ footer{
     <span id="orgNameSpan">Age Support Almanzora</span>
     <button class="spk" id="orgNameSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h1>
-  <p id="taglineP" data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
+  <p id="taglineP">Dedicated to helping elderly people live independently and stay connected.</p>
   <div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
     <button class="spk" id="phoneSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </div>
@@ -264,28 +287,28 @@ footer{
 
 <nav id="mainNav">
   <div style="display:contents;" data-nav-group>
-    <a href="befriending.html" id="navBefriending" data-en="Befriending" data-es="Acompañamiento">Befriending</a>
+    <a href="befriending.html" id="navBefriending">Befriending</a>
     <button class="spk nav-spk" data-nav-speaker="befriending" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     
-    <a href="equipment.html" id="navEquipment" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a>
+    <a href="equipment.html" id="navEquipment">Equipment Loan</a>
     <button class="spk nav-spk" data-nav-speaker="equipment" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     
-    <a href="carer_support.html" id="navCarer" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a>
+    <a href="carer_support.html" id="navCarer">Carer Support</a>
     <button class="spk nav-spk" data-nav-speaker="carer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     
-    <a href="volunteer.html" id="navVolunteer" data-en="Volunteer" data-es="Voluntariado">Volunteer</a>
+    <a href="volunteer.html" id="navVolunteer">Volunteer</a>
     <button class="spk nav-spk" data-nav-speaker="volunteer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     
-    <a href="donations.html" id="navDonations" data-en="Donations" data-es="Donaciones">Donations</a>
+    <a href="donations.html" id="navDonations">Donations</a>
     <button class="spk nav-spk" data-nav-speaker="donations" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     
-    <a href="contact.html" id="navContact" data-en="Contact" data-es="Contacto">Contact</a>
+    <a href="contact.html" id="navContact">Contact</a>
     <button class="spk nav-spk" data-nav-speaker="contact" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </div>
 </nav>
 
 <section class="hero">
-  <h2 id="whyUsHeading" data-en="Why Us?" data-es="¿Por qué nosotros?">Why Us? 
+  <h2 id="whyUsHeading">Why Us? 
     <button class="spk" id="whyUsSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
   <img src="index_main_photo.avif" alt="A group of smiling elderly people together in a sunny garden" class="hero-image">
@@ -322,10 +345,9 @@ footer{
   function resetText(){ fontSize = 20; applyFont(); }
   applyFont();
 
-  // ========== MULTILINGUAL CORE (FIXED FOR MOBILE) ==========
-  // Default to "en" immediately so the page never flashes Spanish on load.
-  // The stored preference is applied in initialLoad() once the DOM is ready.
-  let currentLang = "en";
+  // ========== LANGUAGE SYSTEM ==========
+  // Use the pre-initialized language from the early script block
+  let currentLang = window.__INITIAL_LANG__ || "en";
   
   // Card dataset (static for Why Us)
   const whyUsCardsData = [
@@ -375,31 +397,37 @@ footer{
   function updateAllTexts() {
     document.documentElement.lang = (currentLang === "es") ? "es" : "en";
     
+    // Update accessibility label
+    const a11yLabel = document.getElementById("a11yLabel");
+    if(a11yLabel) {
+      a11yLabel.textContent = currentLang === "es" ? "Accesibilidad:" : "Accessibility:";
+    }
+    
     // Update tagline
     const tagline = document.getElementById("taglineP");
     if(tagline) {
-      const text = tagline.getAttribute("data-" + currentLang);
-      if(text) tagline.textContent = text;
+      const text = currentLang === "es" 
+        ? "Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas."
+        : "Dedicated to helping elderly people live independently and stay connected.";
+      tagline.textContent = text;
     }
     
-    // Update Organization Name (both header & footer)
+    // Organization Name (both header & footer)
     const orgSpan = document.getElementById("orgNameSpan");
-    if(orgSpan) orgSpan.textContent = "Age Support Almanzora"; // name is same in both languages
+    if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
     const footerOrg = document.getElementById("footerOrgName");
     if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
     
     // Update Why Us Heading
     const whyHeading = document.getElementById("whyUsHeading");
     if(whyHeading) {
-      const headingText = whyHeading.getAttribute("data-" + currentLang);
-      if(headingText) {
-        const speakerBtn = whyHeading.querySelector(".spk");
-        // Remove all text nodes cleanly
-        Array.from(whyHeading.childNodes).forEach(node => {
-          if(node.nodeType === 3) whyHeading.removeChild(node);
-        });
-        whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
-      }
+      const headingText = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
+      const speakerBtn = whyHeading.querySelector(".spk");
+      // Remove all text nodes cleanly
+      Array.from(whyHeading.childNodes).forEach(node => {
+        if(node.nodeType === 3) whyHeading.removeChild(node);
+      });
+      whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
     }
     
     // Update Nav links
@@ -415,32 +443,29 @@ footer{
       const el = document.getElementById(link.id);
       if(el) {
         el.textContent = currentLang === "en" ? link.en : link.es;
-        el.setAttribute("data-en", link.en);
-        el.setAttribute("data-es", link.es);
       }
     });
     
-    // Update Footer Address text (two lines)
+    // Update Footer Address text
     const footerAddr = document.getElementById("footerAddress");
     if(footerAddr) {
       const speakerBtnInside = footerAddr.querySelector(".spk");
       const lines_en = "Albox Information Centre<br>Almanzora Valley";
       const lines_es = "Centro de Información de Albox<br>Valle del Almanzora";
       const newHtml = (currentLang === "en") ? lines_en : lines_es;
-      // Preserve speaker button
-      while(footerAddr.firstChild) {
-        if(footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
-        else break;
+      // Remove all children except speaker button
+      while(footerAddr.firstChild && footerAddr.firstChild !== speakerBtnInside) {
+        footerAddr.removeChild(footerAddr.firstChild);
       }
       const spanLines = document.createElement("span");
       spanLines.innerHTML = newHtml;
       footerAddr.insertBefore(spanLines, speakerBtnInside);
     }
     
-    // rebuild why-us cards to avoid duplication and preserve fresh language
+    // Rebuild why-us cards to avoid duplication
     buildWhyUsCards();
     
-    // update speaker text for phone number
+    // Update speaker event handlers
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
     if(phoneSpeaker) {
       phoneSpeaker.onclick = function() {
@@ -449,7 +474,6 @@ footer{
       };
     }
     
-    // organization speaker
     const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
     if(orgSpeaker) {
       orgSpeaker.onclick = function() {
@@ -458,7 +482,6 @@ footer{
       };
     }
     
-    // footer address speaker
     const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
     if(footerAddrSpeaker) {
       footerAddrSpeaker.onclick = function() {
@@ -467,7 +490,6 @@ footer{
       };
     }
     
-    // why us heading speaker
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
     if(whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = function() {
@@ -476,7 +498,7 @@ footer{
       };
     }
     
-    // assign nav speakers
+    // Update nav speakers
     const navSpeakerMap = {
       befriending: { en: "Befriending", es: "Acompañamiento" },
       equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -499,7 +521,6 @@ footer{
   // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
   let activeBtn = null;
 
-  // Expanded female keywords including Spanish-specific voices
   const femaleKeywords = [
     "Female", "female", "Femenino", "femenino",
     "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
@@ -536,14 +557,10 @@ footer{
       }
       let chosenVoice = null;
       if(utterance.lang === "es-ES") {
-        // First try: es-ES female voice
         chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
-        // Second: any es-ES voice (fallback)
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        // Third: any Spanish voice (es-*)
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
       } else {
-        // English: prefer female English voices
         chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
@@ -573,7 +590,7 @@ footer{
     }
   }
   
-  // Language toggle (fixed for mobile + Chrome file://)
+  // Language toggle
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
     try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
@@ -590,9 +607,9 @@ footer{
   }
   
   function initialLoad() {
-    if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", "en");
-    currentLang = localStorage.getItem("siteLang") || "en";
+    // Flag should already be set correctly based on currentLang
     updateFlagImage();
+    // Build all content in the correct language from the start
     updateAllTexts();
   }
   
