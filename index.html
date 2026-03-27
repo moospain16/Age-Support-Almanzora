@@ -238,10 +238,8 @@ footer{
 <body>
 
 <div class="accessibility-bar">
-  Accessibility:
   <button onclick="decreaseText()" aria-label="Decrease font size">A-</button>
   <button onclick="increaseText()" aria-label="Increase font size">A+</button>
-  <button onclick="resetText()" aria-label="Reset font size">Reset</button>
 </div>
 
 <div class="lang-toggle">
@@ -289,7 +287,7 @@ footer{
     <button class="spk" id="whyUsSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
   <img src="index_main_photo.avif" alt="A group of smiling elderly people together in a sunny garden" class="hero-image">
-  <p id="missionP" data-en="Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience." data-es="Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." style="max-width:700px;margin:24px auto 0;font-size:1.05em;line-height:1.7;">Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience. <button class="spk" id="missionSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></p>
+  <p id="missionP" data-en="Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience." data-es="Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." style="max-width:700px;margin:24px auto 0;font-size:1.05em;line-height:1.7;">Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.</p>
   <div class="why-us-grid" id="whyUsGrid"></div>
 </section>
 
@@ -320,12 +318,9 @@ footer{
   }
   function increaseText(){ fontSize = Math.min(36, fontSize+4); applyFont(); }
   function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
-  function resetText(){ fontSize = 20; applyFont(); }
   applyFont();
 
   // ========== MULTILINGUAL CORE (FIXED FOR MOBILE) ==========
-  // Default to "en" immediately so the page never flashes Spanish on load.
-  // The stored preference is applied in initialLoad() once the DOM is ready.
   let currentLang = "en";
   
   // Card dataset (static for Why Us)
@@ -383,20 +378,16 @@ footer{
       if(text) tagline.textContent = text;
     }
     
-    // Update mission statement
+    // Update mission statement (text only, no speaker button)
     const mission = document.getElementById("missionP");
     if(mission) {
       const text = mission.getAttribute("data-" + currentLang);
-      if(text) {
-        const spkBtn = mission.querySelector(".spk");
-        mission.childNodes.forEach(n => { if(n.nodeType === 3) n.remove(); });
-        mission.insertBefore(document.createTextNode(text + " "), spkBtn);
-      }
+      if(text) mission.textContent = text;
     }
     
     // Update Organization Name (both header & footer)
     const orgSpan = document.getElementById("orgNameSpan");
-    if(orgSpan) orgSpan.textContent = "Age Support Almanzora"; // name is same in both languages
+    if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
     const footerOrg = document.getElementById("footerOrgName");
     if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
     
@@ -406,7 +397,6 @@ footer{
       const headingText = whyHeading.getAttribute("data-" + currentLang);
       if(headingText) {
         const speakerBtn = whyHeading.querySelector(".spk");
-        // Remove all text nodes cleanly
         Array.from(whyHeading.childNodes).forEach(node => {
           if(node.nodeType === 3) whyHeading.removeChild(node);
         });
@@ -432,14 +422,13 @@ footer{
       }
     });
     
-    // Update Footer Address text (two lines)
+    // Update Footer Address text
     const footerAddr = document.getElementById("footerAddress");
     if(footerAddr) {
       const speakerBtnInside = footerAddr.querySelector(".spk");
       const lines_en = "Albox Information Centre<br>Almanzora Valley";
       const lines_es = "Centro de Información de Albox<br>Valle del Almanzora";
       const newHtml = (currentLang === "en") ? lines_en : lines_es;
-      // Preserve speaker button
       while(footerAddr.firstChild) {
         if(footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
         else break;
@@ -449,7 +438,7 @@ footer{
       footerAddr.insertBefore(spanLines, speakerBtnInside);
     }
     
-    // rebuild why-us cards to avoid duplication and preserve fresh language
+    // rebuild why-us cards
     buildWhyUsCards();
     
     // update speaker text for phone number
@@ -458,15 +447,6 @@ footer{
       phoneSpeaker.onclick = function() {
         const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
         speakText(digitsText, this);
-      };
-    }
-    
-    // mission speaker
-    const missionSpeaker = document.getElementById("missionSpeakerBtn");
-    if(missionSpeaker) {
-      missionSpeaker.onclick = function() {
-        const msg = document.getElementById("missionP").getAttribute("data-" + currentLang);
-        speakText(msg, this);
       };
     }
 
@@ -488,12 +468,13 @@ footer{
       };
     }
     
-    // why us heading speaker
+    // why us heading speaker - now reads heading + mission
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
     if(whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = function() {
-        const text = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-        speakText(text, this);
+        const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
+        const mission = document.getElementById("missionP").getAttribute("data-" + currentLang);
+        speakText(heading + ". " + mission, this);
       };
     }
     
@@ -517,10 +498,9 @@ footer{
     });
   }
   
-  // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
+  // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
 
-  // Expanded female keywords including Spanish-specific voices
   const femaleKeywords = [
     "Female", "female", "Femenino", "femenino",
     "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
@@ -557,14 +537,10 @@ footer{
       }
       let chosenVoice = null;
       if(utterance.lang === "es-ES") {
-        // First try: es-ES female voice
         chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
-        // Second: any es-ES voice (fallback)
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        // Third: any Spanish voice (es-*)
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
       } else {
-        // English: prefer female English voices
         chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
@@ -594,7 +570,7 @@ footer{
     }
   }
   
-  // Language toggle (fixed for mobile + Chrome file://)
+  // Language toggle
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
     try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
