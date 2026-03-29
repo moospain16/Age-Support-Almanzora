@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Contact | Age Support Almanzora</title>
 
 <style>
-
-/* BODY */
-
+/* BODY - original style */
 body{
 font-family: Arial, sans-serif;
 font-size:20px;
@@ -22,7 +18,6 @@ padding-top:50px;
 }
 
 /* FLOATING ACCESSIBILITY BAR */
-
 .accessibility-bar{
 position:fixed;
 top:0;
@@ -35,34 +30,29 @@ padding:8px 12px;
 z-index:1000;
 box-sizing:border-box;
 }
-
 .accessibility-bar button{
 margin:0 6px;
 padding:6px 12px;
 font-size:16px;
 cursor:pointer;
 }
-
 .lang-toggle{
 position:fixed;
 top:8px;
 right:10px;
 z-index:1100;
 }
-
 .lang-toggle button{
 background:none;
 border:none;
 padding:0;
 cursor:pointer;
 }
-
 .flag{
 width:32px;
 height:auto;
 transition:0.2s;
 }
-
 .version-badge{
 position:fixed;
 top:58px;
@@ -74,14 +64,12 @@ font-weight:normal;
 }
 
 /* HEADER */
-
 header{
 background:#003366;
 color:white;
 text-align:center;
 padding:20px;
 }
-
 header h1{
 margin:0;
 font-size:40px;
@@ -89,14 +77,12 @@ display:inline-flex;
 align-items:center;
 gap:8px;
 }
-
 .header-logo{
 height:1.4em;
 width:auto;
 display:inline-block;
 vertical-align:middle;
 }
-
 .phone{
 font-size:26px;
 font-weight:bold;
@@ -104,7 +90,6 @@ margin-top:10px;
 }
 
 /* NAV */
-
 nav{
 background:#f2f2f2;
 display:flex;
@@ -113,7 +98,6 @@ gap:25px;
 padding:15px;
 flex-wrap:wrap;
 }
-
 nav a{
 text-decoration:none;
 color:#003366;
@@ -121,14 +105,12 @@ font-weight:bold;
 }
 
 /* HERO */
-
 .hero{
 background:#003366;
 color:white;
 padding:60px 20px;
 text-align:center;
 }
-
 .hero-image{
 display:block;
 width:100%;
@@ -138,7 +120,6 @@ border-radius:10px;
 }
 
 /* SPEAKER BUTTONS */
-
 .spk{
 background:none;
 border:none;
@@ -150,22 +131,18 @@ line-height:1;
 display:inline-flex;
 align-items:center;
 }
-
 .spk svg{
 width:1.4em;
 height:1.4em;
 fill:#ffd700;
 transition:transform 0.15s;
 }
-
 .spk:hover svg{
 transform:scale(1.2);
 }
-
 .spk.active svg{
 fill:#ff9900;
 }
-
 .spk.nav-spk{
 background:#003366;
 border-radius:50%;
@@ -174,21 +151,18 @@ width:28px;
 height:28px;
 justify-content:center;
 }
-
 .spk.nav-spk svg{
 fill:#ffd700;
 width:18px;
 height:18px;
 }
 
-/* CONTENT CARDS */
-
+/* CONTENT CARDS - exact original style */
 .content{
 background:#003366;
 color:white;
 padding:40px 20px;
 }
-
 .content-grid{
 max-width:900px;
 margin:auto;
@@ -197,7 +171,6 @@ flex-wrap:wrap;
 gap:20px;
 justify-content:center;
 }
-
 .content-card{
 background:rgba(255,255,255,0.12);
 border:1px solid rgba(255,255,255,0.3);
@@ -208,13 +181,11 @@ max-width:860px;
 text-align:left;
 position:relative;
 }
-
 .content-card h2{
 margin:0 0 10px;
 font-size:1.1em;
 color:#ffdd99;
 }
-
 .content-card p,
 .content-card ul{
 margin:0.4em 0 0;
@@ -222,25 +193,42 @@ font-size:0.9em;
 line-height:1.6;
 color:white;
 }
-
 .content-card a{
 color:#ffd700;
 }
 
-/* FOOTER */
+/* Icon link styling (for .avif images) */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  text-decoration: underline;
+  color: #ffd700;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.icon-link:hover {
+  color: #ffc107;
+  text-decoration: none;
+}
+.icon-img {
+  width: 50px;
+  height: auto;
+  display: inline-block;
+}
 
+/* FOOTER */
 footer{
 background:#f2f2f2;
 padding:30px;
 text-align:center;
 }
-
 .charity-info{
 font-size:0.85em;
 color:#666;
 margin-top:20px;
 }
-
 .site-credit{
 text-align:center;
 font-size:12px;
@@ -249,7 +237,6 @@ padding:15px;
 }
 
 /* CALL BUTTON */
-
 .call-button{
 position:fixed;
 bottom:20px;
@@ -261,7 +248,6 @@ padding:16px 22px;
 border-radius:50px;
 text-decoration:none;
 }
-
 </style>
 
 <script>
@@ -280,26 +266,30 @@ text-decoration:none;
   // ========== MULTILINGUAL CORE ==========
   let currentLang = localStorage.getItem("siteLang") || "en";
 
-  function updateAllTexts() {
-    currentLang = localStorage.getItem("siteLang") || "en";
-    document.documentElement.lang = (currentLang === "es") ? "es" : "en";
+function updateAllTexts() {
+  currentLang = localStorage.getItem("siteLang") || "en";
+  document.documentElement.lang = (currentLang === "es") ? "es" : "en";
 
-    // Update all elements with data-en / data-es attributes
-    document.querySelectorAll("[data-en]").forEach(function(el) {
-      const text = el.getAttribute("data-" + currentLang);
-      if(!text) return;
-      const btn = el.querySelector(".spk");
-      if(btn) {
-        Array.from(el.childNodes).forEach(function(node) {
-          if(node.nodeType === 3) el.removeChild(node);
-        });
-        el.insertBefore(document.createTextNode(text + " "), btn);
-      } else {
-        el.innerText = text;
-      }
-    });
-  }
+  document.querySelectorAll("[data-en]").forEach(function(el) {
+    const text = el.getAttribute("data-" + currentLang);
+    if (!text) return;
 
+    const btn = el.querySelector(".spk");
+
+    if (btn) {
+      let replaced = false;
+
+      el.childNodes.forEach(function(node) {
+        if (!replaced && node.nodeType === 3) {
+          node.nodeValue = text + " ";
+          replaced = true;
+        }
+      });
+    } else {
+      el.textContent = text;
+    }
+  });
+}
   // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
   let activeBtn = null;
 
@@ -312,8 +302,6 @@ text-decoration:none;
     "es-ES Female", "Spanish Female", "Google español femenino"
   ];
 
-  // Speak an array of {text, pause} objects in sequence.
-  // Each item is spoken, then after it ends a pause (ms) is waited before the next.
   function speakSequence(parts, btn) {
     if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
       window.speechSynthesis.cancel();
@@ -353,7 +341,7 @@ text-decoration:none;
 
       let index = 0;
       function next() {
-        if(activeBtn !== btn) return; // cancelled
+        if(activeBtn !== btn) return;
         if(index >= parts.length) {
           btn.classList.remove("active");
           activeBtn = null;
@@ -440,7 +428,6 @@ text-decoration:none;
     }
   }
 
-  // Language toggle
   function toggleLang() {
     const newLang = (localStorage.getItem("siteLang") || "en") === "en" ? "es" : "en";
     localStorage.setItem("siteLang", newLang);
@@ -474,7 +461,6 @@ text-decoration:none;
 </script>
 
 </head>
-
 <body>
 
 <div class="accessibility-bar">
@@ -488,108 +474,74 @@ text-decoration:none;
 </button>
 </div>
 
-<div class="version-badge">Rev. 1.1</div>
+<div class="version-badge">Rev. 1.0</div>
 
 <header>
-
 <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
-
-<p data-en="Dedicated to helping elderly people live independently and stay connected."
-data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
-
+<p data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
 <div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;font-weight:bold;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></div>
-
 </header>
 
 <nav>
-
 <a href="index.html" data-en="Home" data-es="Inicio">Home</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 <a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 <a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 <a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 <a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 <a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-
 </nav>
 
 <section class="hero">
-
 <h2 data-en="Contact Us" data-es="Contáctanos">Contact Us <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';var h=btn.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-
 <img src="contact.avif" alt="A friendly woman wearing a headset ready to help" class="hero-image">
-
-<p data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help."
-data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar.">If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.</p>
-
+<p data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help." data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar.">If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.</p>
 </section>
 
 <section class="content">
 <div class="content-grid">
 
-<div class="content-card">
-<h2 data-en="How to Reach Us" data-es="Cómo Contactarnos">How to Reach Us <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';if(l==='es'){speakSequence([{text:'Cómo contactarnos.',pause:250},{text:'Teléfono.',pause:150},{text:'seis.',pause:200},{text:'tres.',pause:200},{text:'cuatro.',pause:200},{text:'tres.',pause:200},{text:'uno.',pause:200},{text:'seis.',pause:200},{text:'cinco.',pause:200},{text:'siete.',pause:200},{text:'tres.',pause:400},{text:'Nuestra dirección de correo electrónico.',pause:250},{text:'age support almanzora',pause:100},{text:'at',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Horario de apertura: martes a viernes, 10:00 a 14:00.',pause:250},{text:'Ubicación: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'Al salir de mer-kah-donnà, mire a la derecha. Estamos en la esquina frente al antiguo pabellón.',pause:250},{text:'Ver en Google Maps.',pause:250},{text:'Síguenos en Facebook.',pause:0}],btn);}else{speakSequence([{text:'How to Reach Us.',pause:250},{text:'Phone.',pause:150},{text:'six.',pause:200},{text:'three.',pause:200},{text:'four.',pause:200},{text:'three.',pause:200},{text:'one.',pause:200},{text:'six.',pause:200},{text:'five.',pause:200},{text:'seven.',pause:200},{text:'three.',pause:400},{text:'Our email address.',pause:250},{text:'age support almanzora',pause:100},{text:'AT',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Opening Hours: Tuesday to Friday, 10:00am to 2:00pm.',pause:250},{text:'Location: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'As you walk out of mer kah donnà, look to the right. We are on the corner opposite the old pavilion.',pause:250},{text:'View on Google Maps.',pause:250},{text:'Follow us on Facebook.',pause:0}],btn);}})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+  <!-- FIRST CARD: How to Reach Us -->
+  <div class="content-card">
+    <h2 data-en="How to Reach Us" data-es="Cómo Contactarnos">How to Reach Us <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';if(l==='es'){speakSequence([{text:'Cómo contactarnos.',pause:250},{text:'Teléfono.',pause:150},{text:'seis.',pause:200},{text:'tres.',pause:200},{text:'cuatro.',pause:200},{text:'tres.',pause:200},{text:'uno.',pause:200},{text:'seis.',pause:200},{text:'cinco.',pause:200},{text:'siete.',pause:200},{text:'tres.',pause:400},{text:'Nuestra dirección de correo electrónico.',pause:250},{text:'age support almanzora',pause:100},{text:'AT',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Horario de apertura: martes a viernes, 10:00 a 14:00.',pause:250},{text:'Ubicación: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'Al salir de Mercadona, mire a la derecha. Estamos en la esquina frente al antiguo pabellón.',pause:250},{text:'Ver en Google Maps.',pause:250},{text:'Síguenos en Facebook.',pause:0}],btn);}else{speakSequence([{text:'How to Reach Us.',pause:250},{text:'Phone.',pause:150},{text:'six.',pause:200},{text:'three.',pause:200},{text:'four.',pause:200},{text:'three.',pause:200},{text:'one.',pause:200},{text:'six.',pause:200},{text:'five.',pause:200},{text:'seven.',pause:200},{text:'three.',pause:400},{text:'Our email address.',pause:250},{text:'age support almanzora',pause:100},{text:'AT',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Opening Hours: Tuesday to Friday, 10:00am to 2:00pm.',pause:250},{text:'Location: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'As you walk out of Mercadona, look to the right. We are on the corner opposite the old pavilion.',pause:250},{text:'View on Google Maps.',pause:250},{text:'Follow us on Facebook.',pause:0}],btn);}})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+    <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong><br><a href="tel:634316573" style="font-weight:bold;">634 316 573</a></p>
+    <p><strong data-en="Our email address:" data-es="Nuestra dirección de correo electrónico:">Our email address:</strong><br><a href="/cdn-cgi/l/email-protection#11707775636762627d6066717c7d717e6a7f6271517d7867763f727e7c" style="text-decoration:underline;"><span class="__cf_email__" data-cfemail="b6d7d1d3c5c3c6c6d9c4c2d7dadbd7d8ccd9c4d7f6dadfc0d398d5d9db">[email&#160;protected]</span></a></p>
+    <p><strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br><span data-en="Tuesday – Friday" data-es="Martes – Viernes">Tuesday – Friday</span><br>10:00am – 2:00pm</p>
+    <p><strong data-en="Location:" data-es="Ubicación:">Location:</strong><br>Camino Segovias,<br>04800<br>Albox<br>Almería<br>
+    <a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/@37.381783,-2.1368119,3a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2165636836471379%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.2281652190158!7i16384!8i8192!4m22!1m15!4m14!1m6!1m2!1s0xd6535f178ec23b5:0x3391d363642f9f7c!2sAlmanzora,+04815,+Almer%C3%ADa,+Spain!2m2!1d-2.1363598!2d37.3502323!1m6!1m2!1s0xd65362062ed19a7:0x904ac88dc59c2ed8!2sAlbox,+Almer%C3%ADa,+Spain!2m2!1d-2.1417503!2d37.3881024!3m5!1s0xd653619a95eab59:0x2622ae463a520c0a!8m2!3d37.3819269!4d-2.1374287!16s%2Fg%2F11bw449lts?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" data-en="As you walk out of Mercadona, look to the right. We're on the corner opposite the old pavilion." data-es="Al salir de Mercadona, mire a la derecha. Estamos en la esquina frente al antiguo pabellón." style="display:inline-block;margin-top:24px;color:#ffd700;font-weight:bold;font-style:italic;text-decoration:underline;">As you walk out of Mercadona, look to the right. We're on the corner opposite the old pavilion.</a>
+    </p>
+    
+    <!-- Google Maps icon (using the provided .avif file) -->
+    <a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/@37.381783,-2.1368119,3a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2165636836471379%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.2281652190158!7i16384!8i8192!4m22!1m15!4m14!1m6!1m2!1s0xd6535f178ec23b5:0x3391d363642f9f7c!2sAlmanzora,+04815,+Almer%C3%ADa,+Spain!2m2!1d-2.1363598!2d37.3502323!1m6!1m2!1s0xd65362062ed19a7:0x904ac88dc59c2ed8!2sAlbox,+Almer%C3%ADa,+Spain!2m2!1d-2.1417503!2d37.3881024!3m5!1s0xd653619a95eab59:0x2622ae463a520c0a!8m2!3d37.3819269!4d-2.1374287!16s%2Fg%2F11bw449lts?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="icon-link">
+      <img src="google_maps_icon.avif" alt="Google Maps" class="icon-img">
+      <span data-en="View on Google Maps" data-es="Ver en Google Maps">View on Google Maps</span>
+    </a>
+    
+    <!-- Facebook icon (using the provided .avif file) -->
+    <a href="https://www.facebook.com/ASAheretohelp/" target="_blank" rel="noopener noreferrer" class="icon-link">
+      <img src="facebook-logo.avif" alt="Facebook" class="icon-img">
+      <span data-en="Follow us on Facebook" data-es="Síguenos en Facebook">Follow us on Facebook</span>
+    </a>
+  </div> <!-- end first card -->
 
-<p>
-<strong data-en="Phone:" data-es="Teléfono:">Phone:</strong><br>
-<a href="tel:634316573" style="font-weight:bold;">634 316 573</a>
-</p>
+  <!-- SECOND CARD: We Are Here to Help (moved down, no overlap) -->
+  <div class="content-card">
+    <h2 data-en="We Are Here to Help" data-es="Estamos Aquí para Ayudar">We Are Here to Help <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Estamos aquí para ayudar. Si busca apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo posible.':'We are here to help. If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+    <p data-en="If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible." data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.">If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.</p>
+  </div>
 
-<p>
-<strong data-en="Our email address:" data-es="Nuestra dirección de correo electrónico:">Our email address:</strong><br>
-<a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;">agesupportalmanzora@live.com</a>
-</p>
-
-<p>
-<strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br>
-<span data-en="Tuesday – Friday" data-es="Martes – Viernes">Tuesday – Friday</span><br>
-10:00am – 2:00pm
-</p>
-
-<p>
-<strong data-en="Location:" data-es="Ubicación:">Location:</strong><br>
-Camino Segovias,<br>
-04800<br>
-Albox<br>
-Almería<br>
-<a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/@37.381783,-2.1368119,3a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2165636836471379%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.2281652190158!7i16384!8i8192!4m22!1m15!4m14!1m6!1m2!1s0xd6535f178ec23b5:0x3391d363642f9f7c!2sAlmanzora,+04815,+Almer%C3%ADa,+Spain!2m2!1d-2.1363598!2d37.3502323!1m6!1m2!1s0xd65362062ed19a7:0x904ac88dc59c2ed8!2sAlbox,+Almer%C3%ADa,+Spain!2m2!1d-2.1417503!2d37.3881024!3m5!1s0xd653619a95eab59:0x2622ae463a520c0a!8m2!3d37.3819269!4d-2.1374287!16s%2Fg%2F11bw449lts?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:14px;color:#ffd700;font-weight:bold;font-style:italic;text-decoration:underline;">As you walk out of Mercadona, look to the right. We're on the corner opposite the old pavilion.</a>
-<a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/@37.381783,-2.1368119,3a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2165636836471379%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.2281652190158!7i16384!8i8192!4m22!1m15!4m14!1m6!1m2!1s0xd6535f178ec23b5:0x3391d363642f9f7c!2sAlmanzora,+04815,+Almer%C3%ADa,+Spain!2m2!1d-2.1363598!2d37.3502323!1m6!1m2!1s0xd65362062ed19a7:0x904ac88dc59c2ed8!2sAlbox,+Almer%C3%ADa,+Spain!2m2!1d-2.1417503!2d37.3881024!3m5!1s0xd653619a95eab59:0x2622ae463a520c0a!8m2!3d37.3819269!4d-2.1374287!16s%2Fg%2F11bw449lts?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View on Google Maps" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;text-decoration:underline;color:#ffd700;"><img src="google_maps_icon.avif" alt="View on Google Maps" style="width:50px;height:auto;">View on Google Maps</a><br>
-<a href="https://www.facebook.com/ASAheretohelp/" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;text-decoration:underline;color:#ffd700;"><img src="facebook-logo.avif" alt="Follow us on Facebook" style="width:50px;height:auto;">Follow us on Facebook</a>
-</p>
-</div>
-
-<div class="content-card">
-<h2 data-en="We Are Here to Help" data-es="Estamos Aquí para Ayudar">We Are Here to Help <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Estamos aquí para ayudar. Si busca apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo posible.':'We are here to help. If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible."
-data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.">If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.</p>
-</div>
-
-</div>
+</div> <!-- end content-grid -->
 </section>
 
 <footer>
-
 <p><strong>Age Support Almanzora</strong></p>
-
-<p>
-Camino Segovias, 04800<br>
-Albox, Almería
+<p>Camino Segovias, 04800<br>Albox, Almería
 <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Camino Segovias, 04800, Albox, Almería.':'Age Support Almanzora. Camino Segovias, 04800, Albox, Almería.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </p>
-
-<div class="charity-info">
-Registered Charity No. 5274 | CIF: G04742219
-</div>
-
+<div class="charity-info">Registered Charity No. 5274 | CIF: G04742219</div>
 </footer>
 
-<div class="site-credit">Designed by TerraLytics ©2026</div>
+<a href="tel:634316573" class="call-button">📞 Call us</a>
 
-<a href="tel:634316573" class="call-button">📞</a>
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 </body>
 </html>
