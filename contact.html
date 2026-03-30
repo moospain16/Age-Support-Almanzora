@@ -261,36 +261,63 @@ text-decoration:none;
   }
   function increaseText(){ fontSize = Math.min(36, fontSize+4); applyFont(); }
   function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
-  function resetText(){ fontSize = 20; applyFont(); }
+  applyFont();
 
   // ========== MULTILINGUAL CORE ==========
   let currentLang = localStorage.getItem("siteLang") || "en";
 
-function updateAllTexts() {
-  currentLang = localStorage.getItem("siteLang") || "en";
-  document.documentElement.lang = (currentLang === "es") ? "es" : "en";
+  function updateAllTexts() {
+    currentLang = localStorage.getItem("siteLang") || "en";
+    document.documentElement.lang = (currentLang === "es") ? "es" : "en";
 
-  document.querySelectorAll("[data-en]").forEach(function(el) {
-    const text = el.getAttribute("data-" + currentLang);
-    if (!text) return;
+    // 1. Update all elements with data-en / data-es (preserve speaker buttons)
+    document.querySelectorAll("[data-en]").forEach(function(el) {
+      const text = el.getAttribute("data-" + currentLang);
+      if (!text) return;
+      const btn = el.querySelector(".spk");
+      if (btn) {
+        // keep the speaker button, replace only the text node
+        let replaced = false;
+        el.childNodes.forEach(function(node) {
+          if (!replaced && node.nodeType === 3) {
+            node.nodeValue = text + " ";
+            replaced = true;
+          }
+        });
+      } else {
+        el.textContent = text;
+      }
+    });
 
-    const btn = el.querySelector(".spk");
+    // 2. Update navigation links (they have IDs)
+    const navLinks = [
+      { id: "navHome", en: "Home", es: "Inicio" },
+      { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
+      { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
+      { id: "navCarer", en: "Carer Support", es: "Apoyo a Cuidadores" },
+      { id: "navVolunteer", en: "Volunteer", es: "Voluntariado" },
+      { id: "navDonations", en: "Donations", es: "Donaciones" }
+    ];
+    navLinks.forEach(link => {
+      const el = document.getElementById(link.id);
+      if (el) {
+        el.textContent = currentLang === "en" ? link.en : link.es;
+      }
+    });
 
-    if (btn) {
-      let replaced = false;
-
-      el.childNodes.forEach(function(node) {
-        if (!replaced && node.nodeType === 3) {
-          node.nodeValue = text + " ";
-          replaced = true;
-        }
-      });
-    } else {
-      el.textContent = text;
+    // 3. Footer address (simple text, no speaker button inside)
+    const footerAddr = document.getElementById("footerAddress");
+    if (footerAddr) {
+      const addrEn = "Camino Segovias, 04800<br>Albox, Almería";
+      const addrEs = "Camino Segovias, 04800<br>Albox, Almería";
+      footerAddr.innerHTML = currentLang === "en" ? addrEn : addrEs;
     }
-  });
-}
-  // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
+
+    // 4. Re‑attach speaker handlers for the new content (optional but safe)
+    attachSpeakerHandlers();
+  }
+
+  // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
 
   const femaleKeywords = [
@@ -301,71 +328,6 @@ function updateAllTexts() {
     "Isabel", "Juana", "Teresa", "Gabriela", "Valeria", "Laura", "Claudia",
     "es-ES Female", "Spanish Female", "Google español femenino"
   ];
-
-  function speakSequence(parts, btn) {
-    if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-      window.speechSynthesis.cancel();
-    }
-    if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
-    if(activeBtn === btn) {
-      activeBtn.classList.remove("active");
-      activeBtn = null;
-      return;
-    }
-    activeBtn = btn;
-    btn.classList.add("active");
-
-    const siteLang = localStorage.getItem("siteLang") || "en";
-    const lang = siteLang === "es" ? "es-ES" : "en-GB";
-
-    function getVoice(cb) {
-      let voices = speechSynthesis.getVoices();
-      if(voices.length) { cb(voices); return; }
-      speechSynthesis.addEventListener("voiceschanged", function h() {
-        speechSynthesis.removeEventListener("voiceschanged", h);
-        cb(speechSynthesis.getVoices());
-      });
-    }
-
-    getVoice(function(voices) {
-      let chosenVoice = null;
-      if(lang === "es-ES") {
-        chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
-      } else {
-        chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
-      }
-
-      let index = 0;
-      function next() {
-        if(activeBtn !== btn) return;
-        if(index >= parts.length) {
-          btn.classList.remove("active");
-          activeBtn = null;
-          return;
-        }
-        const part = parts[index++];
-        const utt = new SpeechSynthesisUtterance(part.text);
-        utt.lang = lang;
-        utt.rate = part.rate || 0.95;
-        utt.pitch = part.pitch || 1;
-        if(chosenVoice) utt.voice = chosenVoice;
-        utt.onend = function() {
-          if(activeBtn !== btn) return;
-          setTimeout(next, part.pause || 0);
-        };
-        utt.onerror = function() {
-          btn.classList.remove("active");
-          if(activeBtn === btn) activeBtn = null;
-        };
-        window.speechSynthesis.speak(utt);
-      }
-      next();
-    });
-  }
 
   function speakText(text, btn) {
     if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
@@ -382,8 +344,7 @@ function updateAllTexts() {
     activeBtn = btn;
     btn.classList.add("active");
     const utterance = new SpeechSynthesisUtterance(text);
-    const siteLang = localStorage.getItem("siteLang") || "en";
-    utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
+    utterance.lang = currentLang === "es" ? "es-ES" : "en-GB";
     utterance.rate = 0.95;
     utterance.pitch = 1;
 
@@ -404,7 +365,7 @@ function updateAllTexts() {
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
       }
       if(chosenVoice) utterance.voice = chosenVoice;
-
+      
       utterance.onend = () => {
         if(activeBtn === btn) {
           btn.classList.remove("active");
@@ -417,7 +378,7 @@ function updateAllTexts() {
       };
       window.speechSynthesis.speak(utterance);
     }
-
+    
     if(speechSynthesis.getVoices().length > 0) {
       setVoiceAndSpeak();
     } else {
@@ -428,6 +389,33 @@ function updateAllTexts() {
     }
   }
 
+  // Helper for speaker buttons inside cards
+  function speakCard(headingEl, btn) {
+    const l = currentLang;
+    const heading = headingEl.getAttribute("data-" + l);
+    let text = heading;
+    let el = headingEl.nextElementSibling;
+    while(el && el.tagName !== 'H2') {
+      if(el.tagName === 'P' || el.tagName === 'LI') {
+        text += ". " + (el.getAttribute("data-" + l) || el.innerText);
+      } else if(el.tagName === 'UL') {
+        el.querySelectorAll('li').forEach(li => {
+          text += ". " + (li.getAttribute("data-" + l) || li.innerText);
+        });
+      }
+      el = el.nextElementSibling;
+    }
+    speakText(text, btn);
+  }
+
+  function attachSpeakerHandlers() {
+    // Re‑attach any dynamic speaker buttons (if needed)
+    document.querySelectorAll('.spk').forEach(btn => {
+      // If the button already has an onclick, leave it (most are inline)
+    });
+  }
+
+  // ========== LANGUAGE TOGGLE ==========
   function toggleLang() {
     const newLang = (localStorage.getItem("siteLang") || "en") === "en" ? "es" : "en";
     localStorage.setItem("siteLang", newLang);
@@ -439,16 +427,14 @@ function updateAllTexts() {
   function updateLangFlag() {
     const flagImg = document.getElementById("langFlagImg");
     if(flagImg) {
-      const langNow = localStorage.getItem("siteLang") || "en";
-      flagImg.src = langNow === "es" ? "flag_spain.avif" : "flag_uk.avif";
-      flagImg.alt = langNow === "es" ? "Español" : "English";
+      flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
+      flagImg.alt = currentLang === "es" ? "Español" : "English";
     }
   }
 
   function initialLoad() {
     if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", "en");
     currentLang = localStorage.getItem("siteLang");
-    applyFont();
     updateLangFlag();
     updateAllTexts();
   }
@@ -483,12 +469,12 @@ function updateAllTexts() {
 </header>
 
 <nav>
-<a href="index.html" data-en="Home" data-es="Inicio">Home</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navHome" href="index.html" data-en="Home" data-es="Inicio">Home</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navBefriending" href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navEquipment" href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navCarer" href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navVolunteer" href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<a id="navDonations" href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </nav>
 
 <section class="hero">
@@ -523,7 +509,7 @@ function updateAllTexts() {
     </a>
   </div> <!-- end first card -->
 
-  <!-- SECOND CARD: We Are Here to Help (moved down, no overlap) -->
+  <!-- SECOND CARD: We Are Here to Help -->
   <div class="content-card">
     <h2 data-en="We Are Here to Help" data-es="Estamos Aquí para Ayudar">We Are Here to Help <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Estamos aquí para ayudar. Si busca apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo posible.':'We are here to help. If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
     <p data-en="If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible." data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.">If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.</p>
@@ -534,11 +520,13 @@ function updateAllTexts() {
 
 <footer>
 <p><strong>Age Support Almanzora</strong></p>
-<p>Camino Segovias, 04800<br>Albox, Almería
-<button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Camino Segovias, 04800, Albox, Almería.':'Age Support Almanzora. Camino Segovias, 04800, Albox, Almería.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-</p>
+<p id="footerAddress">Camino Segovias, 04800<br>Albox, Almería</p>
 <div class="charity-info">Registered Charity No. 5274 | CIF: G04742219</div>
 </footer>
+
+<div class="site-credit">
+  Designed by TerraLytics ©2026
+</div>
 
 <a href="tel:634316573" class="call-button">📞 Call us</a>
 
