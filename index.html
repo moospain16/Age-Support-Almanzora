@@ -315,7 +315,7 @@ font-weight:normal;
 <div class="site-credit">
   Designed by TerraLytics ©2026
 </div>
-<a href="tel:634316573" class="call-button">📞</a>
+<a href="tel:634316573" class="call-button">📞 Call us</a>
 
 <script>
   // ========== FONT SIZE SYSTEM ==========
@@ -330,10 +330,10 @@ font-weight:normal;
   function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
   applyFont();
 
-  // ========== MULTILINGUAL CORE (FIXED FOR MOBILE) ==========
-  let currentLang = "en";
-  
-  // Card dataset (static for Why Us)
+  // ========== MULTILINGUAL CORE ==========
+  let currentLang = localStorage.getItem("siteLang") || "en";
+
+  // Card dataset for "Why Us"
   const whyUsCardsData = [
     { h3_en: "We provide real help for everyday needs", h3_es: "Ofrecemos ayuda real para las necesidades cotidianas", p_en: "Practical and emotional support (like advice, information and mobility aids).", p_es: "Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad)." },
     { h3_en: "Focus on independence and dignity", h3_es: "Enfoque en la independencia y la dignidad", p_en: "Our charity is built around helping elderly people stay independent and live with dignity.", p_es: "Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad." },
@@ -377,44 +377,52 @@ font-weight:normal;
     });
   }
 
-  // Update all translatable fields without duplication
+  // ========== UPDATE ALL TRANSLATABLE CONTENT ==========
   function updateAllTexts() {
+    // get current language from localStorage (global variable)
+    currentLang = localStorage.getItem("siteLang") || "en";
     document.documentElement.lang = (currentLang === "es") ? "es" : "en";
-    
-    // Update tagline
-    const tagline = document.getElementById("taglineP");
-    if(tagline) {
-      const text = tagline.getAttribute("data-" + currentLang);
-      if(text) tagline.textContent = text;
-    }
-    
-    // Update mission statement (text only, no speaker button)
-    const mission = document.getElementById("missionP");
-    if(mission) {
-      const text = mission.getAttribute("data-" + currentLang);
-      if(text) mission.textContent = text;
-    }
-    
-    // Update Organization Name (both header & footer)
+
+    // 1. update all elements with data-en / data-es (simple text)
+    document.querySelectorAll("[data-en]").forEach(function(el) {
+      const text = el.getAttribute("data-" + currentLang);
+      if (!text) return;
+      const btn = el.querySelector(".spk");
+      if (btn) {
+        // preserve speaker button – replace only the text node
+        let replaced = false;
+        el.childNodes.forEach(function(node) {
+          if (!replaced && node.nodeType === 3) {
+            node.nodeValue = text + " ";
+            replaced = true;
+          }
+        });
+      } else {
+        el.textContent = text;
+      }
+    });
+
+    // 2. organisation name (header & footer)
     const orgSpan = document.getElementById("orgNameSpan");
-    if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
+    if (orgSpan) orgSpan.textContent = "Age Support Almanzora"; // name is same in both languages
     const footerOrg = document.getElementById("footerOrgName");
-    if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
-    
-    // Update Why Us Heading
+    if (footerOrg) footerOrg.textContent = "Age Support Almanzora";
+
+    // 3. "Why Us?" heading (preserve the speaker button)
     const whyHeading = document.getElementById("whyUsHeading");
-    if(whyHeading) {
+    if (whyHeading) {
       const headingText = whyHeading.getAttribute("data-" + currentLang);
-      if(headingText) {
+      if (headingText) {
         const speakerBtn = whyHeading.querySelector(".spk");
+        // remove all text nodes, keep the button
         Array.from(whyHeading.childNodes).forEach(node => {
-          if(node.nodeType === 3) whyHeading.removeChild(node);
+          if (node.nodeType === 3) whyHeading.removeChild(node);
         });
         whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
       }
     }
-    
-    // Update Nav links
+
+    // 4. navigation links (IDs)
     const navLinks = [
       { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
       { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -425,70 +433,69 @@ font-weight:normal;
     ];
     navLinks.forEach(link => {
       const el = document.getElementById(link.id);
-      if(el) {
-        el.textContent = currentLang === "en" ? link.en : link.es;
+      if (el) {
+        const newText = currentLang === "en" ? link.en : link.es;
+        el.textContent = newText;
+        // update data-* attributes for consistency
         el.setAttribute("data-en", link.en);
         el.setAttribute("data-es", link.es);
       }
     });
-    
-    // Update Footer Address text
+
+    // 5. footer address (with speaker button)
     const footerAddr = document.getElementById("footerAddress");
-    if(footerAddr) {
+    if (footerAddr) {
       const speakerBtnInside = footerAddr.querySelector(".spk");
       const lines_en = "Albox Information Centre<br>Almanzora Valley";
       const lines_es = "Centro de Información de Albox<br>Valle del Almanzora";
       const newHtml = (currentLang === "en") ? lines_en : lines_es;
-      while(footerAddr.firstChild) {
-        if(footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
+      // remove all children except the speaker button
+      while (footerAddr.firstChild) {
+        if (footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
         else break;
       }
       const spanLines = document.createElement("span");
       spanLines.innerHTML = newHtml;
       footerAddr.insertBefore(spanLines, speakerBtnInside);
     }
-    
-    // rebuild why-us cards
+
+    // 6. rebuild Why Us cards (they use currentLang internally)
     buildWhyUsCards();
-    
-    // update speaker text for phone number
+
+    // 7. assign speaker functionality for various elements (phone, org, footer, why us, nav)
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
-    if(phoneSpeaker) {
+    if (phoneSpeaker) {
       phoneSpeaker.onclick = function() {
         const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
         speakText(digitsText, this);
       };
     }
 
-    // organization speaker
     const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
-    if(orgSpeaker) {
+    if (orgSpeaker) {
       orgSpeaker.onclick = function() {
         const msg = currentLang === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
         speakText(msg, this);
       };
     }
-    
-    // footer address speaker
+
     const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
-    if(footerAddrSpeaker) {
+    if (footerAddrSpeaker) {
       footerAddrSpeaker.onclick = function() {
         const msg = currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
         speakText(msg, this);
       };
     }
-    
-    // why us heading speaker - now reads heading + mission
+
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
-    if(whyUsSpeakerBtn) {
+    if (whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = function() {
         const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
         const mission = document.getElementById("missionP").getAttribute("data-" + currentLang);
         speakText(heading + ". " + mission, this);
       };
     }
-    
-    // assign nav speakers
+
     const navSpeakerMap = {
       befriending: { en: "Befriending", es: "Acompañamiento" },
       equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -499,7 +506,7 @@ font-weight:normal;
     };
     document.querySelectorAll("[data-nav-speaker]").forEach(btn => {
       const key = btn.getAttribute("data-nav-speaker");
-      if(key && navSpeakerMap[key]) {
+      if (key && navSpeakerMap[key]) {
         btn.onclick = function() {
           const word = currentLang === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
           speakText(word, this);
@@ -507,7 +514,7 @@ font-weight:normal;
       }
     });
   }
-  
+
   // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
 
@@ -580,10 +587,10 @@ font-weight:normal;
     }
   }
   
-  // Language toggle
+  // ========== LANGUAGE TOGGLE ==========
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
-    try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
+    localStorage.setItem("siteLang", currentLang);
     updateAllTexts();
     updateFlagImage();
   }
@@ -598,7 +605,7 @@ font-weight:normal;
   
   function initialLoad() {
     if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", "en");
-    currentLang = localStorage.getItem("siteLang") || "en";
+    currentLang = localStorage.getItem("siteLang");
     updateFlagImage();
     updateAllTexts();
   }
