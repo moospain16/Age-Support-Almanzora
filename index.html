@@ -315,8 +315,7 @@ font-weight:normal;
   <p><strong id="footerOrgName">Age Support Almanzora</strong></p>
   <p id="footerAddress">
     Albox Information Centre<br>
-    Almanzora Valley
-    <button class="spk nav-spk" id="footerAddressSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    Almanzora Valley  <button class="spk nav-spk" id="footerAddressSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </p>
   <div class="charity-info">
     Registered Charity No. 5274 | CIF: G04742219
@@ -325,7 +324,7 @@ font-weight:normal;
 <div class="site-credit">
   Designed by TerraLytics ©2026
 </div>
-<a href="tel:634316573" class="call-button">📞</a>
+
 
 <script>
   // ========== FONT SIZE SYSTEM ==========
@@ -446,8 +445,8 @@ font-weight:normal;
     const footerAddr = document.getElementById("footerAddress");
     if(footerAddr) {
       const speakerBtnInside = footerAddr.querySelector(".spk");
-      const lines_en = "Albox Information Centre<br>Almanzora Valley";
-      const lines_es = "Centro de Información de Albox<br>Valle del Almanzora";
+      const lines_en = "Albox Information Centre<br>Almanzora Valley&nbsp;";
+      const lines_es = "Centro de Información de Albox<br>Valle del Almanzora&nbsp;";
       const newHtml = (currentLang === "en") ? lines_en : lines_es;
       while(footerAddr.firstChild) {
         if(footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
