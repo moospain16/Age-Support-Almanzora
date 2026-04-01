@@ -218,6 +218,33 @@ color:#ffd700;
   display: inline-block;
 }
 
+/* QR code styling */
+.qr-code {
+  display: inline-block;
+  margin-left: 16px;
+  vertical-align: middle;
+  width: 60px; /* same as the call button's approximate width */
+  height: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+}
+.qr-code img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.phone-number-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.phone-number-row strong {
+  margin-right: 4px;
+}
+
 /* FOOTER */
 footer{
 background:#f2f2f2;
@@ -305,16 +332,13 @@ text-decoration:none;
       }
     });
 
-    // 3. Footer address (simple text, no speaker button inside)
+    // 3. Footer address (simple text)
     const footerAddr = document.getElementById("footerAddress");
     if (footerAddr) {
       const addrEn = "Camino Segovias, 04800<br>Albox, Almería";
       const addrEs = "Camino Segovias, 04800<br>Albox, Almería";
       footerAddr.innerHTML = currentLang === "en" ? addrEn : addrEs;
     }
-
-    // 4. Re‑attach speaker handlers for the new content (optional but safe)
-    attachSpeakerHandlers();
   }
 
   // ========== TEXT-TO-SPEECH ==========
@@ -389,29 +413,69 @@ text-decoration:none;
     }
   }
 
-  // Helper for speaker buttons inside cards
-  function speakCard(headingEl, btn) {
-    const l = currentLang;
-    const heading = headingEl.getAttribute("data-" + l);
-    let text = heading;
-    let el = headingEl.nextElementSibling;
-    while(el && el.tagName !== 'H2') {
-      if(el.tagName === 'P' || el.tagName === 'LI') {
-        text += ". " + (el.getAttribute("data-" + l) || el.innerText);
-      } else if(el.tagName === 'UL') {
-        el.querySelectorAll('li').forEach(li => {
-          text += ". " + (li.getAttribute("data-" + l) || li.innerText);
-        });
-      }
-      el = el.nextElementSibling;
+  // Helper for speaker sequences (used in the How to Reach Us card)
+  function speakSequence(parts, btn) {
+    if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      window.speechSynthesis.cancel();
     }
-    speakText(text, btn);
-  }
+    if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
+    if(activeBtn === btn) {
+      activeBtn.classList.remove("active");
+      activeBtn = null;
+      return;
+    }
+    activeBtn = btn;
+    btn.classList.add("active");
 
-  function attachSpeakerHandlers() {
-    // Re‑attach any dynamic speaker buttons (if needed)
-    document.querySelectorAll('.spk').forEach(btn => {
-      // If the button already has an onclick, leave it (most are inline)
+    const siteLang = localStorage.getItem("siteLang") || "en";
+    const lang = siteLang === "es" ? "es-ES" : "en-GB";
+
+    function getVoice(cb) {
+      let voices = speechSynthesis.getVoices();
+      if(voices.length) { cb(voices); return; }
+      speechSynthesis.addEventListener("voiceschanged", function h() {
+        speechSynthesis.removeEventListener("voiceschanged", h);
+        cb(speechSynthesis.getVoices());
+      });
+    }
+
+    getVoice(function(voices) {
+      let chosenVoice = null;
+      if(lang === "es-ES") {
+        chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
+      } else {
+        chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
+      }
+
+      let index = 0;
+      function next() {
+        if(activeBtn !== btn) return;
+        if(index >= parts.length) {
+          btn.classList.remove("active");
+          activeBtn = null;
+          return;
+        }
+        const part = parts[index++];
+        const utt = new SpeechSynthesisUtterance(part.text);
+        utt.lang = lang;
+        utt.rate = part.rate || 0.95;
+        utt.pitch = part.pitch || 1;
+        if(chosenVoice) utt.voice = chosenVoice;
+        utt.onend = function() {
+          if(activeBtn !== btn) return;
+          setTimeout(next, part.pause || 0);
+        };
+        utt.onerror = function() {
+          btn.classList.remove("active");
+          if(activeBtn === btn) activeBtn = null;
+        };
+        window.speechSynthesis.speak(utt);
+      }
+      next();
     });
   }
 
@@ -465,7 +529,12 @@ text-decoration:none;
 <header>
 <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Age Support Almanzora<button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
 <p data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
-<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;font-weight:bold;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></div>
+ 
+<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<span class="qr-code" style="display:inline-block; margin-left:12px; width:60px; background:white; border-radius:8px; padding:4px; vertical-align:middle;">
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" alt="Scan to call" style="width:100%; height:auto; display:block;">
+</span>
+</div>
 </header>
 
 <nav>
@@ -489,7 +558,16 @@ text-decoration:none;
   <!-- FIRST CARD: How to Reach Us -->
   <div class="content-card">
     <h2 data-en="How to Reach Us" data-es="Cómo Contactarnos">How to Reach Us <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';if(l==='es'){speakSequence([{text:'Cómo contactarnos.',pause:250},{text:'Teléfono.',pause:150},{text:'seis.',pause:200},{text:'tres.',pause:200},{text:'cuatro.',pause:200},{text:'tres.',pause:200},{text:'uno.',pause:200},{text:'seis.',pause:200},{text:'cinco.',pause:200},{text:'siete.',pause:200},{text:'tres.',pause:400},{text:'Nuestra dirección de correo electrónico.',pause:250},{text:'age support almanzora',pause:100},{text:'AT',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Horario de apertura: martes a viernes, 10:00 a 14:00.',pause:250},{text:'Ubicación: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'Al salir de Mercadona, mire a la derecha. Estamos en la esquina frente al antiguo pabellón.',pause:250},{text:'Ver en Google Maps.',pause:250},{text:'Síguenos en Facebook.',pause:0}],btn);}else{speakSequence([{text:'How to Reach Us.',pause:250},{text:'Phone.',pause:150},{text:'six.',pause:200},{text:'three.',pause:200},{text:'four.',pause:200},{text:'three.',pause:200},{text:'one.',pause:200},{text:'six.',pause:200},{text:'five.',pause:200},{text:'seven.',pause:200},{text:'three.',pause:400},{text:'Our email address.',pause:250},{text:'age support almanzora',pause:100},{text:'AT',pause:100,pitch:1.5},{text:'live dot com.',pause:600,rate:0.78},{text:'Opening Hours: Tuesday to Friday, 10:00am to 2:00pm.',pause:250},{text:'Location: Camino Segovias, 04800, Albox, Almería.',pause:250},{text:'As you walk out of Mercadona, look to the right. We are on the corner opposite the old pavilion.',pause:250},{text:'View on Google Maps.',pause:250},{text:'Follow us on Facebook.',pause:0}],btn);}})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-    <p><strong data-en="Phone:" data-es="Teléfono:">Phone:</strong><br><a href="tel:634316573" style="font-weight:bold;">634 316 573</a></p>
+    
+    <!-- Phone number with QR code -->
+    <div class="phone-number-row">
+      <strong data-en="Phone:" data-es="Teléfono:">Phone:</strong>
+      <a href="tel:634316573" style="font-weight:bold;">634 316 573</a>
+      <span class="qr-code" title="Scan to call">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" alt="QR code for phone number">
+      </span>
+    </div>
+    
     <p><strong data-en="Our email address:" data-es="Nuestra dirección de correo electrónico:">Our email address:</strong><br><a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;">agesupportalmanzora@live.com</a></p>
     <p><strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br><span data-en="Tuesday – Friday" data-es="Martes – Viernes">Tuesday – Friday</span><br>10:00am – 2:00pm</p>
     <p><strong data-en="Location:" data-es="Ubicación:">Location:</strong><br>Camino Segovias,<br>04800<br>Albox<br>Almería<br>
