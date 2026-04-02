@@ -172,11 +172,27 @@ footer{
   color:#666;
   margin-top:20px;
 }
+/* SITE CREDIT + VIEW COUNTER: far left + far right */
 .site-credit{
-  text-align:center;
-  font-size:12px;
-  color:#777;
-  padding:15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  padding: 15px;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+.view-counter {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+  font-weight: normal;
+}
+.credit-text {
+  font-size: 12px;
+  color: #777;
 }
 
 /* WHY US CARDS */
@@ -267,17 +283,14 @@ font-weight:normal;
   </h1>
   <p id="taglineP" data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
 
-
-<a href="tel:634316573" class="call-button">📞 Call us</a>
-</body>
-</html><div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" 
-       alt="Scan to call" 
-       style="width:100%; height:100%; display:block; border-radius:4px;">
-</span>
-
-  </div>
+<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
+  <button class="spk" id="phoneSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  <span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" 
+         alt="Scan to call" 
+         style="width:100%; height:100%; display:block; border-radius:4px;">
+  </span>
+</div>
 </header>
 
 <nav id="mainNav">
@@ -322,11 +335,32 @@ font-weight:normal;
   </div>
 </footer>
 <div class="site-credit">
-  Designed by TerraLytics ©2026
+  <span class="view-counter" id="viewCounterDisplay">Views: 0</span>
+  <span class="credit-text">Designed by TerraLytics ©2026</span>
 </div>
 
+<a href="tel:634316573" class="call-button">📞 Call us</a>
 
 <script>
+  // ========== VIEW COUNTER (localStorage, no cookies) ==========
+  function updateViewCounter() {
+    try {
+      let views = localStorage.getItem("asa_pageViews");
+      if (views === null) {
+        views = 1;
+      } else {
+        views = parseInt(views, 10) + 1;
+      }
+      localStorage.setItem("asa_pageViews", views);
+      const formattedViews = views.toLocaleString();
+      const counterSpan = document.getElementById("viewCounterDisplay");
+      if (counterSpan) counterSpan.textContent = `Views: ${formattedViews}`;
+    } catch(e) {
+      const counterSpan = document.getElementById("viewCounterDisplay");
+      if (counterSpan) counterSpan.textContent = `Views: --`;
+    }
+  }
+
   // ========== FONT SIZE SYSTEM ==========
   let fontSize = localStorage.getItem("siteFontSize");
   if(!fontSize) fontSize = 20;
@@ -339,10 +373,9 @@ font-weight:normal;
   function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
   applyFont();
 
-  // ========== MULTILINGUAL CORE (FIXED FOR MOBILE) ==========
+  // ========== MULTILINGUAL CORE ==========
   let currentLang = "en";
   
-  // Card dataset (static for Why Us)
   const whyUsCardsData = [
     { h3_en: "We provide real help for everyday needs", h3_es: "Ofrecemos ayuda real para las necesidades cotidianas", p_en: "Practical and emotional support (like advice, information and mobility aids).", p_es: "Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad)." },
     { h3_en: "Focus on independence and dignity", h3_es: "Enfoque en la independencia y la dignidad", p_en: "Our charity is built around helping elderly people stay independent and live with dignity.", p_es: "Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad." },
@@ -354,7 +387,7 @@ font-weight:normal;
     const container = document.getElementById("whyUsGrid");
     if(!container) return;
     container.innerHTML = "";
-    whyUsCardsData.forEach((card, idx) => {
+    whyUsCardsData.forEach((card) => {
       const cardDiv = document.createElement("div");
       cardDiv.className = "why-us-card";
       const h3 = document.createElement("h3");
@@ -386,44 +419,30 @@ font-weight:normal;
     });
   }
 
-  // Update all translatable fields without duplication
   function updateAllTexts() {
     document.documentElement.lang = (currentLang === "es") ? "es" : "en";
     
-    // Update tagline
     const tagline = document.getElementById("taglineP");
-    if(tagline) {
-      const text = tagline.getAttribute("data-" + currentLang);
-      if(text) tagline.textContent = text;
-    }
+    if(tagline) tagline.textContent = tagline.getAttribute("data-" + currentLang);
     
-    // Update mission statement (text only, no speaker button)
     const mission = document.getElementById("missionP");
-    if(mission) {
-      const text = mission.getAttribute("data-" + currentLang);
-      if(text) mission.textContent = text;
-    }
+    if(mission) mission.textContent = mission.getAttribute("data-" + currentLang);
     
-    // Update Organization Name (both header & footer)
     const orgSpan = document.getElementById("orgNameSpan");
     if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
     const footerOrg = document.getElementById("footerOrgName");
     if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
     
-    // Update Why Us Heading
     const whyHeading = document.getElementById("whyUsHeading");
     if(whyHeading) {
       const headingText = whyHeading.getAttribute("data-" + currentLang);
-      if(headingText) {
-        const speakerBtn = whyHeading.querySelector(".spk");
-        Array.from(whyHeading.childNodes).forEach(node => {
-          if(node.nodeType === 3) whyHeading.removeChild(node);
-        });
-        whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
-      }
+      const speakerBtn = whyHeading.querySelector(".spk");
+      Array.from(whyHeading.childNodes).forEach(node => {
+        if(node.nodeType === 3) whyHeading.removeChild(node);
+      });
+      whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
     }
     
-    // Update Nav links
     const navLinks = [
       { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
       { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -434,14 +453,9 @@ font-weight:normal;
     ];
     navLinks.forEach(link => {
       const el = document.getElementById(link.id);
-      if(el) {
-        el.textContent = currentLang === "en" ? link.en : link.es;
-        el.setAttribute("data-en", link.en);
-        el.setAttribute("data-es", link.es);
-      }
+      if(el) el.textContent = currentLang === "en" ? link.en : link.es;
     });
     
-    // Update Footer Address text
     const footerAddr = document.getElementById("footerAddress");
     if(footerAddr) {
       const speakerBtnInside = footerAddr.querySelector(".spk");
@@ -457,10 +471,8 @@ font-weight:normal;
       footerAddr.insertBefore(spanLines, speakerBtnInside);
     }
     
-    // rebuild why-us cards
     buildWhyUsCards();
     
-    // update speaker text for phone number
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
     if(phoneSpeaker) {
       phoneSpeaker.onclick = function() {
@@ -469,7 +481,6 @@ font-weight:normal;
       };
     }
 
-    // organization speaker
     const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
     if(orgSpeaker) {
       orgSpeaker.onclick = function() {
@@ -478,7 +489,6 @@ font-weight:normal;
       };
     }
     
-    // footer address speaker
     const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
     if(footerAddrSpeaker) {
       footerAddrSpeaker.onclick = function() {
@@ -487,17 +497,15 @@ font-weight:normal;
       };
     }
     
-    // why us heading speaker - now reads heading + mission
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
     if(whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = function() {
         const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-        const mission = document.getElementById("missionP").getAttribute("data-" + currentLang);
-        speakText(heading + ". " + mission, this);
+        const missionText = document.getElementById("missionP").getAttribute("data-" + currentLang);
+        speakText(heading + ". " + missionText, this);
       };
     }
     
-    // assign nav speakers
     const navSpeakerMap = {
       befriending: { en: "Befriending", es: "Acompañamiento" },
       equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -519,7 +527,6 @@ font-weight:normal;
   
   // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
-
   const femaleKeywords = [
     "Female", "female", "Femenino", "femenino",
     "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
@@ -533,9 +540,7 @@ font-weight:normal;
     if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
       window.speechSynthesis.cancel();
     }
-    if(activeBtn && activeBtn !== btn) {
-      activeBtn.classList.remove("active");
-    }
+    if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
     if(activeBtn === btn) {
       activeBtn.classList.remove("active");
       activeBtn = null;
@@ -565,7 +570,6 @@ font-weight:normal;
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
       }
       if(chosenVoice) utterance.voice = chosenVoice;
-      
       utterance.onend = () => {
         if(activeBtn === btn) {
           btn.classList.remove("active");
@@ -579,17 +583,13 @@ font-weight:normal;
       window.speechSynthesis.speak(utterance);
     }
     
-    if(speechSynthesis.getVoices().length > 0) {
+    if(speechSynthesis.getVoices().length > 0) setVoiceAndSpeak();
+    else speechSynthesis.addEventListener("voiceschanged", function handler() {
+      speechSynthesis.removeEventListener("voiceschanged", handler);
       setVoiceAndSpeak();
-    } else {
-      speechSynthesis.addEventListener("voiceschanged", function handler() {
-        speechSynthesis.removeEventListener("voiceschanged", handler);
-        setVoiceAndSpeak();
-      });
-    }
+    });
   }
   
-  // Language toggle
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
     try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
@@ -610,13 +610,11 @@ font-weight:normal;
     currentLang = localStorage.getItem("siteLang") || "en";
     updateFlagImage();
     updateAllTexts();
+    updateViewCounter();   // increment & display view count
   }
   
-  if(document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialLoad);
-  } else {
-    initialLoad();
-  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialLoad);
+  else initialLoad();
 </script>
 </body>
 </html>
