@@ -9,175 +9,153 @@
   box-sizing: border-box;
 }
 
-/* BODY */
-body{
+body {
   font-family: Arial, sans-serif;
-  font-size:20px;
-  line-height:1.7;
-  margin:0;
-  background:white;
-  color:#222;
-  padding-top:50px;
+  font-size: 20px;
+  line-height: 1.7;
+  margin: 0;
+  background: white;
+  color: #222;
+  padding-top: 50px;
 }
 
-/* FLOATING ACCESSIBILITY BAR */
-.accessibility-bar{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  background:black;
-  color:white;
-  text-align:left;
-  padding:8px 12px;
-  z-index:1000;
-  box-sizing:border-box;
+.accessibility-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  color: white;
+  text-align: left;
+  padding: 8px 12px;
+  z-index: 1000;
 }
-.accessibility-bar button{
-  margin:0 6px;
-  padding:6px 12px;
-  font-size:16px;
-  cursor:pointer;
+.accessibility-bar button {
+  margin: 0 6px;
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.lang-toggle{
-  position:fixed;
-  top:8px;
-  right:10px;
-  z-index:1100;
+.lang-toggle {
+  position: fixed;
+  top: 8px;
+  right: 10px;
+  z-index: 1100;
 }
-.lang-toggle button{
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
+.lang-toggle button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
-.flag{
-  width:32px;
-  height:auto;
-  transition:0.2s;
+.flag {
+  width: 32px;
+  height: auto;
 }
 
-/* HEADER */
-header{
-  background:#003366;
-  color:white;
-  text-align:center;
-  padding:20px;
+header {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
-header h1{
-  margin:0;
-  font-size:40px;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
+header h1 {
+  margin: 0;
+  font-size: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.header-logo{
-  height:1.4em;
-  width:auto;
-  display:inline-block;
-  vertical-align:middle;
+.header-logo {
+  height: 1.4em;
+  width: auto;
 }
-.phone{
-  font-size:26px;
-  font-weight:bold;
-  margin-top:10px;
+.phone {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-/* NAV */
-nav{
-  background:#f2f2f2;
-  display:flex;
-  justify-content:center;
-  gap:25px;
-  padding:15px;
-  flex-wrap:wrap;
+nav {
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px;
+  flex-wrap: wrap;
 }
-nav a{
-  text-decoration:none;
-  color:#003366;
-  font-weight:bold;
-}
-
-/* HERO */
-.hero{
-  background:#003366;
-  color:white;
-  padding:60px 20px;
-  text-align:center;
-}
-.hero-image{
-  display:block;
-  width:100%;
-  max-width:900px;
-  margin:30px auto 0;
-  border-radius:10px;
+nav a {
+  text-decoration: none;
+  color: #003366;
+  font-weight: bold;
 }
 
-/* SPEAKER BUTTONS */
-.spk{
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-size:1em;
-  padding:0 0 0 6px;
-  vertical-align:middle;
-  line-height:1;
-  display:inline-flex;
-  align-items:center;
+.hero {
+  background: #003366;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
 }
-.spk svg{
-  width:1.4em;
-  height:1.4em;
-  fill:#ffd700;
-  transition:transform 0.15s;
-}
-.spk:hover svg{
-  transform:scale(1.2);
-}
-.spk.active svg{
-  fill:#ff9900;
-}
-.spk.nav-spk{
-  background:#003366;
-  border-radius:50%;
-  padding:4px;
-  width:28px;
-  height:28px;
-  justify-content:center;
-}
-.spk.nav-spk svg{
-  fill:#ffd700;
-  width:18px;
-  height:18px;
+.hero-image {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  margin: 30px auto 0;
+  border-radius: 10px;
 }
 
-/* CONTENT */
-.content{
-  max-width:900px;
-  margin:auto;
-  padding:40px 20px;
+.spk {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0 0 0 6px;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+}
+.spk svg {
+  width: 1.4em;
+  height: 1.4em;
+  fill: #ffd700;
+  transition: transform 0.15s;
+}
+.spk:hover svg {
+  transform: scale(1.2);
+}
+.spk.active svg {
+  fill: #ff9900;
+}
+.spk.nav-spk {
+  background: #003366;
+  border-radius: 50%;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+}
+.spk.nav-spk svg {
+  width: 18px;
+  height: 18px;
 }
 
-/* FOOTER */
-footer{
-  background:#f2f2f2;
-  padding:30px;
-  text-align:center;
+footer {
+  background: #f2f2f2;
+  padding: 30px;
+  text-align: center;
 }
-.charity-info{
-  font-size:0.85em;
-  color:#666;
-  margin-top:20px;
+.charity-info {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 20px;
 }
-/* SITE CREDIT + VIEW COUNTER: far left + far right */
-.site-credit{
+
+.site-credit {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
   font-size: 12px;
   color: #777;
   padding: 15px;
@@ -188,91 +166,86 @@ footer{
   font-size: 12px;
   color: #777;
   margin: 0;
-  font-weight: normal;
 }
 .credit-text {
   font-size: 12px;
   color: #777;
 }
 
-/* WHY US CARDS */
-.why-us-grid{
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
-  justify-content:center;
-  margin-top:30px;
+.why-us-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
 }
-.why-us-card{
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.3);
-  border-radius:10px;
-  padding:20px 24px;
-  max-width:400px;
-  text-align:left;
-  position:relative;
-  padding-bottom:48px;
+.why-us-card {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  max-width: 400px;
+  text-align: left;
+  position: relative;
+  padding-bottom: 48px;
 }
-.why-us-card h3{
-  margin:0 0 8px;
-  font-size:1em;
-  color:#ffdd99;
+.why-us-card h3 {
+  margin: 0 0 8px;
+  font-size: 1em;
+  color: #ffdd99;
 }
-.why-us-card p{
-  margin:0;
-  font-size:0.85em;
-  line-height:1.5;
+.why-us-card p {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
 }
 .card-speaker {
-  position:absolute;
-  bottom:12px;
-  right:12px;
-  background:rgba(0,0,0,0.3);
-  border-radius:30px;
-  padding:4px 8px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 30px;
+  padding: 4px 8px;
 }
 .card-speaker .spk {
-  padding:0;
+  padding: 0;
 }
 
-/* CALL BUTTON */
-.call-button{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#28a745;
-  color:white;
-  font-size:22px;
-  padding:16px 22px;
-  border-radius:50px;
-  text-decoration:none;
-  box-shadow:0 2px 8px rgba(0,0,0,0.2);
-  z-index:1200;
+.call-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  font-size: 22px;
+  padding: 16px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1200;
 }
-.version-badge{
-position:fixed;
-top:58px;
-right:10px;
-z-index:1100;
-font-size:12px;
-color:#666;
-font-weight:normal;
+.version-badge {
+  position: fixed;
+  top: 58px;
+  right: 10px;
+  font-size: 12px;
+  color: #666;
+  z-index: 1100;
 }
 </style>
 </head>
 <body>
 
 <div class="accessibility-bar">
-  <button onclick="decreaseText()" aria-label="Decrease font size">A-</button>
-  <button onclick="increaseText()" aria-label="Increase font size">A+</button>
+  <button onclick="decreaseText()">A-</button>
+  <button onclick="increaseText()">A+</button>
 </div>
 
 <div class="lang-toggle">
-  <button id="langToggleBtn" onclick="toggleLanguageUI()" title="Switch language">
+  <button id="langToggleBtn" onclick="toggleLanguageUI()">
     <img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
   </button>
 </div>
-
 <div class="version-badge">Rev. 1.0</div>
 
 <header>
@@ -282,100 +255,99 @@ font-weight:normal;
     <button class="spk" id="orgNameSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h1>
   <p id="taglineP" data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
-
-<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
-  <button class="spk" id="phoneSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-  <span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" 
-         alt="Scan to call" 
-         style="width:100%; height:100%; display:block; border-radius:4px;">
-  </span>
-</div>
+  <div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
+    <button class="spk" id="phoneSpeakerBtn" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    <span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" alt="Scan to call" style="width:100%; height:100%; display:block; border-radius:4px;">
+    </span>
+  </div>
 </header>
 
 <nav id="mainNav">
-  <div style="display:contents;" data-nav-group>
+  <div style="display:contents;">
     <a href="befriending.html" id="navBefriending" data-en="Befriending" data-es="Acompañamiento">Befriending</a>
-    <button class="spk nav-spk" data-nav-speaker="befriending" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
+    <button class="spk nav-spk" data-nav-speaker="befriending"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     <a href="equipment.html" id="navEquipment" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a>
-    <button class="spk nav-spk" data-nav-speaker="equipment" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
+    <button class="spk nav-spk" data-nav-speaker="equipment"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     <a href="carer_support.html" id="navCarer" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a>
-    <button class="spk nav-spk" data-nav-speaker="carer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
+    <button class="spk nav-spk" data-nav-speaker="carer"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     <a href="volunteer.html" id="navVolunteer" data-en="Volunteer" data-es="Voluntariado">Volunteer</a>
-    <button class="spk nav-spk" data-nav-speaker="volunteer" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
+    <button class="spk nav-spk" data-nav-speaker="volunteer"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     <a href="donations.html" id="navDonations" data-en="Donations" data-es="Donaciones">Donations</a>
-    <button class="spk nav-spk" data-nav-speaker="donations" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-    
+    <button class="spk nav-spk" data-nav-speaker="donations"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     <a href="contact.html" id="navContact" data-en="Contact" data-es="Contacto">Contact</a>
-    <button class="spk nav-spk" data-nav-speaker="contact" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    <button class="spk nav-spk" data-nav-speaker="contact"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </div>
 </nav>
 
 <section class="hero">
   <h2 id="whyUsHeading" data-en="Why Us?" data-es="¿Por qué nosotros?">Why Us? 
-    <button class="spk" id="whyUsSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    <button class="spk" id="whyUsSpeaker"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
-  <img src="index_main_photo.avif" alt="A group of smiling elderly people together in a sunny garden" class="hero-image">
-  <p id="missionP" data-en="Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience." data-es="Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." style="max-width:700px;margin:24px auto 0;font-size:1.05em;line-height:1.7;">Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.</p>
+  <img src="index_main_photo.avif" alt="Smiling elderly people together in a sunny garden" class="hero-image">
+  <p id="missionP" data-en="Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience." data-es="Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." style="max-width:700px;margin:24px auto 0;font-size:1.05em;">Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.</p>
   <div class="why-us-grid" id="whyUsGrid"></div>
 </section>
 
 <footer>
   <p><strong id="footerOrgName">Age Support Almanzora</strong></p>
-  <p id="footerAddress">
-    Albox Information Centre<br>
-    Almanzora Valley  <button class="spk nav-spk" id="footerAddressSpeaker" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-  </p>
-  <div class="charity-info">
-    Registered Charity No. 5274 | CIF: G04742219
-  </div>
+  <p id="footerAddress">Albox Information Centre<br>Almanzora Valley <button class="spk nav-spk" id="footerAddressSpeaker"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></p>
+  <div class="charity-info">Registered Charity No. 5274 | CIF: G04742219</div>
 </footer>
 <div class="site-credit">
-  <span class="view-counter" id="viewCounterDisplay">Views: 0</span>
+  <span class="view-counter" id="globalViewCounter">Views: loading...</span>
   <span class="credit-text">Designed by TerraLytics ©2026</span>
 </div>
-
 <a href="tel:634316573" class="call-button">📞 Call us</a>
 
 <script>
-  // ========== VIEW COUNTER (localStorage, no cookies) ==========
-  function updateViewCounter() {
+  // ========== GLOBAL VIEW COUNTER (countapi.xyz) ==========
+  // This increments a shared counter for all visitors.
+  // If the API fails, it falls back to localStorage (per browser) without errors.
+  async function incrementGlobalCounter() {
+    const counterElement = document.getElementById("globalViewCounter");
+    const namespace = "agesupportalmanzora";
+    const key = "pageviews";
+    const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+    
     try {
-      let views = localStorage.getItem("asa_pageViews");
-      if (views === null) {
-        views = 1;
-      } else {
-        views = parseInt(views, 10) + 1;
+      const response = await fetch(apiUrl, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      if (data && typeof data.value === "number") {
+        counterElement.textContent = `Views: ${data.value.toLocaleString()}`;
+        return;
       }
-      localStorage.setItem("asa_pageViews", views);
-      const formattedViews = views.toLocaleString();
-      const counterSpan = document.getElementById("viewCounterDisplay");
-      if (counterSpan) counterSpan.textContent = `Views: ${formattedViews}`;
-    } catch(e) {
-      const counterSpan = document.getElementById("viewCounterDisplay");
-      if (counterSpan) counterSpan.textContent = `Views: --`;
+      throw new Error("Invalid API response");
+    } catch (err) {
+      console.warn("Global counter API failed, using localStorage fallback:", err);
+      // Fallback to per‑browser localStorage counter
+      try {
+        let localViews = localStorage.getItem("asa_localFallbackViews");
+        if (localViews === null) localViews = 1;
+        else localViews = parseInt(localViews, 10) + 1;
+        localStorage.setItem("asa_localFallbackViews", localViews);
+        counterElement.textContent = `Views (local): ${localViews.toLocaleString()}`;
+      } catch(e) {
+        counterElement.textContent = `Views: --`;
+      }
     }
   }
 
-  // ========== FONT SIZE SYSTEM ==========
+  // ========== FONT SIZE ==========
   let fontSize = localStorage.getItem("siteFontSize");
-  if(!fontSize) fontSize = 20;
+  if (!fontSize) fontSize = 20;
   else fontSize = parseInt(fontSize);
-  function applyFont(){
+  function applyFont() {
     document.body.style.fontSize = fontSize + "px";
     localStorage.setItem("siteFontSize", fontSize);
   }
-  function increaseText(){ fontSize = Math.min(36, fontSize+4); applyFont(); }
-  function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
+  function increaseText() { fontSize = Math.min(36, fontSize + 4); applyFont(); }
+  function decreaseText() { fontSize = Math.max(18, fontSize - 4); applyFont(); }
   applyFont();
 
   // ========== MULTILINGUAL CORE ==========
   let currentLang = "en";
-  
   const whyUsCardsData = [
     { h3_en: "We provide real help for everyday needs", h3_es: "Ofrecemos ayuda real para las necesidades cotidianas", p_en: "Practical and emotional support (like advice, information and mobility aids).", p_es: "Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad)." },
     { h3_en: "Focus on independence and dignity", h3_es: "Enfoque en la independencia y la dignidad", p_en: "Our charity is built around helping elderly people stay independent and live with dignity.", p_es: "Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad." },
@@ -385,9 +357,9 @@ font-weight:normal;
 
   function buildWhyUsCards() {
     const container = document.getElementById("whyUsGrid");
-    if(!container) return;
+    if (!container) return;
     container.innerHTML = "";
-    whyUsCardsData.forEach((card) => {
+    whyUsCardsData.forEach(card => {
       const cardDiv = document.createElement("div");
       cardDiv.className = "why-us-card";
       const h3 = document.createElement("h3");
@@ -402,7 +374,6 @@ font-weight:normal;
       speakerDiv.className = "card-speaker";
       const spkBtn = document.createElement("button");
       spkBtn.className = "spk";
-      spkBtn.setAttribute("aria-label", "Listen to card");
       spkBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
       spkBtn.onclick = (function(h3El, pEl) {
         return function() {
@@ -420,29 +391,18 @@ font-weight:normal;
   }
 
   function updateAllTexts() {
-    document.documentElement.lang = (currentLang === "es") ? "es" : "en";
-    
+    document.documentElement.lang = currentLang === "es" ? "es" : "en";
     const tagline = document.getElementById("taglineP");
-    if(tagline) tagline.textContent = tagline.getAttribute("data-" + currentLang);
-    
+    if (tagline) tagline.textContent = tagline.getAttribute("data-" + currentLang);
     const mission = document.getElementById("missionP");
-    if(mission) mission.textContent = mission.getAttribute("data-" + currentLang);
-    
-    const orgSpan = document.getElementById("orgNameSpan");
-    if(orgSpan) orgSpan.textContent = "Age Support Almanzora";
-    const footerOrg = document.getElementById("footerOrgName");
-    if(footerOrg) footerOrg.textContent = "Age Support Almanzora";
-    
+    if (mission) mission.textContent = mission.getAttribute("data-" + currentLang);
     const whyHeading = document.getElementById("whyUsHeading");
-    if(whyHeading) {
+    if (whyHeading) {
       const headingText = whyHeading.getAttribute("data-" + currentLang);
       const speakerBtn = whyHeading.querySelector(".spk");
-      Array.from(whyHeading.childNodes).forEach(node => {
-        if(node.nodeType === 3) whyHeading.removeChild(node);
-      });
+      while (whyHeading.firstChild && whyHeading.firstChild !== speakerBtn) whyHeading.removeChild(whyHeading.firstChild);
       whyHeading.insertBefore(document.createTextNode(headingText + " "), speakerBtn);
     }
-    
     const navLinks = [
       { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
       { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -453,168 +413,86 @@ font-weight:normal;
     ];
     navLinks.forEach(link => {
       const el = document.getElementById(link.id);
-      if(el) el.textContent = currentLang === "en" ? link.en : link.es;
+      if (el) el.textContent = currentLang === "en" ? link.en : link.es;
     });
-    
     const footerAddr = document.getElementById("footerAddress");
-    if(footerAddr) {
-      const speakerBtnInside = footerAddr.querySelector(".spk");
-      const lines_en = "Albox Information Centre<br>Almanzora Valley&nbsp;";
-      const lines_es = "Centro de Información de Albox<br>Valle del Almanzora&nbsp;";
-      const newHtml = (currentLang === "en") ? lines_en : lines_es;
-      while(footerAddr.firstChild) {
-        if(footerAddr.firstChild !== speakerBtnInside) footerAddr.removeChild(footerAddr.firstChild);
-        else break;
-      }
-      const spanLines = document.createElement("span");
-      spanLines.innerHTML = newHtml;
-      footerAddr.insertBefore(spanLines, speakerBtnInside);
+    if (footerAddr) {
+      const speakerBtn = footerAddr.querySelector(".spk");
+      const newHtml = currentLang === "en" ? "Albox Information Centre<br>Almanzora Valley&nbsp;" : "Centro de Información de Albox<br>Valle del Almanzora&nbsp;";
+      while (footerAddr.firstChild && footerAddr.firstChild !== speakerBtn) footerAddr.removeChild(footerAddr.firstChild);
+      const span = document.createElement("span");
+      span.innerHTML = newHtml;
+      footerAddr.insertBefore(span, speakerBtn);
     }
-    
     buildWhyUsCards();
-    
+    // reassign dynamic speakers
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
-    if(phoneSpeaker) {
-      phoneSpeaker.onclick = function() {
-        const digitsText = currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six...... three...... four...... three...... one...... six...... five...... seven...... three";
-        speakText(digitsText, this);
-      };
-    }
-
+    if (phoneSpeaker) phoneSpeaker.onclick = () => speakText(currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six... three... four... three... one... six... five... seven... three", phoneSpeaker);
     const orgSpeaker = document.getElementById("orgNameSpeakerBtn");
-    if(orgSpeaker) {
-      orgSpeaker.onclick = function() {
-        const msg = currentLang === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.";
-        speakText(msg, this);
-      };
-    }
-    
+    if (orgSpeaker) orgSpeaker.onclick = () => speakText(currentLang === "es" ? "Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas." : "Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.", orgSpeaker);
     const footerAddrSpeaker = document.getElementById("footerAddressSpeaker");
-    if(footerAddrSpeaker) {
-      footerAddrSpeaker.onclick = function() {
-        const msg = currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.";
-        speakText(msg, this);
-      };
-    }
-    
+    if (footerAddrSpeaker) footerAddrSpeaker.onclick = () => speakText(currentLang === "es" ? "Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora." : "Age Support Almanzora. Albox Information Centre, Almanzora Valley.", footerAddrSpeaker);
     const whyUsSpeakerBtn = document.getElementById("whyUsSpeaker");
-    if(whyUsSpeakerBtn) {
-      whyUsSpeakerBtn.onclick = function() {
-        const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-        const missionText = document.getElementById("missionP").getAttribute("data-" + currentLang);
-        speakText(heading + ". " + missionText, this);
-      };
-    }
-    
-    const navSpeakerMap = {
-      befriending: { en: "Befriending", es: "Acompañamiento" },
-      equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
-      carer: { en: "Carer Support", es: "Apoyo a Cuidadores" },
-      volunteer: { en: "Volunteer", es: "Voluntariado" },
-      donations: { en: "Donations", es: "Donaciones" },
-      contact: { en: "Contact", es: "Contacto" }
+    if (whyUsSpeakerBtn) whyUsSpeakerBtn.onclick = () => {
+      const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
+      const missionText = document.getElementById("missionP").getAttribute("data-" + currentLang);
+      speakText(heading + ". " + missionText, whyUsSpeakerBtn);
     };
+    const navMap = { befriending: { en:"Befriending", es:"Acompañamiento" }, equipment:{ en:"Equipment Loan", es:"Préstamo de Equipos" }, carer:{ en:"Carer Support", es:"Apoyo a Cuidadores" }, volunteer:{ en:"Volunteer", es:"Voluntariado" }, donations:{ en:"Donations", es:"Donaciones" }, contact:{ en:"Contact", es:"Contacto" } };
     document.querySelectorAll("[data-nav-speaker]").forEach(btn => {
       const key = btn.getAttribute("data-nav-speaker");
-      if(key && navSpeakerMap[key]) {
-        btn.onclick = function() {
-          const word = currentLang === "es" ? navSpeakerMap[key].es : navSpeakerMap[key].en;
-          speakText(word, this);
-        };
-      }
+      if (navMap[key]) btn.onclick = () => speakText(currentLang === "es" ? navMap[key].es : navMap[key].en, btn);
     });
   }
-  
+
   // ========== TEXT-TO-SPEECH ==========
   let activeBtn = null;
-  const femaleKeywords = [
-    "Female", "female", "Femenino", "femenino",
-    "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
-    "Google UK English Female", "Google US English Female",
-    "Monica", "Paulina", "Rosa", "Maria", "Lucia", "Elena", "Carmen", "Sofia",
-    "Isabel", "Juana", "Teresa", "Gabriela", "Valeria", "Laura", "Claudia",
-    "es-ES Female", "Spanish Female", "Google español femenino"
-  ];
-
+  const femaleKeywords = ["Female","female","Femenino","femenino","Zira","Susan","Sarah","Samantha","Victoria","Karen","Moira","Aria","Google UK English Female","Google US English Female","Monica","Paulina","Rosa","Maria","Lucia","Elena","Carmen","Sofia","Isabel","Juana","Teresa","Gabriela","Valeria","Laura","Claudia","es-ES Female","Spanish Female","Google español femenino"];
   function speakText(text, btn) {
-    if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-      window.speechSynthesis.cancel();
-    }
-    if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
-    if(activeBtn === btn) {
-      activeBtn.classList.remove("active");
-      activeBtn = null;
-      return;
-    }
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
+    if (activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
+    if (activeBtn === btn) { activeBtn.classList.remove("active"); activeBtn = null; return; }
     activeBtn = btn;
     btn.classList.add("active");
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = currentLang === "es" ? "es-ES" : "en-GB";
     utterance.rate = 0.95;
-    utterance.pitch = 1;
-
-    function setVoiceAndSpeak() {
+    const setVoice = () => {
       let voices = speechSynthesis.getVoices();
-      if(!voices.length) {
-        setTimeout(setVoiceAndSpeak, 100);
-        return;
-      }
-      let chosenVoice = null;
-      if(utterance.lang === "es-ES") {
-        chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
-      } else {
-        chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
-      }
-      if(chosenVoice) utterance.voice = chosenVoice;
-      utterance.onend = () => {
-        if(activeBtn === btn) {
-          btn.classList.remove("active");
-          activeBtn = null;
-        }
-      };
-      utterance.onerror = () => {
-        btn.classList.remove("active");
-        if(activeBtn === btn) activeBtn = null;
-      };
+      if (!voices.length) { setTimeout(setVoice, 100); return; }
+      let chosen = null;
+      if (utterance.lang === "es-ES") chosen = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k))) || voices.find(v => v.lang === "es-ES") || voices.find(v => v.lang.startsWith("es"));
+      else chosen = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k))) || voices.find(v => v.lang === "en-GB") || voices.find(v => v.lang.startsWith("en"));
+      if (chosen) utterance.voice = chosen;
+      utterance.onend = () => { if (activeBtn === btn) { btn.classList.remove("active"); activeBtn = null; } };
+      utterance.onerror = () => { btn.classList.remove("active"); if (activeBtn === btn) activeBtn = null; };
       window.speechSynthesis.speak(utterance);
-    }
-    
-    if(speechSynthesis.getVoices().length > 0) setVoiceAndSpeak();
-    else speechSynthesis.addEventListener("voiceschanged", function handler() {
-      speechSynthesis.removeEventListener("voiceschanged", handler);
-      setVoiceAndSpeak();
-    });
+    };
+    if (speechSynthesis.getVoices().length) setVoice();
+    else speechSynthesis.addEventListener("voiceschanged", function handler() { speechSynthesis.removeEventListener("voiceschanged", handler); setVoice(); });
   }
-  
+
   function toggleLanguageUI() {
     currentLang = currentLang === "en" ? "es" : "en";
-    try { localStorage.setItem("siteLang", currentLang); } catch(e) {}
+    localStorage.setItem("siteLang", currentLang);
     updateAllTexts();
-    updateFlagImage();
-  }
-  
-  function updateFlagImage() {
     const flagImg = document.getElementById("langFlagImg");
-    if(flagImg) {
-      flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
-      flagImg.alt = currentLang === "es" ? "Español" : "English";
-    }
+    if (flagImg) flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
   }
-  
-  function initialLoad() {
-    if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", "en");
-    currentLang = localStorage.getItem("siteLang") || "en";
-    updateFlagImage();
+
+  function init() {
+    const savedLang = localStorage.getItem("siteLang");
+    if (savedLang === "es" || savedLang === "en") currentLang = savedLang;
+    else currentLang = "en";
+    const flagImg = document.getElementById("langFlagImg");
+    if (flagImg) flagImg.src = currentLang === "es" ? "flag_spain.avif" : "flag_uk.avif";
     updateAllTexts();
-    updateViewCounter();   // increment & display view count
+    // start global counter (shared across all visitors)
+    incrementGlobalCounter();
   }
-  
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialLoad);
-  else initialLoad();
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 </script>
 </body>
 </html>
