@@ -301,36 +301,35 @@ footer {
 <a href="tel:634316573" class="call-button">📞 Call us</a>
 
 <script>
-  // ========== GLOBAL VIEW COUNTER (countapi.xyz) ==========
-  // This increments a shared counter for all visitors.
-  // If the API fails, it falls back to localStorage (per browser) without errors.
+  // ========== GLOBAL VIEW COUNTER (counterapi.dev) ==========
+  // Only increments for first-time visitors (returning visitors are not counted).
+  // Falls back to showing the current count without incrementing if the API fails.
   async function incrementGlobalCounter() {
     const counterElement = document.getElementById("globalViewCounter");
     const namespace = "agesupportalmanzora";
     const key = "pageviews";
-    const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
-    
+
+    const isReturningVisitor = localStorage.getItem("asa_visited") === "1";
+
+    // Choose endpoint: hit (increments) for new visitors, get (read-only) for returning ones
+    const apiUrl = isReturningVisitor
+      ? `https://api.counterapi.dev/v1/${namespace}/${key}`
+      : `https://api.counterapi.dev/v1/${namespace}/${key}/up`;
+
     try {
       const response = await fetch(apiUrl, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      if (data && typeof data.value === "number") {
-        counterElement.textContent = `Views: ${data.value.toLocaleString()}`;
+      if (data && typeof data.count === "number") {
+        counterElement.textContent = `Views: ${data.count.toLocaleString()}`;
+        // Mark this browser as a returning visitor so future loads don't re-increment
+        if (!isReturningVisitor) localStorage.setItem("asa_visited", "1");
         return;
       }
       throw new Error("Invalid API response");
     } catch (err) {
-      console.warn("Global counter API failed, using localStorage fallback:", err);
-      // Fallback to per‑browser localStorage counter
-      try {
-        let localViews = localStorage.getItem("asa_localFallbackViews");
-        if (localViews === null) localViews = 1;
-        else localViews = parseInt(localViews, 10) + 1;
-        localStorage.setItem("asa_localFallbackViews", localViews);
-        counterElement.textContent = `Views (local): ${localViews.toLocaleString()}`;
-      } catch(e) {
-        counterElement.textContent = `Views: --`;
-      }
+      console.warn("Global counter API failed:", err);
+      counterElement.textContent = `Views: --`;
     }
   }
 
