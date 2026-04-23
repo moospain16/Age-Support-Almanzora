@@ -246,7 +246,7 @@ footer {
     <img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
   </button>
 </div>
-<div class="version-badge">Rev. 1.2</div>
+<div class="version-badge">Rev. 1.3</div>
 
 <header>
   <h1>
@@ -372,13 +372,13 @@ footer {
       const spkBtn = document.createElement("button");
       spkBtn.className = "spk";
       spkBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
-      spkBtn.onclick = (function(h3El, pEl) {
+      spkBtn.onclick = (function(h3Text, pText) {
         return function() {
           const titleText = currentLang === "en" ? card.h3_en : card.h3_es;
           const descText = currentLang === "en" ? card.p_en : card.p_es;
           speakText(titleText + ". " + descText, this);
         };
-      })(h3, p);
+      })(h3.textContent, p.textContent);
       speakerDiv.appendChild(spkBtn);
       cardDiv.appendChild(h3);
       cardDiv.appendChild(p);
@@ -387,30 +387,43 @@ footer {
     });
   }
 
+  // Robust text node replacement: remove all text nodes inside an element,
+  // then insert a fresh text node with the translated string.
+  // Preserves all non-text child nodes (buttons, icons, etc.)
+  function setElementTranslatedText(element, text) {
+    // Collect all child nodes that are text nodes
+    const textNodes = [];
+    for (let node of element.childNodes) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        textNodes.push(node);
+      }
+    }
+    // Remove all existing text nodes
+    for (let textNode of textNodes) {
+      element.removeChild(textNode);
+    }
+    // Insert a new text node at the beginning (preserves original order: text first, then other elements)
+    const newTextNode = document.createTextNode(text);
+    element.insertBefore(newTextNode, element.firstChild);
+  }
+
   function updateAllTexts() {
     document.documentElement.lang = currentLang === "es" ? "es" : "en";
     
-    // Update elements with data-en and data-es attributes
+    // Update all elements with data-en / data-es attributes using robust text replacement
     document.querySelectorAll("[data-en]").forEach(el => {
-      const text = el.getAttribute("data-" + currentLang);
-      if (!text) return;
+      const translation = el.getAttribute("data-" + currentLang);
+      if (!translation) return;
       
-      // Find the first text node and update it
-      let textNodeFound = false;
-      for (let node of el.childNodes) {
-        if (node.nodeType === 3) { // Text node
-          node.nodeValue = text + " ";
-          textNodeFound = true;
-          break;
-        }
-      }
-      // If no text node, set innerText
-      if (!textNodeFound) {
-        el.innerText = text;
-      }
+      // Special handling for footerAddress: it contains <br> and a speaker button, we handle separately below
+      if (el.id === "footerAddress") return;
+      
+      // For any element that may have mixed content (like h2 with button, spans with nothing else)
+      // Replace text nodes intelligently
+      setElementTranslatedText(el, translation);
     });
 
-    // Update navigation links
+    // Update navigation links (they are simple <a> tags without nested buttons, but using same robust method)
     const navLinks = [
       { id: "navBefriending", en: "Befriending", es: "Acompañamiento" },
       { id: "navEquipment", en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -421,21 +434,25 @@ footer {
     ];
     navLinks.forEach(link => {
       const el = document.getElementById(link.id);
-      if (el) el.textContent = currentLang === "en" ? link.en : link.es;
+      if (el) {
+        // For nav links, just replace text content (they have no child elements except text)
+        el.textContent = currentLang === "en" ? link.en : link.es;
+      }
     });
 
-    // Update footer address
+    // Special handling for footerAddress (contains HTML and a button)
     const footerAddr = document.getElementById("footerAddress");
     if (footerAddr) {
-      const newHtml = currentLang === "en" ? "Albox Information Centre<br>Almanzora Valley&nbsp;" : "Centro de Información de Albox<br>Valle del Almanzora&nbsp;";
       const speakerBtn = footerAddr.querySelector(".spk");
-      footerAddr.innerHTML = newHtml;
+      const newBaseHtml = currentLang === "en" ? "Albox Information Centre<br>Almanzora Valley " : "Centro de Información de Albox<br>Valle del Almanzora ";
+      footerAddr.innerHTML = newBaseHtml;
       if (speakerBtn) footerAddr.appendChild(speakerBtn);
     }
 
+    // Rebuild dynamic cards (they already depend on currentLang)
     buildWhyUsCards();
 
-    // Update dynamic speaker buttons
+    // Re-attach speaker events for dynamic elements (phone, org name, footer, whyUs heading, nav)
     const phoneSpeaker = document.getElementById("phoneSpeakerBtn");
     if (phoneSpeaker) {
       phoneSpeaker.onclick = () => speakText(currentLang === "es" ? "seis, tres, cuatro, tres, uno, seis, cinco, siete, tres" : "six... three... four... three... one... six... five... seven... three", phoneSpeaker);
@@ -455,11 +472,16 @@ footer {
     if (whyUsSpeakerBtn) {
       whyUsSpeakerBtn.onclick = () => {
         const heading = currentLang === "es" ? "¿Por qué nosotros?" : "Why Us?";
-        const missionText = document.getElementById("missionP").getAttribute("data-" + currentLang);
+        const missionTextEl = document.getElementById("missionP");
+        let missionText = "";
+        if (missionTextEl) {
+          missionText = missionTextEl.getAttribute("data-" + currentLang) || (currentLang === "es" ? "Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." : "Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.");
+        }
         speakText(heading + ". " + missionText, whyUsSpeakerBtn);
       };
     }
 
+    // Navigation speakers
     const navMap = { 
       befriending: { en: "Befriending", es: "Acompañamiento" }, 
       equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" }, 
