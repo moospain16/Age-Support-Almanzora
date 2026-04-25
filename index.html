@@ -345,9 +345,8 @@ footer {
   applyFont();
 
   // ========== LANGUAGE SYSTEM ==========
-  let currentLang = "en"; // Always starts in English
+  let currentLang = "en";
 
-  // Translation data
   const translations = {
     befriending: { en: "Befriending", es: "Acompañamiento" },
     equipment: { en: "Equipment Loan", es: "Préstamo de Equipos" },
@@ -357,7 +356,9 @@ footer {
     contact: { en: "Contact", es: "Contacto" },
     whyUsHeading: { en: "Why Us?", es: "¿Por qué nosotros?" },
     tagline: { en: "Dedicated to helping elderly people live independently and stay connected.", es: "Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas." },
-    mission: { en: "Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.", es: "Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." }
+    mission: { en: "Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.", es: "Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria." },
+    footerAddressEN: "Albox Information Centre<br>Almanzora Valley ",
+    footerAddressES: "Centro de Información de Albox<br>Valle del Almanzora "
   };
 
   const whyUsCardsData = [
@@ -383,13 +384,13 @@ footer {
       const spkBtn = document.createElement("button");
       spkBtn.className = "spk";
       spkBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
-      spkBtn.onclick = (function(h3Text, pText) {
+      spkBtn.onclick = (function(card) {
         return function() {
           const titleText = currentLang === "en" ? card.h3_en : card.h3_es;
           const descText = currentLang === "en" ? card.p_en : card.p_es;
           speakText(titleText + ". " + descText, this);
         };
-      })(h3.textContent, p.textContent);
+      })(card);
       speakerDiv.appendChild(spkBtn);
       cardDiv.appendChild(h3);
       cardDiv.appendChild(p);
@@ -401,7 +402,7 @@ footer {
   function updateAllTexts() {
     document.documentElement.lang = currentLang === "es" ? "es" : "en";
     
-    // Update fixed text elements
+    // Update headings - preserve exact text
     document.getElementById("whyUsHeading").textContent = translations.whyUsHeading[currentLang];
     document.getElementById("taglineP").textContent = translations.tagline[currentLang];
     document.getElementById("missionP").textContent = translations.mission[currentLang];
@@ -418,7 +419,7 @@ footer {
     const footerAddr = document.getElementById("footerAddress");
     if (footerAddr) {
       const speakerBtn = footerAddr.querySelector(".spk");
-      const newBaseHtml = currentLang === "en" ? "Albox Information Centre<br>Almanzora Valley " : "Centro de Información de Albox<br>Valle del Almanzora ";
+      const newBaseHtml = currentLang === "en" ? translations.footerAddressEN : translations.footerAddressES;
       footerAddr.innerHTML = newBaseHtml;
       if (speakerBtn) footerAddr.appendChild(speakerBtn);
     }
@@ -509,11 +510,14 @@ footer {
   }
 
   function init() {
-    // Load saved language preference or default to English
+    // ONLY set to English if localStorage is completely empty
     const savedLang = localStorage.getItem("siteLang");
     if (savedLang === "es") {
       currentLang = "es";
+    } else if (savedLang === "en") {
+      currentLang = "en";
     } else {
+      // First time visitor - set to English
       currentLang = "en";
       localStorage.setItem("siteLang", "en");
     }
