@@ -65,7 +65,7 @@ transition:0.2s;
 
 .version-badge{
 position:fixed;
-top:48px;
+top:58px;
 right:10px;
 z-index:1100;
 font-size:12px;
@@ -296,10 +296,31 @@ applyFont();
 }
 
 /* ==============================
+   AUTOMATIC LANGUAGE DETECTION
+============================== */
+
+function detectUserLanguage() {
+  // Check if user has previously set a language preference
+  const savedLang = localStorage.getItem("siteLang");
+  if (savedLang) return savedLang;
+
+  // Detect language from browser/OS
+  const browserLang = navigator.language || navigator.userLanguage;
+  
+  // Check if language starts with 'es' (Spanish) or 'en' (English)
+  if (browserLang.startsWith('es')) {
+    return 'es';
+  }
+  
+  // Default to English for all other languages
+  return 'en';
+}
+
+/* ==============================
    LANGUAGE SYSTEM
 ============================== */
 
-let lang = localStorage.getItem("siteLang") || "en";
+let lang = detectUserLanguage();
 
 function toggleLang(){
 lang = (lang === "en") ? "es" : "en";
@@ -498,9 +519,7 @@ loadLanguage();
 <p data-en="Dedicated to helping elderly people live independently and stay connected."
 data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
 
-<a href="tel:634316573" class="call-button">📞 Call us</a>
-</body>
-</html><div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 <span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
   <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" 
        alt="Scan to call" 
@@ -531,10 +550,9 @@ data-es="Dedicados a ayudar a las personas mayores a vivir de forma independient
 
 <h2 data-en="Equipment Loan Service" data-es="Servicio de Préstamo de Equipos">Equipment Loan Service <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
 
-<img src="equipment.avif" alt="Mobility equipment including a rollator, crutches and a walking frame" class="hero-image">
+<img src="equipment.avif" alt="Mobility equipment including wheelchairs and walking frames" class="hero-image" style="max-height:500px;object-fit:cover;">
 
-<p data-en="We provide mobility and support equipment to help people remain safe, independent and comfortable in their own homes."
-data-es="Proporcionamos equipos de movilidad y apoyo para ayudar a las personas a mantenerse seguras, independientes y cómodas en sus propios hogares.">We provide mobility and support equipment to help people remain safe, independent and comfortable in their own homes.</p>
+<p data-en="We loan mobility equipment to people in the Almanzora Valley who need temporary or permanent support to maintain their independence and quality of life." data-es="Prestamos equipos de movilidad a personas del Valle del Almanzora que necesitan apoyo temporal o permanente para mantener su independencia y calidad de vida.">We loan mobility equipment to people in the Almanzora Valley who need temporary or permanent support to maintain their independence and quality of life.</p>
 
 </section>
 
@@ -542,29 +560,31 @@ data-es="Proporcionamos equipos de movilidad y apoyo para ayudar a las personas 
 <div class="content-grid">
 
 <div class="content-card">
-<h2 data-en="Equipment We Can Provide" data-es="Equipos que Podemos Proporcionar">Equipment We Can Provide <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Through donations and community support, Age Support Almanzora is able to loan a range of useful mobility and support equipment. These include.."
-data-es="Gracias a donaciones y al apoyo de la comunidad, Age Support Almanzora puede prestar una variedad de equipos de movilidad y apoyo. Estos incluyen..">Through donations and community support, Age Support Almanzora is able to loan a range of useful mobility and support equipment. These include..</p>
+<h2 data-en="What We Offer" data-es="Lo Que Ofrecemos">What We Offer <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="We have a range of mobility equipment available for loan, including:" data-es="Tenemos una variedad de equipos de movilidad disponibles para préstamo, incluyendo:">We have a range of mobility equipment available for loan, including:</p>
 <ul>
-<li data-en="Wheelchairs" data-es="Sillas de ruedas">Wheelchairs</li>
-<li data-en="Walking frames" data-es="Andadores">Walking frames</li>
-<li data-en="Mobility aids" data-es="Ayudas de movilidad">Mobility aids</li>
-<li data-en="..and other support equipment" data-es="..y otros equipos de apoyo">..and other support equipment</li>
+<li data-en="Wheelchairs and ramps" data-es="Sillas de ruedas y rampas">Wheelchairs and ramps</li>
+<li data-en="Walking frames and rollators" data-es="Andadores y rollators">Walking frames and rollators</li>
+<li data-en="Walking sticks and crutches" data-es="Bastones y muletas">Walking sticks and crutches</li>
+<li data-en="Bath and raised toilet seats" data-es="Asientos de baño y alzadores de inodoro">Bath and raised toilet seats</li>
+<li data-en="Commodes and bed tables" data-es="Cuñas y mesas de cama">Commodes and bed tables</li>
 </ul>
 </div>
 
 <div class="content-card">
-<h2 data-en="How the Loan Service Works" data-es="Cómo Funciona el Servicio de Préstamo">How the Loan Service Works <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Equipment is loaned to people who need temporary assistance due to illness, injury or reduced mobility."
-data-es="El equipo se presta a personas que necesitan ayuda temporal debido a enfermedad, lesión o movilidad reducida.">Equipment is loaned to people who need temporary assistance due to illness, injury or reduced mobility.</p>
-<p data-en="If the equipment is no longer required, we kindly ask that it is returned so it can help another member of the community."
-data-es="Si el equipo ya no se necesita, le pedimos amablemente que lo devuelva para que pueda ayudar a otro miembro de la comunidad.">If the equipment is no longer required, we kindly ask that it is returned so it can help another member of the community.</p>
+<h2 data-en="How It Works" data-es="Cómo Funciona">How It Works <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="Getting equipment is simple:" data-es="Obtener equipo es simple:">Getting equipment is simple:</p>
+<ul>
+<li data-en="Contact us to discuss your needs" data-es="Contáctenos para discutir sus necesidades">Contact us to discuss your needs</li>
+<li data-en="We will help you find suitable equipment" data-es="Le ayudaremos a encontrar equipo adecuado">We will help you find suitable equipment</li>
+<li data-en="Equipment is delivered where possible" data-es="El equipo se entrega cuando es posible">Equipment is delivered where possible</li>
+<li data-en="There is no cost for loans" data-es="No hay costo para los préstamos">There is no cost for loans</li>
+</ul>
 </div>
 
 <div class="content-card">
-<h2 data-en="Request Equipment" data-es="Solicitar Equipo">Request Equipment <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="If you or someone you know may benefit from borrowing equipment, please contact us and we will do our best to assist."
-data-es="Si usted o alguien que conoce podría beneficiarse de pedir equipo prestado, por favor contáctenos y haremos todo lo posible por ayudar.">If you or someone you know may benefit from borrowing equipment, please contact us and we will do our best to assist.</p>
+<h2 data-en="Get in Touch" data-es="Ponte en Contacto">Get in Touch <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+<p data-en="If you need equipment support, please contact us. Our team will be happy to discuss your requirements and find a solution." data-es="Si necesita apoyo con equipos, por favor contáctenos. Nuestro equipo estará encantado de discutir sus necesidades y encontrar una solución.">If you need equipment support, please contact us. Our team will be happy to discuss your requirements and find a solution.</p>
 </div>
 
 </div>
@@ -576,18 +596,18 @@ data-es="Si usted o alguien que conoce podría beneficiarse de pedir equipo pres
 
 <p>
 <span data-en="Albox Information Centre" data-es="Centro de Información de Albox">Albox Information Centre</span><br>
-<span data-en="Almanzora Valley " data-es="Valle del Almanzora ">Almanzora Valley</span>
-<button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora.':'Age Support Almanzora. Albox Information Centre, Almanzora Valley.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+<span data-en="Almanzora Valley " data-es="Valle del Almanzora ">Almanzora Valley </span>
+<button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora.':'Age Support Almanzora. Albox Information Centre, Almanzora Valley .',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
 </p>
 
 <div class="charity-info">
-<span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>
+Registered Charity No. 5274 | CIF: G04742219
 </div>
 
 </footer>
 
 <div class="site-credit">
-<span data-en="Designed by TerraLytics ©2026" data-es="Diseñado por TerraLytics ©2026">Designed by TerraLytics ©2026</span>
+Designed by TerraLytics ©2026
 </div>
 
 <a href="tel:634316573" class="call-button">📞 Call us</a>
