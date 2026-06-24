@@ -37,6 +37,27 @@ body {
   cursor: pointer;
 }
 
+.lang-toggle {
+  position: fixed;
+  top: 8px;
+  right: 10px;
+  z-index: 1100;
+  display: block;
+}
+
+.lang-toggle button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.flag {
+  width: 32px;
+  height: auto;
+  transition: 0.2s;
+}
+
 header {
   background: #003366;
   color: white;
@@ -219,10 +240,15 @@ footer {
 </style>
 </head>
 <body>
-
 <div class="accessibility-bar">
   <button onclick="decreaseText()">A-</button>
   <button onclick="increaseText()">A+</button>
+</div>
+
+<div class="lang-toggle">
+  <button onclick="toggleLang()" title="Switch language">
+    <img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
+  </button>
 </div>
 
 <div class="version-badge">Rev. 1.3</div>
@@ -325,6 +351,28 @@ footer {
   
   applyFont();
 
+  // ========== LANGUAGE SYSTEM ==========
+  let currentLang = localStorage.getItem("siteLang") || "en";
+
+  function toggleLang() {
+    currentLang = (currentLang === "en") ? "es" : "en";
+    localStorage.setItem("siteLang", currentLang);
+    updateLangFlag();
+    updateAllTexts();
+  }
+
+  function updateLangFlag() {
+    let img = document.getElementById("langFlagImg");
+    if (!img) return;
+    if (currentLang === "en") {
+      img.src = "flag_uk.avif";
+      img.alt = "English";
+    } else {
+      img.src = "flag_spain.avif";
+      img.alt = "Español";
+    }
+  }
+
   // ========== AUTOMATIC LANGUAGE DETECTION ==========
   function detectUserLanguage() {
     // Check if user has previously set a language preference
@@ -344,8 +392,7 @@ footer {
   }
 
   // ========== MULTILINGUAL CORE ==========
-  let currentLang = detectUserLanguage();
-  localStorage.setItem("siteLang", currentLang); // Save the detected language
+  currentLang = detectUserLanguage();
 
   const whyUsCardsData = [
     { h3_en: "We provide real help for everyday needs", h3_es: "Ofrecemos ayuda real para las necesidades cotidianas", p_en: "Practical and emotional support (like advice, information and mobility aids).", p_es: "Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad)." },
@@ -503,6 +550,7 @@ footer {
   }
 
   function init() {
+    updateLangFlag();
     updateAllTexts();
     incrementGlobalCounter();
   }
