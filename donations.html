@@ -353,12 +353,12 @@ font-weight:normal;
 
     // Detect language from browser/OS
     const browserLang = navigator.language || navigator.userLanguage;
-    
+
     // Check if language starts with 'es' (Spanish) or 'en' (English)
     if (browserLang && browserLang.startsWith('es')) {
       return 'es';
     }
-    
+
     // Default to English for all other languages
     return 'en';
   }
@@ -369,22 +369,29 @@ font-weight:normal;
   function updateAllTexts() {
     currentLang = localStorage.getItem("siteLang") || "en";
     document.documentElement.lang = (currentLang === "es") ? "es" : "en";
+
+    // Update elements that have data-en/data-es attributes
     document.querySelectorAll("[data-en]").forEach(function(el) {
       const text = el.getAttribute("data-" + currentLang);
-      if(!text) return;
+      if (!text) return;
+
+      // If element contains an inline .spk button (speaker), preserve the button and replace only the text node(s)
       const btn = el.querySelector(".spk");
-      if(btn) {
+      if (btn) {
+        // Remove direct text nodes only (preserve other elements such as the button)
         Array.from(el.childNodes).forEach(function(node) {
-          if(node.nodeType === 3) el.removeChild(node);
+          if (node.nodeType === 3) el.removeChild(node);
         });
+        // Insert the new text before the button
         el.insertBefore(document.createTextNode(text + " "), btn);
       } else {
+        // If no speaker button inside element, set innerText (safe because we control attributes)
         el.innerText = text;
       }
     });
   }
 
-  // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE FOR SPANISH) ==========
+  // ========== TEXT-TO-SPEECH (MOBILE OPTIMIZED + FEMALE VOICE PREFERENCE) ==========
   let activeBtn = null;
 
   const femaleKeywords = [
@@ -399,19 +406,26 @@ font-weight:normal;
   function speakText(text, btn) {
     if (!window.speechSynthesis) return; // TTS not available
 
-    if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    // Stop any existing speech
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
       window.speechSynthesis.cancel();
     }
-    if(activeBtn && activeBtn !== btn) {
+
+    // Toggle active button state
+    if (activeBtn && activeBtn !== btn) {
       activeBtn.classList.remove("active");
     }
-    if(activeBtn === btn) {
-      activeBtn.classList.remove("active");
+    if (activeBtn === btn) {
+      // If same button clicked while active -> stop and clear
+      if (btn) btn.classList.remove("active");
       activeBtn = null;
       return;
     }
+
+    // Set the new active button
     activeBtn = btn;
-    if(btn) btn.classList.add("active");
+    if (btn) btn.classList.add("active");
+
     const utterance = new SpeechSynthesisUtterance(text);
     const siteLang = localStorage.getItem("siteLang") || "en";
     utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
@@ -420,35 +434,40 @@ font-weight:normal;
 
     function setVoiceAndSpeak() {
       let voices = speechSynthesis.getVoices();
-      if(!voices.length) {
+      if (!voices.length) {
+        // voices not loaded yet; retry shortly
         setTimeout(setVoiceAndSpeak, 100);
         return;
       }
       let chosenVoice = null;
-      if(utterance.lang === "es-ES") {
+      if (utterance.lang === "es-ES") {
         chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("es"));
+        if (!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
+        if (!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("es"));
       } else {
         chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("en"));
+        if (!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
+        if (!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("en"));
       }
-      if(chosenVoice) utterance.voice = chosenVoice;
-      
+      if (chosenVoice) utterance.voice = chosenVoice;
+
       utterance.onend = () => {
-        if(activeBtn === btn) { if(btn) btn.classList.remove("active"); activeBtn = null; }
+        if (activeBtn === btn) {
+          if (btn) btn.classList.remove("active");
+          activeBtn = null;
+        }
       };
       utterance.onerror = () => {
-        if(btn) btn.classList.remove("active");
-        if(activeBtn === btn) activeBtn = null;
+        if (btn) btn.classList.remove("active");
+        if (activeBtn === btn) activeBtn = null;
       };
       window.speechSynthesis.speak(utterance);
     }
 
-    if(speechSynthesis.getVoices().length > 0) {
+    if (speechSynthesis.getVoices().length > 0) {
       setVoiceAndSpeak();
     } else {
+      // Some browsers fire 'voiceschanged' when voices become available
       speechSynthesis.addEventListener("voiceschanged", function handler() {
         speechSynthesis.removeEventListener("voiceschanged", handler);
         setVoiceAndSpeak();
@@ -456,7 +475,70 @@ font-weight:normal;
     }
   }
 
-  // Language toggle
+  // ========== NEW HELPERS FOR CARD SPEECH & SLOW PHONE READING ==========
+
+  // Convert digits into spoken words joined by deliberate pauses (so TTS reads them slowly)
+  function spellOutPhone(number, lang) {
+    const digits = (number || '').replace(/\D/g, '').split('');
+    if (!digits.length) return '';
+    const en = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+    const es = ['cero','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve'];
+    const map = (lang === 'es') ? es : en;
+    // join with ellipses which many TTS engines will read with a short pause
+    return digits.map(d => map[parseInt(d, 10)] || d).join('... ');
+  }
+
+  // Find a telephone number inside a card (first tel: link)
+  function getPhoneFromCard(card) {
+    if (!card) return '';
+    const telEl = card.querySelector('a[href^="tel:"]');
+    if (!telEl) return '';
+    return telEl.getAttribute('href').replace(/^tel:/i, '');
+  }
+
+  // Build a spoken string for a card by collecting heading, paragraphs and list items in document order
+  function buildCardText(card) {
+    if (!card) return '';
+    const lang = localStorage.getItem('siteLang') || 'en';
+    const parts = [];
+
+    // Heading (use data-<lang> if present)
+    const h2 = card.querySelector('h2');
+    if (h2) {
+      const headingText = h2.getAttribute('data-' + lang) || h2.innerText || '';
+      if (headingText) parts.push(headingText);
+    }
+
+    // Walk relevant child elements in document order: p and li within the card
+    // Using a selector that preserves order across paragraphs and list items
+    const nodes = card.querySelectorAll('p[data-en], li[data-en], p:not([data-en]), li:not([data-en])');
+    nodes.forEach(function(el) {
+      // prefer data-<lang> when present
+      const t = el.getAttribute('data-' + lang) || el.innerText || '';
+      if (t) parts.push(t);
+    });
+
+    // Append phone intro + spelled-out digits if a telephone link exists
+    const phone = getPhoneFromCard(card);
+    if (phone) {
+      const spokenPhone = spellOutPhone(phone, lang);
+      const phoneIntro = (lang === 'es') ? 'Por favor llame al' : 'Please call';
+      // Put the phone intro and digits as a single sentence for TTS clarity
+      parts.push(phoneIntro + ' ' + spokenPhone);
+    }
+
+    return parts.join('. ');
+  }
+
+  // Public function to call from speaker buttons: speak all card content and slow-phone digits
+  function speakCard(btn) {
+    if (!btn) return;
+    const card = (typeof btn.closest === 'function') ? btn.closest('.content-card') : null;
+    const text = buildCardText(card);
+    if (text) speakText(text, btn);
+  }
+
+  // ========== LANGUAGE TOGGLE & FLAG UPDATE ==========
   function toggleLang() {
     const newLang = (localStorage.getItem("siteLang") || "en") === "en" ? "es" : "en";
     localStorage.setItem("siteLang", newLang);
@@ -474,14 +556,15 @@ font-weight:normal;
     }
   }
 
+  // ========== INITIAL LOAD ==========
   function initialLoad() {
-    if(!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", currentLang);
+    if (!localStorage.getItem("siteLang")) localStorage.setItem("siteLang", currentLang);
     applyFont();
     updateLangFlag();
     updateAllTexts();
   }
 
-  if(document.readyState === "loading") {
+  if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initialLoad);
   } else {
     initialLoad();
@@ -606,6 +689,27 @@ data-es="También agradecemos las donaciones de ayudas a la movilidad y equipos.
 </ul>
 <div class="note">
 <strong><span data-en="To arrange a donation of equipment, please call us on" data-es="Para organizar una donación de equipos, llámenos al">To arrange a donation of equipment, please call us on</span> <a href="tel:634316573" style="color:#ffd700;text-decoration:underline;font-weight:bold;">634 316 573</a>.</strong>
+</div>
+</div>
+
+<!-- NEW: DONATE YOUR STUFF -->
+<div class="content-card">
+<h2 data-en="Donate Your Stuff" data-es="Done sus artículos">Donate Your Stuff <button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Done sus artículos. Si tiene artículos que ya no necesita, aceptamos con gusto artículos domésticos, ropa en buen estado, libros, pequeños electrodomésticos en funcionamiento y pequeños muebles. Especialmente agradecemos: Artículos domésticos como utensilios de cocina y ropa de cama. Ropa en buen estado. Libros, rompecabezas y juegos. Pequeños electrodomésticos en funcionamiento como tostadoras y hervidores. Pequeños muebles como sillas y mesillas. Para donar artículos o concertar la recogida de objetos grandes, llámenos al seis... tres... cuatro... tres... uno... seis... cinco... siete... tres.':'Donate Your Stuff. If you have items you no longer need, we gladly accept household items, clothes in good condition, books, small working electricals and small pieces of furniture. We especially welcome: Household items such as kitchenware and linens. Clothing in good condition. Books, puzzles and games. Small working electricals such as toasters and kettles. Small furniture such as chairs and bedside tables. To donate items or to arrange collection for large objects, please call us on six... three... four... three... one... six... five... seven... three.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+
+<p data-en="If you have items you no longer need, we gladly accept household items, clothes in good condition, books, small working electricals and small pieces of furniture."
+data-es="Si tiene artículos que ya no necesita, aceptamos con gusto artículos domésticos, ropa en buen estado, libros, pequeños electrodomésticos en funcionamiento y pequeños muebles.">If you have items you no longer need, we gladly accept household items, clothes in good condition, books, small working electricals and small pieces of furniture.</p>
+
+<p style="margin-top:10px;" data-en="We especially welcome:" data-es="Especialmente agradecemos:">We especially welcome:</p>
+<ul>
+<li data-en="Household items (kitchenware, linens)" data-es="Artículos domésticos (utensilios de cocina, ropa de cama)">Household items (kitchenware, linens)</li>
+<li data-en="Clothing in good condition" data-es="Ropa en buen estado">Clothing in good condition</li>
+<li data-en="Books, puzzles and games" data-es="Libros, rompecabezas y juegos">Books, puzzles and games</li>
+<li data-en="Small working electricals (toasters, kettles)" data-es="Pequeños electrodomésticos en funcionamiento (tostadoras, hervidores)">Small working electricals (toasters, kettles)</li>
+<li data-en="Small furniture (chairs, bedside tables)" data-es="Pequeños muebles (sillas, mesillas)">Small furniture (chairs, bedside tables)</li>
+</ul>
+
+<div class="note">
+<strong><span data-en="To donate items or to arrange collection for large objects, please call us on" data-es="Para donar artículos o concertar la recogida de objetos grandes, llámenos al">To donate items or to arrange collection for large objects, please call us on</span> <a href="tel:634316573" style="color:#ffd700;text-decoration:underline;font-weight:bold;">634 316 573</a>.</strong>
 </div>
 </div>
 
