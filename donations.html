@@ -180,19 +180,21 @@ width:18px;
 height:18px;
 }
 
+/* Updated hero speaker so the SVG scales like the one on index.html */
 .spk.hero-spk{
-background:#003366;
-border-radius:50%;
-padding:4px;
-width:28px;
-height:28px;
-justify-content:center;
+  background:#003366;
+  border-radius:50%;
+  padding:4px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  /* removed fixed width/height so the svg (1.4em) can scale with font-size like index.html */
 }
 
 .spk.hero-spk svg{
-fill:#ffd700;
-width:18px;
-height:18px;
+  fill:#ffd700;
+  width:1.4em;
+  height:1.4em;
 }
 
 /* CONTENT CARDS */
@@ -329,15 +331,16 @@ font-weight:normal;
 <script>
   // ========== FONT SIZE SYSTEM ==========
   let fontSize = localStorage.getItem("siteFontSize");
-  if(!fontSize) fontSize = 20;
-  else fontSize = parseInt(fontSize);
-  function applyFont(){
-    if(document.body) document.body.style.fontSize = fontSize + "px";
+  if (!fontSize) fontSize = 20;
+  else fontSize = parseInt(fontSize, 10);
+
+  function applyFont() {
+    if (document.body) document.body.style.fontSize = fontSize + "px";
     localStorage.setItem("siteFontSize", fontSize);
   }
-  function increaseText(){ fontSize = Math.min(36, fontSize+4); applyFont(); }
-  function decreaseText(){ fontSize = Math.max(18, fontSize-4); applyFont(); }
-  function resetText(){ fontSize = 20; applyFont(); }
+  function increaseText() { fontSize = Math.min(36, fontSize + 4); applyFont(); }
+  function decreaseText() { fontSize = Math.max(18, fontSize - 4); applyFont(); }
+  function resetText() { fontSize = 20; applyFont(); }
 
   // ========== LANGUAGE SYSTEM ==========
   let currentLang = localStorage.getItem("siteLang") || "en";
@@ -352,7 +355,7 @@ font-weight:normal;
     const browserLang = navigator.language || navigator.userLanguage;
     
     // Check if language starts with 'es' (Spanish) or 'en' (English)
-    if (browserLang.startsWith('es')) {
+    if (browserLang && browserLang.startsWith('es')) {
       return 'es';
     }
     
@@ -394,6 +397,8 @@ font-weight:normal;
   ];
 
   function speakText(text, btn) {
+    if (!window.speechSynthesis) return; // TTS not available
+
     if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
       window.speechSynthesis.cancel();
     }
@@ -406,7 +411,7 @@ font-weight:normal;
       return;
     }
     activeBtn = btn;
-    btn.classList.add("active");
+    if(btn) btn.classList.add("active");
     const utterance = new SpeechSynthesisUtterance(text);
     const siteLang = localStorage.getItem("siteLang") || "en";
     utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
@@ -423,19 +428,19 @@ font-weight:normal;
       if(utterance.lang === "es-ES") {
         chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("es"));
       } else {
         chosenVoice = voices.find(v => (v.lang === "en-GB" || v.lang === "en-US") && femaleKeywords.some(k => v.name.includes(k)));
         if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
-        if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
+        if(!chosenVoice) chosenVoice = voices.find(v => v.lang && v.lang.startsWith("en"));
       }
       if(chosenVoice) utterance.voice = chosenVoice;
       
       utterance.onend = () => {
-        if(activeBtn === btn) { btn.classList.remove("active"); activeBtn = null; }
+        if(activeBtn === btn) { if(btn) btn.classList.remove("active"); activeBtn = null; }
       };
       utterance.onerror = () => {
-        btn.classList.remove("active");
+        if(btn) btn.classList.remove("active");
         if(activeBtn === btn) activeBtn = null;
       };
       window.speechSynthesis.speak(utterance);
@@ -462,7 +467,7 @@ font-weight:normal;
 
   function updateLangFlag() {
     const flagImg = document.getElementById("langFlagImg");
-    if(flagImg) {
+    if (flagImg) {
       const langNow = localStorage.getItem("siteLang") || "en";
       flagImg.src = langNow === "es" ? "flag_spain.avif" : "flag_uk.avif";
       flagImg.alt = langNow === "es" ? "Español" : "English";
