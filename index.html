@@ -251,7 +251,7 @@ footer {
   </button>
 </div>
 
-<div class="version-badge">Rev. 1.4</div>
+<div class="version-badge">Rev. 1.5</div>
 
 <header>
   <h1>
@@ -309,33 +309,74 @@ footer {
 <a href="tel:634316573" class="call-button">📞 Call us</a>
 
 <script>
-  // ========== GLOBAL VIEW COUNTER (counterapi.dev) ==========
-  async function incrementGlobalCounter() {
-    const counterElement = document.getElementById("globalViewCounter");
-    const namespace = "agesupportalmanzora";
-    const key = "pageviews";
+// ========== GLOBAL VIEW COUNTER (counterapi.dev) ==========
+async function incrementGlobalCounter() {
+  const counterElement = document.getElementById("globalViewCounter");
+  const namespace = "agesupportalmanzora";
+  const key = "pageviews";
 
-    const isReturningVisitor = localStorage.getItem("asa_visited") === "1";
-    const apiUrl = isReturningVisitor
-      ? `https://api.counterapi.dev/v1/${namespace}/${key}`
-      : `https://api.counterapi.dev/v1/${namespace}/${key}/up`;
+  const isReturningVisitor = localStorage.getItem("asa_visited") === "1";
+  const apiBase = `https://api.counterapi.dev/v1/${namespace}/${key}`;
 
-    try {
-      const response = await fetch(apiUrl, { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      if (data && typeof data.count === "number") {
-        counterElement.textContent = `Views: ${data.count.toLocaleString()}`;
-        if (!isReturningVisitor) localStorage.setItem("asa_visited", "1");
-        return;
-      }
-      throw new Error("Invalid API response");
-    } catch (err) {
-      console.warn("Global counter API failed:", err);
-      counterElement.textContent = `Views: --`;
-    }
+  // Helper to extract numeric count from different possible API shapes
+  function extractCount(data) {
+    if (!data) return null;
+    if (typeof data.count === "number") return data.count;
+    if (typeof data.value === "number") return data.value;
+    if (typeof data.total === "number") return data.total;
+    if (typeof data.views === "number") return data.views;
+    return null;
   }
 
+  try {
+    let response;
+    if (isReturningVisitor) {
+      // Just read the current value
+      response = await fetch(apiBase, { cache: "no-store" });
+    } else {
+      // Try to increment for new visitors (POST to /up)
+      response = await fetch(apiBase + "/up", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store"
+      });
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const count = extractCount(data);
+
+    if (count !== null) {
+      counterElement.textContent = `Views: ${count.toLocaleString()}`;
+      if (!isReturningVisitor) localStorage.setItem("asa_visited", "1");
+      return;
+    }
+
+    // If we reach here the API responded but we couldn't find a count
+    throw new Error("Invalid API response shape");
+  } catch (err) {
+    // API failed (network/CORS/rate-limit etc.) — fall back to a local counter
+    console.warn("Global counter API failed, using local fallback:", err);
+
+    // Local fallback key
+    const localKey = "asa_local_counter";
+    let localCount = parseInt(localStorage.getItem(localKey) || "0", 10);
+    if (isNaN(localCount)) localCount = 0;
+
+    if (!isReturningVisitor) {
+      localCount += 1; // increment for first visit
+      localStorage.setItem("asa_local_counter", String(localCount));
+      localStorage.setItem("asa_visited", "1");
+    }
+
+    // If returning visitor, show the stored fallback count (or 0)
+    counterElement.textContent =
+      localCount > 0 ? `Views: ${localCount.toLocaleString()}` : "Views: --";
+  }
+}
   // ========== FONT SIZE ==========
   let fontSize = localStorage.getItem("siteFontSize");
   if (!fontSize) fontSize = 20;
