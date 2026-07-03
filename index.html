@@ -251,7 +251,7 @@ footer {
   </button>
 </div>
 
-<div class="version-badge">Rev. 1.6</div>
+<div class="version-badge">Rev. 1.7</div>
 
 <header>
   <h1>
@@ -358,12 +358,9 @@ async function incrementGlobalCounter() {
     // If we reach here the API responded but we couldn't find a count
     throw new Error("Invalid API response shape");
   } catch (err) {
-    // API failed (network/CORS/rate-limit/blocked etc.) — fall back to a local counter
+    // API failed (network/CORS/rate-limit etc.) — fall back to a local counter
     console.warn("Global counter API failed, using local fallback:", err);
 
-    // Local fallback key — tracked independently of "asa_visited" (which is
-    // about the global API) so a local increment can never be skipped just
-    // because the global API succeeded on a previous visit.
     const localKey = "asa_local_counter";
     const localVisitedKey = "asa_local_visited";
     let localCount = parseInt(localStorage.getItem(localKey) || "0", 10);
@@ -371,7 +368,7 @@ async function incrementGlobalCounter() {
 
     const hasIncrementedLocally = localStorage.getItem(localVisitedKey) === "1";
     if (!hasIncrementedLocally) {
-      localCount += 1; // increment once per browser for the fallback counter
+      localCount += 1;
       localStorage.setItem(localKey, String(localCount));
       localStorage.setItem(localVisitedKey, "1");
     }
