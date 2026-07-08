@@ -8,397 +8,400 @@
 <title>Befriending | Age Support Almanzora</title>
 
 <style>
+/* Layout variables */
+:root{
+  --topbar-height:92px;
+  --page-padding:12px;
+}
 
-/* BODY */
+/* Reset box sizing */
+*{box-sizing:border-box;}
 
+/* BODY: content pushed down by the top bar height so nav sits directly under it */
 body{
-font-family: Arial, sans-serif;
-font-size:20px;
-line-height:1.7;
-margin:0;
-background:white;
-color:#222;
-padding-top:50px;
+  font-family: Arial, sans-serif;
+  font-size:20px;
+  line-height:1.7;
+  margin:0;
+  width:100%;
+  background:white;
+  color:#222;
+  padding-top:var(--topbar-height); /* reserve space for the fixed top bar */
 }
 
-/* FLOATING ACCESSIBILITY BAR */
-
+/* FLOATING ACCESSIBILITY BAR (full width) */
 .accessibility-bar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:black;
-color:white;
-text-align:left;
-padding:8px 12px;
-z-index:1000;
-box-sizing:border-box;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:var(--topbar-height);
+  background:black;
+  color:white;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  padding:0 var(--page-padding);
 }
 
-.accessibility-bar button{
-margin:0 6px;
-padding:6px 12px;
-font-size:16px;
-cursor:pointer;
+/* Inner row: left and right groups */
+.accessibility-left,
+.accessibility-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.lang-toggle{
-position:fixed;
-top:8px;
-right:10px;
-z-index:1100;
+/* Left group is pushed to the left edge, right group to the far right */
+.accessibility-left{ order:0; }
+.accessibility-right{ margin-left:auto; order:1; }
+
+/* Text Size label: larger to match the new topbar height */
+.text-size-label{
+  background:transparent;
+  color:#ffffff;
+  padding:0 10px;
+  font-size:30px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  height:var(--topbar-height);
+  line-height:1;
 }
 
-.lang-toggle button{
-background:none;
-border:none;
-padding:0;
-cursor:pointer;
+/* A-/A+ and Reset buttons: larger rectangular background to match tall bar */
+.size-btn{
+  background:#e9e9e9;
+  color:#222;
+  border:none;
+  padding:12px 18px;
+  font-size:28px;
+  font-weight:700;
+  border-radius:8px;
+  cursor:pointer;
+  margin-left:6px;
+  height:calc(var(--topbar-height) - 28px);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.flag{
-width:32px;
-height:auto;
-transition:0.2s;
+/* Flag button on the far right (scaled) */
+.flag-btn{
+  background:transparent;
+  border:none;
+  padding:8px 12px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  height:var(--topbar-height);
+}
+.flag-btn img{
+  height:40px;
+  width:auto;
+  display:block;
 }
 
 /* HEADER */
-
 header{
-background:#003366;
-color:white;
-text-align:center;
-padding:20px;
+  background:#003366;
+  color:white;
+  text-align:center;
+  padding:20px 12px 26px;
+  position:relative;
 }
 
 header h1{
-margin:0;
-font-size:40px;
-display:inline-flex;
-align-items:center;
-gap:8px;
+  margin:0;
+  font-size:40px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 }
 
 .header-logo{
-height:1.4em;
-width:auto;
-display:inline-block;
-vertical-align:middle;
+  height:1.4em;
+  width:auto;
+  display:inline-block;
+  vertical-align:middle;
 }
 
 .phone{
-font-size:26px;
-font-weight:bold;
-margin-top:10px;
+  font-size:26px;
+  font-weight:bold;
+  margin-top:10px;
 }
 
 /* NAV */
-
 nav{
-background:#f2f2f2;
-display:flex;
-justify-content:center;
-gap:25px;
-padding:15px;
-flex-wrap:wrap;
+  background:#f2f2f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:25px;
+  padding:15px;
+  flex-wrap:wrap;
+  margin:0; /* ensure directly under top bar */
 }
-
 nav a{
-text-decoration:none;
-color:#003366;
-font-weight:bold;
+  text-decoration:none;
+  color:#003366;
+  font-weight:bold;
 }
 .nav-item{
-display:inline-flex;
-align-items:center;
-gap:6px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
 }
 
 /* HERO */
-
 .hero{
-background:#003366;
-color:white;
-padding:60px 20px;
-text-align:center;
+  background:#003366;
+  color:white;
+  padding:20px 20px 40px;
+  text-align:center;
+  position:relative;
+}
+.hero h2{
+  margin:0;
+  display:inline-block;
 }
 
+/* HERO IMAGE */
 .hero-image{
-display:block;
-width:100%;
-max-width:900px;
-margin:30px auto 0;
-border-radius:10px;
+  display:block;
+  width:100%;
+  max-width:1200px;
+  margin:16px auto 0;
+  border-radius:10px;
 }
 
 /* SPEAKER BUTTONS */
-
 .spk{
-background:none;
-border:none;
-cursor:pointer;
-font-size:1em;
-padding:0 0 0 6px;
-vertical-align:middle;
-line-height:1;
-display:inline-flex;
-align-items:center;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:1em;
+  padding:0 0 0 6px;
+  vertical-align:middle;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
 }
-
 .spk svg{
-width:1.4em;
-height:1.4em;
-fill:#ffd700;
-transition:transform 0.15s;
+  width:1.4em;
+  height:1.4em;
+  fill:#ffd700;
+  transition:transform 0.15s;
 }
-
-.spk:hover svg{
-transform:scale(1.2);
-}
-
-.spk.active svg{
-fill:#ff9900;
-}
+.spk:hover svg{ transform:scale(1.2); }
+.spk.active svg{ fill:#ff9900; }
 
 .spk.nav-spk{
-background:#003366;
-border-radius:50%;
-padding:4px;
-width:28px;
-height:28px;
-justify-content:center;
+  background:#003366;
+  border-radius:50%;
+  padding:4px;
+  width:28px;
+  height:28px;
+  justify-content:center;
 }
-
 .spk.nav-spk svg{
-fill:#ffd700;
-width:18px;
-height:18px;
+  fill:#ffd700;
+  width:18px;
+  height:18px;
 }
 
 /* CONTENT CARDS */
-
 .content{
-background:#003366;
-color:white;
-padding:40px 20px;
+  background:#003366;
+  color:white;
+  padding:40px 20px;
 }
-
 .content-grid{
-max-width:900px;
-margin:auto;
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-justify-content:center;
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
 }
-
 .content-card{
-background:rgba(255,255,255,0.12);
-border:1px solid rgba(255,255,255,0.3);
-border-radius:10px;
-padding:24px 28px 48px;
-width:100%;
-max-width:860px;
-text-align:left;
-position:relative;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:10px;
+  padding:24px 28px 48px;
+  width:100%;
+  max-width:860px;
+  text-align:left;
+  position:relative;
 }
-
 .content-card h2{
-margin:0 0 10px;
-font-size:1.1em;
-color:#ffdd99;
+  margin:0 0 10px;
+  font-size:1.1em;
+  color:#ffdd99;
 }
-
 .content-card p,
 .content-card ul{
-margin:0.4em 0 0;
-font-size:0.9em;
-line-height:1.6;
-color:white;
+  margin:0.4em 0 0;
+  font-size:0.9em;
+  line-height:1.6;
+  color:white;
 }
-
-.content-card ul{
-padding-left:1.4em;
-}
+.content-card ul{ padding-left:1.4em; }
 
 /* FOOTER */
-
 footer{
-background:#f2f2f2;
-padding:30px;
-text-align:center;
+  background:#f2f2f2;
+  padding:30px;
+  text-align:center;
 }
-
+.footer-line{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.footer-icon{
+  width:32px;
+  height:32px;
+  vertical-align:middle;
+}
+.footer-pin{
+  width:32px;
+  height:32px;
+  fill:#003366;
+  vertical-align:middle;
+  cursor:pointer;
+}
 .charity-info{
-font-size:0.85em;
-color:#666;
-margin-top:20px;
+  font-size:0.85em;
+  color:#666;
+  margin-top:20px;
 }
-
 .site-credit{
-text-align:center;
-font-size:12px;
-color:#777;
-padding:15px;
+  text-align:center;
+  font-size:12px;
+  color:#777;
+  padding:15px;
 }
 
 /* CALL BUTTON */
-
 .call-button{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#28a745;
-color:white;
-font-size:22px;
-padding:16px 22px;
-border-radius:50px;
-text-decoration:none;
-}
-
-.version-badge{
-position:fixed;
-top:58px;
-right:10px;
-z-index:1100;
-font-size:12px;
-color:#666;
-font-weight:normal;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#28a745;
+  color:white;
+  font-size:22px;
+  padding:16px 22px;
+  border-radius:50px;
+  text-decoration:none;
 }
 </style>
 
 <script>
-
 /* ==============================
    FONT SIZE SYSTEM
+   - Max now 48px, default 24px
 ============================== */
 
+/* read stored value if present */
 let fontSize = localStorage.getItem("siteFontSize");
 
+/* If not stored, start at 24px (default requested) */
 if(!fontSize){
-fontSize = 20;
-}else{
-fontSize = parseInt(fontSize);
+  fontSize = 24;
+} else {
+  fontSize = parseInt(fontSize);
 }
 
 function applyFont(){
-document.body.style.fontSize = fontSize + "px";
-localStorage.setItem("siteFontSize", fontSize);
+  document.body.style.fontSize = fontSize + "px";
+  localStorage.setItem("siteFontSize", fontSize);
 }
 
 function increaseText(){
-fontSize += 4;
-if(fontSize > 36){fontSize = 36;}
-applyFont();
+  fontSize += 4;
+  if(fontSize > 48){ fontSize = 48; } /* new max */
+  applyFont();
 }
 
 function decreaseText(){
-fontSize -= 4;
-if(fontSize < 18){fontSize = 18;}
-applyFont();
+  fontSize -= 4;
+  if(fontSize < 12){ fontSize = 12; }
+  applyFont();
 }
 
+/* Reset restores to the chosen default (24px) */
 function resetText(){
-fontSize = 20;
-applyFont();
+  fontSize = 24;
+  applyFont();
 }
 
 /* ==============================
    LANGUAGE SYSTEM
 ============================== */
-
 let lang = localStorage.getItem("siteLang") || "en";
 
 function toggleLang(){
-lang = (lang === "en") ? "es" : "en";
-localStorage.setItem("siteLang", lang);
-loadLanguage();
+  lang = (lang === "en") ? "es" : "en";
+  localStorage.setItem("siteLang", lang);
+  loadLanguage();
 }
 
 function updateLangFlag(){
-let img = document.getElementById("langFlagImg");
-if(!img) return;
-if(lang === "en"){
-img.src = "flag_uk.avif";
-img.alt = "English";
-}else{
-img.src = "flag_spain.avif";
-img.alt = "Español";
-}
+  let img = document.getElementById("langFlagImg");
+  if(!img) return;
+  if(lang === "en"){
+    img.src = "flag_uk.avif";
+    img.alt = "English";
+  }else{
+    img.src = "flag_spain.avif";
+    img.alt = "Español";
+  }
 }
 
 function loadLanguage(){
-
-document.documentElement.lang = (lang === "es") ? "es" : "en";
-
-let elements = document.querySelectorAll("[data-en]");
-
-elements.forEach(function(el){
-
-let text = el.getAttribute("data-" + lang);
-if(!text) return;
-
-/* If there's a child .spk button, preserve it and only update the text node */
-let btn = el.querySelector(".spk");
-if(btn){
-Array.from(el.childNodes).forEach(function(node){
-if(node.nodeType === 3){ el.removeChild(node); }
-});
-el.insertBefore(document.createTextNode(text + " "), btn);
-}else{
-el.innerText = text;
-}
-
-});
-
-updateLangFlag();
-
+  document.documentElement.lang = (lang === "es") ? "es" : "en";
+  let elements = document.querySelectorAll("[data-en]");
+  elements.forEach(function(el){
+    let text = el.getAttribute("data-" + lang);
+    if(!text) return;
+    let btn = el.querySelector(".spk");
+    if(btn){
+      Array.from(el.childNodes).forEach(function(node){
+        if(node.nodeType === 3){ el.removeChild(node); }
+      });
+      el.insertBefore(document.createTextNode(text + " "), btn);
+    }else{
+      el.innerText = text;
+    }
+  });
+  updateLangFlag();
 }
 
 /* ==============================
-   READ ALOUD SYSTEM
+   READ ALOUD SYSTEM (unchanged)
 ============================== */
-
 let activeBtn = null;
-
-const femaleKeywords = [
-  "Female", "female", "Femenino", "femenino",
-  "Zira", "Susan", "Sarah", "Samantha", "Victoria", "Karen", "Moira", "Aria",
-  "Google UK English Female", "Google US English Female",
-  "Monica", "Paulina", "Rosa", "Maria", "Lucia", "Elena", "Carmen", "Sofia",
-  "Isabel", "Juana", "Teresa", "Gabriela", "Valeria", "Laura", "Claudia",
-  "es-ES Female", "Spanish Female", "Google español femenino"
-];
+const femaleKeywords = [ "Female","female","Femenino","femenino","Zira","Susan","Sarah","Samantha","Victoria","Karen","Moira","Aria","Google UK English Female","Google US English Female","Monica","Paulina","Rosa","Maria","Lucia","Elena","Carmen","Sofia","Isabel","Juana","Teresa","Gabriela","Valeria","Laura","Claudia","es-ES Female","Spanish Female","Google español femenino" ];
 
 function speakText(text, btn) {
-  if(window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-    window.speechSynthesis.cancel();
-  }
-  if(activeBtn && activeBtn !== btn) {
-    activeBtn.classList.remove("active");
-  }
-  if(activeBtn === btn) {
-    activeBtn.classList.remove("active");
-    activeBtn = null;
-    return;
-  }
-  activeBtn = btn;
-  btn.classList.add("active");
+  if(window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
+  if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
+  if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn = null; return; }
+  activeBtn = btn; btn.classList.add("active");
   const utterance = new SpeechSynthesisUtterance(text);
   const siteLang = localStorage.getItem("siteLang") || "en";
   utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
-  utterance.rate = 0.95;
-  utterance.pitch = 1;
+  utterance.rate = 0.95; utterance.pitch = 1;
 
-  function setVoiceAndSpeak() {
+  function setVoiceAndSpeak(){
     let voices = speechSynthesis.getVoices();
-    if(!voices.length) {
-      setTimeout(setVoiceAndSpeak, 100);
-      return;
-    }
+    if(!voices.length){ setTimeout(setVoiceAndSpeak, 100); return; }
     let chosenVoice = null;
-    if(utterance.lang === "es-ES") {
+    if(utterance.lang === "es-ES"){
       chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
@@ -408,191 +411,149 @@ function speakText(text, btn) {
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
     }
     if(chosenVoice) utterance.voice = chosenVoice;
-
-    utterance.onend = () => {
-      if(activeBtn === btn) {
-        btn.classList.remove("active");
-        activeBtn = null;
-      }
-    };
-    utterance.onerror = () => {
-      btn.classList.remove("active");
-      if(activeBtn === btn) activeBtn = null;
-    };
+    utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); activeBtn = null; } };
+    utterance.onerror = () => { btn.classList.remove("active"); if(activeBtn === btn) activeBtn = null; };
     window.speechSynthesis.speak(utterance);
   }
 
-  if(speechSynthesis.getVoices().length > 0) {
-    setVoiceAndSpeak();
-  } else {
-    speechSynthesis.addEventListener("voiceschanged", function handler() {
-      speechSynthesis.removeEventListener("voiceschanged", handler);
-      setVoiceAndSpeak();
-    });
-  }
+  if(speechSynthesis.getVoices().length > 0) setVoiceAndSpeak();
+  else speechSynthesis.addEventListener("voiceschanged", function handler(){ speechSynthesis.removeEventListener("voiceschanged", handler); setVoiceAndSpeak(); });
 }
 
 function speakSection(headingEl, btn){
-var l = localStorage.getItem('siteLang') || 'en';
-var parts = [];
-
-/* Collect text from this heading */
-parts.push(headingEl.getAttribute('data-' + l));
-
-/* Walk siblings until the next h2 or end of section */
-var el = headingEl.nextElementSibling;
-while(el && el.tagName !== 'H2'){
-if(el.tagName === 'P'){
-parts.push(el.getAttribute('data-' + l) || el.innerText.replace(/\s+/g,' ').trim());
-}else if(el.tagName === 'UL'){
-el.querySelectorAll('li').forEach(function(li){
-parts.push(li.getAttribute('data-' + l) || li.innerText.replace(/\s+/g,' ').trim());
-});
-}
-el = el.nextElementSibling;
-}
-
-speakText(parts.join('. '), btn);
+  var l = localStorage.getItem('siteLang') || 'en';
+  var parts = [];
+  parts.push(headingEl.getAttribute('data-' + l));
+  var el = headingEl.nextElementSibling;
+  while(el && el.tagName !== 'H2'){
+    if(el.tagName === 'P'){ parts.push(el.getAttribute('data-' + l) || el.innerText.replace(/\s+/g,' ').trim()); }
+    else if(el.tagName === 'UL'){ el.querySelectorAll('li').forEach(function(li){ parts.push(li.getAttribute('data-' + l) || li.innerText.replace(/\s+/g,' ').trim()); }); }
+    el = el.nextElementSibling;
+  }
+  speakText(parts.join('. '), btn);
 }
 
 function speakHeroSection(btn){
-var l = localStorage.getItem('siteLang') || 'en';
-var h2 = btn.closest('h2');
-var p = h2.nextElementSibling;
-
-/* Skip past the image to get to the paragraph */
-while(p && p.tagName === 'IMG'){
-p = p.nextElementSibling;
-}
-
-var headingText = h2.getAttribute('data-' + l);
-var paraText = p ? (p.getAttribute('data-' + l) || p.innerText) : '';
-
-var fullText = headingText + '. ' + paraText;
-
-speakText(fullText, btn);
+  var l = localStorage.getItem('siteLang') || 'en';
+  var h2 = btn.closest('h2');
+  var p = h2.nextElementSibling;
+  while(p && p.tagName === 'IMG'){ p = p.nextElementSibling; }
+  var headingText = h2.getAttribute('data-' + l);
+  var paraText = p ? (p.getAttribute('data-' + l) || p.innerText) : '';
+  speakText(headingText + '. ' + paraText, btn);
 }
 
 document.addEventListener("DOMContentLoaded",function(){
-
-applyFont();
-loadLanguage();
-
+  applyFont();
+  loadLanguage();
 });
-
 </script>
-
 </head>
 
 <body>
 
-<div class="accessibility-bar">
-<button onclick="decreaseText()">A-</button>
-<button onclick="increaseText()">A+</button>
+<!-- Top accessibility bar: Text Size + A-/A+ + Reset on far left, flag on far right -->
+<div class="accessibility-bar" role="region" aria-label="Accessibility controls">
+  <div class="accessibility-left" aria-hidden="false">
+    <span class="text-size-label">Text Size</span>
+    <button class="size-btn" aria-label="Decrease text" onclick="decreaseText()">A-</button>
+    <button class="size-btn" aria-label="Increase text" onclick="increaseText()">A+</button>
+    <button class="size-btn" aria-label="Reset text" onclick="resetText()">Reset</button>
+  </div>
+  <div class="accessibility-right">
+    <button class="flag-btn" onclick="toggleLang()" title="Switch language" aria-label="Toggle language">
+      <img id="langFlagImg" src="flag_uk.avif" alt="English">
+    </button>
+  </div>
 </div>
 
-<div class="lang-toggle">
-<button onclick="toggleLang()" title="Switch language">
-<img id="langFlagImg" src="flag_uk.avif" alt="English" class="flag">
-</button>
-</div>
-
-<div class="version-badge">Rev. 1.4</div>
-
-<header>
-
-<h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"><span data-en="Age Support Almanzora" data-es="Age Support Almanzora">Age Support Almanzora</span><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h1>
-
-<p data-en="Dedicated to helping elderly people live independently and stay connected."
-data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
-
-<div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a><button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-<span class="qr-code" style="display:inline-block; margin-left:12px; width:92px; height:92px; background:white; border-radius:8px; padding:6px; vertical-align:middle; line-height:0; box-sizing:border-box;">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:634316573" 
-       alt="Scan to call" 
-       style="width:100%; height:100%; display:block; border-radius:4px;">
-</span>
-
-</div>
-
-</header>
-
+<!-- Navigation is directly under the fixed top bar (body padding pushes content down) -->
 <nav>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
-
-<span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Contacto':'Contact',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></span>
-
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Contacto':'Contact',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></span>
 </nav>
 
 <section class="hero">
+  <h2 data-en="Befriending Service" data-es="Servicio de Acompañamiento">Befriending Service
+    <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  </h2>
 
-<h2 data-en="Befriending Service" data-es="Servicio de Acompañamiento">Befriending Service <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
+  <img src="befriending.avif" alt="A carer smiling with an elderly person in a comfortable home setting" class="hero-image" style="max-height:500px;object-fit:cover;">
 
-<img src="befriending.avif" alt="A carer smiling with an elderly person in a comfortable home setting" class="hero-image" style="max-height:500px;object-fit:cover;">
-
-<p data-en="Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship." data-es="Nuestro servicio de acompañamiento ayuda a reducir la soledad conectando voluntarios con personas que se beneficiarían de conversación y compañía regular." style="max-width:700px;margin:24px auto 0;font-size:1.05em;">Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship.</p>
-
+  <p data-en="Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship." data-es="Nuestro servicio de acompañamiento ayuda a reducir la soledad conectando voluntarios con personas que se beneficiarían de conversación y compañía regular." style="max-width:900px;margin:24px auto 0;font-size:1.05em;">
+    Our befriending service helps reduce loneliness by connecting volunteers with people who would benefit from regular conversation and companionship.
+  </p>
 </section>
 
 <section class="content">
-<div class="content-grid">
+  <div class="content-grid">
+    <div class="content-card">
+      <h2 data-en="What is Befriending?" data-es="¿Qué es el Acompañamiento?">What is Befriending?
+        <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+      </h2>
+      <p data-en="Many elderly people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls." data-es="Muchas personas mayores de la comunidad viven solas o no tienen oportunidades frecuentes de socializar. Nuestros voluntarios ofrecen contacto amistoso mediante visitas o llamadas telefónicas.">
+        Many elderly people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls.
+      </p>
+      <p data-en="A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection." data-es="Una simple conversación, una cara amable o una llamada regular pueden marcar una gran diferencia en el bienestar y la sensación de conexión de alguien.">
+        A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection.
+      </p>
+    </div>
 
-<div class="content-card">
-<h2 data-en="What is Befriending?" data-es="¿Qué es el Acompañamiento?">What is Befriending? <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Many elderly people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls."
-data-es="Muchas personas mayores de la comunidad viven solas o no tienen oportunidades frecuentes de socializar. Nuestros voluntarios ofrecen contacto amistoso mediante visitas o llamadas telefónicas.">Many elderly people in the community live alone or may not have regular opportunities to socialise. Our befriending volunteers provide friendly contact through visits or phone calls.</p>
-<p data-en="A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection."
-data-es="Una simple conversación, una cara amable o una llamada regular pueden marcar una gran diferencia en el bienestar y la sensación de conexión de alguien.">A simple chat, a friendly face or a regular phone call can make a big difference to someone's wellbeing and sense of connection.</p>
-</div>
+    <div class="content-card">
+      <h2 data-en="How It Works" data-es="Cómo Funciona">How It Works
+        <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+      </h2>
+      <p data-en="Our volunteers are carefully matched with people who would benefit from companionship. The support may include:" data-es="Nuestros voluntarios se asignan cuidadosamente a personas que se beneficiarían de compañía. El apoyo puede incluir:">
+        Our volunteers are carefully matched with people who would benefit from companionship. The support may include:
+      </p>
+      <ul>
+        <li data-en="Regular friendly phone calls" data-es="Llamadas telefónicas amistosas regulares">Regular friendly phone calls</li>
+        <li data-en="Occasional home visits" data-es="Visitas ocasionales al domicilio">Occasional home visits</li>
+        <li data-en="Conversation and companionship" data-es="Conversación y compañía">Conversation and companionship</li>
+        <li data-en="Helping people stay connected with the community" data-es="Ayudar a las personas a mantenerse conectadas con la comunidad">Helping people stay connected with the community</li>
+      </ul>
+    </div>
 
-<div class="content-card">
-<h2 data-en="How It Works" data-es="Cómo Funciona">How It Works <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="Our volunteers are carefully matched with people who would benefit from companionship. The support may include:"
-data-es="Nuestros voluntarios se asignan cuidadosamente a personas que se beneficiarían de compañía. El apoyo puede incluir:">Our volunteers are carefully matched with people who would benefit from companionship. The support may include:</p>
-<ul>
-<li data-en="Regular friendly phone calls" data-es="Llamadas telefónicas amistosas regulares">Regular friendly phone calls</li>
-<li data-en="Occasional home visits" data-es="Visitas ocasionales al domicilio">Occasional home visits</li>
-<li data-en="Conversation and companionship" data-es="Conversación y compañía">Conversation and companionship</li>
-<li data-en="Helping people stay connected with the community" data-es="Ayudar a las personas a mantenerse conectadas con la comunidad">Helping people stay connected with the community</li>
-</ul>
-</div>
-
-<div class="content-card">
-<h2 data-en="Get in Touch" data-es="Ponte en Contacto">Get in Touch <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button></h2>
-<p data-en="If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help."
-data-es="Si usted o alguien que conoce podría beneficiarse de nuestro servicio de acompañamiento, por favor póngase en contacto con nosotros. Estaremos encantados de hablar sobre cómo podemos ayudar.">If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help.</p>
-</div>
-
-</div>
+    <div class="content-card">
+      <h2 data-en="Get in Touch" data-es="Ponte en Contacto">Get in Touch
+        <button class="spk nav-spk" onclick="speakSection(this.parentElement, this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+      </h2>
+      <p data-en="If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help." data-es="Si usted o alguien que conoce podría beneficiarse de nuestro servicio de acompañamiento, por favor póngase en contacto con nosotros. Estaremos encantados de hablar sobre cómo podemos ayudar.">
+        If you or someone you know would benefit from our befriending service, please contact us. We will be happy to discuss how we can help.
+      </p>
+    </div>
+  </div>
 </section>
 
+<header>
+  <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"><span data-en="Age Support Almanzora" data-es="Age Support Almanzora">Age Support Almanzora</span>
+    <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+  </h1>
+
+  <p data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
+
+  <div class="phone">📞 <a href="tel:634316573" style="color:white;text-decoration:underline;">634 316 573</a>
+    <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'seis, tres, cuatro, tres, uno, seis, cinco, siete, tres':'six...... three...... four...... three...... one...... six...... five...... seven...... three',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    <span style="margin-left:14px;font-size:1em;font-weight:normal;">✉ <a href="mailto:agesupportalmanzora@live.com" style="color:white;">agesupportalmanzora@live.com</a></span>
+  </div>
+</header>
+
 <footer>
+  <p class="footer-line"><strong>Age Support Almanzora</strong> <a href="https://www.facebook.com/ASAheretohelp/" target="_blank" rel="noopener noreferrer"><img src="facebook-logo.avif" alt="Facebook" class="footer-icon"></a></p>
 
-<p><strong>Age Support Almanzora</strong></p>
+  <p class="footer-line" id="footerAddress"><strong>Camino Segovias 04800, Albox, Almería</strong> <a href="https://www.google.com/maps/@37.3817828,-2.136812,412a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2199999999999989%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.23!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDcwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View location on Google Maps" aria-label="View location on Google Maps"><svg class="footer-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></p>
 
-<p>
-<span data-en="Albox Information Centre" data-es="Centro de Información de Albox">Albox Information Centre</span><br>
-<span data-en="Almanzora Valley " data-es="Valle del Almanzora ">Almanzora Valley </span>
-<button class="spk nav-spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora.':'Age Support Almanzora. Albox Information Centre, Almanzora Valley .',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
-</p>
-
-<div class="charity-info">
-<span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>
-</div>
-
+  <div class="charity-info">
+    <span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>
+  </div>
 </footer>
 
 <div class="site-credit">
-<span data-en="Designed by TerraLytics ©2026" data-es="Diseñado por TerraLytics ©2026">Designed by TerraLytics ©2026</span>
+  <span data-en="Designed by TerraLytics ©2026" data-es="Diseñado por TerraLytics ©2026">Designed by TerraLytics ©2026</span>
 </div>
 
 <a href="tel:634316573" class="call-button">📞 Call us</a>
