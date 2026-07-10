@@ -200,7 +200,10 @@ nav a{
 }
 .hero h2{
   margin:0;
-  display:inline-block;
+  font-size:40px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 }
 
 /* HERO IMAGE */
@@ -347,20 +350,46 @@ footer{
   border-radius:50px;
   text-decoration:none;
 }
+
+/* MOBILE: shrink the nav menu bar so it doesn't dominate small screens */
+@media (max-width:600px){
+  nav{
+    gap:10px;
+    padding:10px 8px;
+  }
+  .nav-item{
+    gap:4px;
+  }
+  nav a{
+    font-size:15px;
+  }
+  .spk.nav-spk{
+    width:20px;
+    height:20px;
+    padding:3px;
+  }
+  .spk.nav-spk svg{
+    width:13px;
+    height:13px;
+  }
+  .hero h2{
+    font-size:30px;
+  }
+}
 </style>
 
 <script>
 /* ==============================
    FONT SIZE SYSTEM
-   - Max now 48px, default 24px
+   - Max now 48px, default 20px
 ============================== */
 
 /* read stored value if present */
 let fontSize = localStorage.getItem("siteFontSize");
 
-/* If not stored, start at 24px (default requested) */
+/* If not stored, start at 20px (default requested) */
 if(!fontSize){
-  fontSize = 24;
+  fontSize = 20;
 } else {
   fontSize = parseInt(fontSize);
 }
@@ -382,9 +411,9 @@ function decreaseText(){
   applyFont();
 }
 
-/* Reset restores to the chosen default (24px) */
+/* Reset restores to the chosen default (20px) */
 function resetText(){
-  fontSize = 24;
+  fontSize = 20;
   applyFont();
 }
 

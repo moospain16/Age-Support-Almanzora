@@ -111,6 +111,14 @@ header{
   position:relative;
 }
 
+.rev-tag{
+  position:absolute;
+  top:6px;
+  right:12px;
+  font-size:11px;
+  color:#a9b7c6;
+}
+
 header h1{
   margin:0 0 2px 0;
   font-size:40px;
@@ -404,15 +412,15 @@ footer{
 <script>
 /* ==============================
    FONT SIZE SYSTEM
-   - Max now 48px, default 24px
+   - Max now 48px, default 20px
 ============================== */
 
 /* read stored value if present */
 let fontSize = localStorage.getItem("siteFontSize");
 
-/* If not stored, start at 24px (default requested) */
+/* If not stored, start at 20px (default requested) */
 if(!fontSize){
-  fontSize = 24;
+  fontSize = 20;
 } else {
   fontSize = parseInt(fontSize);
 }
@@ -434,9 +442,9 @@ function decreaseText(){
   applyFont();
 }
 
-/* Reset restores to the chosen default (24px) */
+/* Reset restores to the chosen default (20px) */
 function resetText(){
-  fontSize = 24;
+  fontSize = 20;
   applyFont();
 }
 
@@ -580,6 +588,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </nav>
 
 <section class="hero">
+  <span class="rev-tag">Rev. 1.1</span>
   <h2 data-en="Welcome to Age Support Almanzora" data-es="Bienvenido a Age Support Almanzora"><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Welcome to Age Support Almanzora
     <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>

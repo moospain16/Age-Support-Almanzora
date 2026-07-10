@@ -319,15 +319,41 @@ footer{
   border-radius:50px;
   text-decoration:none;
 }
+
+/* MOBILE: shrink the nav menu bar so it doesn't dominate small screens */
+@media (max-width:600px){
+  nav{
+    gap:10px;
+    padding:10px 8px;
+  }
+  .nav-item{
+    gap:4px;
+  }
+  nav a{
+    font-size:15px;
+  }
+  .spk.nav-spk{
+    width:20px;
+    height:20px;
+    padding:3px;
+  }
+  .spk.nav-spk svg{
+    width:13px;
+    height:13px;
+  }
+  .hero h2{
+    font-size:30px;
+  }
+}
 </style>
 
 <script>
 /* ==============================
    FONT SIZE SYSTEM
-   default 24px for message-first design
+   default 20px for message-first design
 ============================== */
 let fontSize = localStorage.getItem("siteFontSize");
-if(!fontSize){ fontSize = 24; } else { fontSize = parseInt(fontSize, 10); }
+if(!fontSize){ fontSize = 20; } else { fontSize = parseInt(fontSize, 10); }
 
 function applyFont(){
   document.body.style.fontSize = fontSize + "px";
@@ -335,7 +361,7 @@ function applyFont(){
 }
 function increaseText(){ fontSize = Math.min(48, fontSize + 4); applyFont(); }
 function decreaseText(){ fontSize = Math.max(12, fontSize - 4); applyFont(); }
-function resetText(){ fontSize = 24; applyFont(); }
+function resetText(){ fontSize = 20; applyFont(); }
 
 /* ==============================
    LANGUAGE SYSTEM
