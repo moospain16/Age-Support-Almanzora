@@ -190,7 +190,7 @@ header p{
 .hero-image{
   display:block;
   width:100%;
-  max-width:1200px;
+  max-width:800px;
   margin:16px auto 0;
   border-radius:10px;
   height:auto;
@@ -266,6 +266,8 @@ header p{
 .spk.active svg{ fill:#ff9900; }
 .spk.nav-spk{ background:#003366; border-radius:50%; padding:4px; width:28px; height:28px; justify-content:center; }
 .spk.nav-spk svg{ fill:#ffd700; width:18px; height:18px; }
+.content-card h2 .spk.nav-spk{ width:36px; height:36px; padding:6px; }
+.content-card h2 .spk.nav-spk svg{ width:24px; height:24px; }
 
 /* Phone row and QR */
 .phone-number-row{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:8px; }
@@ -549,27 +551,27 @@ document.addEventListener('DOMContentLoaded', function(){
   </div>
 </div>
 
-<div class="version-badge">Rev. 1.0</div>
 
 <!-- Navigation -->
 <nav>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Sobre Nosotros':'About Us',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="aboutus.html" data-en="About Us" data-es="Sobre Nosotros">About Us</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Contacto':'Contact',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="contact.html" data-en="Contact" data-es="Contacto">Contact</a></span>
+
 </nav>
 
 <!-- HERO: message-first -->
 <section class="hero" aria-labelledby="hero-heading">
-  <h2 id="hero-heading" data-en="Why Us?" data-es="¿Por qué nosotros?">
-    <img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Why Us?
-    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+  <h2 id="hero-heading" data-en="About Us" data-es="Sobre Nosotros">
+    <img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"> About Us
+    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
 
-  <img src="index_main_photo.avif" alt="Smiling elderly people together in a sunny garden" class="hero-image">
+  <img src="aboutus.avif" alt="Group of people in a charity shop smiling." class="hero-image">
 
   <p class="lead" data-en="Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience." data-es="Nuestra misión es promover el bienestar de las personas mayores y contribuir a que la vida en sus últimos años sea una experiencia plena y satisfactoria.">
     Our mission is to promote the well-being of elderly people and to help make later life a fulfilling and enjoyable experience.
@@ -582,7 +584,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card why-us">
       <h2 data-en="We provide real help for everyday needs" data-es="Ofrecemos ayuda real para las necesidades cotidianas">We provide real help for everyday needs
-        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
       <p data-en="Practical and emotional support (like advice, information and mobility aids)." data-es="Apoyo práctico y emocional (como asesoramiento, información y ayudas para la movilidad).">
         Practical and emotional support (like advice, information and mobility aids).
@@ -591,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card why-us">
       <h2 data-en="Focus on independence and dignity" data-es="Enfoque en la independencia y la dignidad">Focus on independence and dignity
-        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
       <p data-en="Our charity is built around helping elderly people stay independent and live with dignity." data-es="Nuestra organización está dedicada a ayudar a las personas mayores a mantenerse independientes y vivir con dignidad.">
         Our charity is built around helping elderly people stay independent and live with dignity.
@@ -600,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card why-us">
       <h2 data-en="Compassionate person-centred approach" data-es="Enfoque compasivo y centrado en la persona">Compassionate person-centred approach
-        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
       <p data-en="We emphasise being caring, supportive and attentive to individual needs." data-es="Hacemos hincapié en ser atentos, solidarios y sensibles a las necesidades individuales.">
         We emphasise being caring, supportive and attentive to individual needs.
@@ -609,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card why-us">
       <h2 data-en="Support for vulnerable or isolated people" data-es="Apoyo a personas vulnerables o aisladas">Support for vulnerable or isolated people
-        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
       <p data-en="We actively create opportunities for connection and help to reduce loneliness." data-es="Creamos activamente oportunidades de conexión y ayudamos a reducir la soledad.">
         We actively create opportunities for connection and help to reduce loneliness.
@@ -621,8 +623,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- Header/contact block placed after message content to prioritise trust & help-first message -->
 <header>
-  <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"><span data-en="Age Support Almanzora" data-es="Age Support Almanzora">Age Support Almanzora</span>
-    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+  <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"> <span data-en="Age Support Almanzora" data-es="Age Support Almanzora">Age Support Almanzora</span>
+    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h1>
 
   <p data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
@@ -645,7 +647,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <footer>
   <p class="footer-line" id="footerAddress" data-en="Albox Information Centre, Almanzora Valley" data-es="Centro de Información de Albox, Valle del Almanzora">
     Albox Information Centre, Almanzora Valley
-    <button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora.':'Age Support Almanzora. Albox Information Centre, Almanzora Valley.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+    <button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Centro de Información de Albox, Valle del Almanzora.':'Age Support Almanzora. Albox Information Centre, Almanzora Valley.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </p>
   <div class="charity-info">
     <span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>

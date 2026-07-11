@@ -190,7 +190,7 @@ header p{
 .hero-image{
   display:block;
   width:100%;
-  max-width:1200px;
+  max-width:500px;
   margin:16px auto 0;
   border-radius:10px;
   height:auto;
@@ -266,11 +266,11 @@ header p{
 .spk.active svg{ fill:#ff9900; }
 .spk.nav-spk{ background:#003366; border-radius:50%; padding:4px; width:28px; height:28px; justify-content:center; }
 .spk.nav-spk svg{ fill:#ffd700; width:18px; height:18px; }
+.content-card h2 .spk.nav-spk{ width:36px; height:36px; padding:6px; }
+.content-card h2 .spk.nav-spk svg{ width:24px; height:24px; }
 
-/* Phone row and QR */
+/* Phone row */
 .phone-number-row{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:8px; }
-.qr-code{ display:inline-block; margin-left:12px; width:80px; min-width:80px; background:white; border-radius:8px; padding:6px; box-sizing:border-box; }
-.qr-code img{ width:100%; height:auto; display:block; border-radius:4px; }
 
 /* Icon link */
 .icon-link{ display:inline-flex; align-items:center; gap:12px; margin-top:16px; text-decoration:underline; color:#ffd700; font-weight:bold; transition:0.2s; }
@@ -478,20 +478,20 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- Navigation -->
 <nav>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
-  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Sobre Nosotros':'About Us',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button><a href="aboutus.html" data-en="About Us" data-es="Sobre Nosotros">About Us</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Inicio':'Home',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="index.html" data-en="Home" data-es="Inicio">Home</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Acompañamiento':'Befriending',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="befriending.html" data-en="Befriending" data-es="Acompañamiento">Befriending</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Préstamo de Equipos':'Equipment Loan',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="equipment.html" data-en="Equipment Loan" data-es="Préstamo de Equipos">Equipment Loan</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Apoyo a Cuidadores':'Carer Support',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="carer_support.html" data-en="Carer Support" data-es="Apoyo a Cuidadores">Carer Support</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Voluntariado':'Volunteer',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="volunteer.html" data-en="Volunteer" data-es="Voluntariado">Volunteer</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donaciones':'Donations',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="donations.html" data-en="Donations" data-es="Donaciones">Donations</a></span>
+  <span class="nav-item"><button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Sobre Nosotros':'About Us',b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button><a href="aboutus.html" data-en="About Us" data-es="Sobre Nosotros">About Us</a></span>
 </nav>
 
 <!-- HERO: message-first -->
 <section class="hero" aria-labelledby="hero-heading">
   <h2 id="hero-heading" data-en="Contact Us" data-es="Contáctanos">
     <img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Contact Us
-    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
 
   <img src="contact.avif" alt="A friendly woman wearing a headset ready to help" class="hero-image">
@@ -511,19 +511,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card" id="how-to-reach">
       <h2 data-en="How to Reach Us" data-es="Cómo Contactarnos">How to Reach Us
-        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){speakCard(b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
 
       <div class="phone-number-row">
         <strong data-en="Phone:" data-es="Teléfono:">Phone:</strong>
-        <a href="tel:634316573" style="font-weight:bold;">634 316 573</a>
-        <span class="qr-code" title="Scan to call">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=tel:634316573" alt="QR code for phone number">
-        </span>
+        <a href="tel:634316573" style="font-weight:bold;color:#ffd700;">634 316 573</a>
       </div>
 
       <p><strong data-en="Email:" data-es="Correo electrónico:">Email:</strong><br>
-        <a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;">agesupportalmanzora@live.com</a>
+        <a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;color:#ffd700;">agesupportalmanzora@live.com</a>
       </p>
 
       <p><strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br>
@@ -537,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       <p style="margin-top:12px;">
         <a href="https://www.google.com/maps/place/C.+Poeta+Jos%C3%A9+Antonio+S%C3%A1ez,+04800+Albox,+Almer%C3%ADa,+Spain/" target="_blank" rel="noopener noreferrer" class="icon-link" aria-label="View on Google Maps">
-          <img src="google_maps_icon.avif" alt="Google Maps" class="icon-img">
+          <img src="location.avif" alt="Google Maps" class="icon-img">
           <span data-en="View on Google Maps" data-es="Ver en Google Maps">View on Google Maps</span>
         </a>
       </p>
@@ -552,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     <div class="content-card">
       <h2 data-en="We Are Here to Help" data-es="Estamos Aquí para Ayudar">We Are Here to Help
-        <button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Estamos aquí para ayudar. Si busca apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.': 'We are here to help. If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="spk nav-spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Estamos aquí para ayudar. Si busca apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.': 'We are here to help. If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
       </h2>
       <p data-en="If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible." data-es="Si está buscando apoyo para usted o para alguien que conoce, no dude en ponerse en contacto con nosotros. Nuestro amable equipo estará encantado de escucharle y ayudarle en lo que sea posible.">
         If you are looking for support for yourself or someone you know, please do not hesitate to contact us. Our friendly team will be happy to listen and help where possible.
@@ -565,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <!-- Header/contact block placed after message content to prioritise trust & help-first message -->
 <header>
   <h1><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo"><span data-en="Age Support Almanzora" data-es="Age Support Almanzora">Age Support Almanzora</span>
-    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Age Support Almanzora. Dedicados a ayudar a las personas mayores a vivir de forma independiente y a mantenerse conectadas.':'Age Support Almanzora. Dedicated to helping elderly people live independently and stay connected.', b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h1>
 
   <p data-en="Dedicated to helping elderly people live independently and stay connected." data-es="Dedicados a ayudar a las personas mayores a vivir de forma independiente y mantenerse conectadas.">Dedicated to helping elderly people live independently and stay connected.</p>
