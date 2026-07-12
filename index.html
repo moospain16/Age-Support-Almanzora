@@ -520,9 +520,13 @@ function speakText(text, btn) {
   utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
   utterance.rate = 0.95; utterance.pitch = 1;
 
-  function setVoiceAndSpeak(){
-    let voices = speechSynthesis.getVoices();
-    if(!voices.length){ setTimeout(setVoiceAndSpeak, 100); return; }
+  /* Pick a preferred voice ONLY if the list is already loaded - never wait for it.
+     Waiting for the voice list (which can take seconds on first use, especially
+     on mobile) used to delay every speech request. If voices aren't ready yet,
+     speak straight away and let the device use its own default voice for the
+     language - it will pick up the preferred voice automatically next time. */
+  const voices = speechSynthesis.getVoices();
+  if(voices.length){
     let chosenVoice = null;
     if(utterance.lang === "es-ES"){
       chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
@@ -534,13 +538,11 @@ function speakText(text, btn) {
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
     }
     if(chosenVoice) utterance.voice = chosenVoice;
-    utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); activeBtn = null; } };
-    utterance.onerror = () => { btn.classList.remove("active"); if(activeBtn === btn) activeBtn = null; };
-    window.speechSynthesis.speak(utterance);
   }
 
-  if(speechSynthesis.getVoices().length > 0) setVoiceAndSpeak();
-  else speechSynthesis.addEventListener("voiceschanged", function handler(){ speechSynthesis.removeEventListener("voiceschanged", handler); setVoiceAndSpeak(); });
+  utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); activeBtn = null; } };
+  utterance.onerror = () => { btn.classList.remove("active"); if(activeBtn === btn) activeBtn = null; };
+  window.speechSynthesis.speak(utterance);
 }
 
 function speakSection(headingEl, btn){
@@ -602,7 +604,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </nav>
 
 <section class="hero">
-  <span class="rev-tag">Rev. 1.4</span>
+  <span class="rev-tag">Rev. 1.5</span>
   <h2 data-en="Welcome to Age Support Almanzora" data-es="Bienvenido a Age Support Almanzora"><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Welcome to Age Support Almanzora
     <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
