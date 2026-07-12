@@ -261,6 +261,11 @@ nav a{
 }
 .spk:hover svg{ transform:scale(1.2); }
 .spk.active svg{ fill:#ff9900; }
+.spk.loading svg{ animation:spk-pulse 0.8s ease-in-out infinite; }
+@keyframes spk-pulse{
+  0%, 100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.5; transform:scale(1.15); }
+}
 
 .spk.nav-spk{
   background:#003366;
@@ -407,6 +412,20 @@ footer{
 
 <script>
 /* ==============================
+   SPEECH WARM-UP
+   - Primes the browser's speech engine on page load so the
+     first speaker-icon click isn't delayed
+============================== */
+(function warmUpSpeech(){
+  if(!("speechSynthesis" in window)) return;
+  try{
+    const warmup = new SpeechSynthesisUtterance(" ");
+    warmup.volume = 0;
+    speechSynthesis.speak(warmup);
+  }catch(e){}
+})();
+
+/* ==============================
    FONT SIZE SYSTEM
    - Max now 48px, default 20px
 ============================== */
@@ -494,17 +513,21 @@ const femaleKeywords = [ "Female","female","Femenino","femenino","Zira","Susan",
 
 function speakText(text, btn) {
   if(window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
-  if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
-  if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn = null; return; }
-  activeBtn = btn; btn.classList.add("active");
+  if(activeBtn && activeBtn !== btn) { activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); }
+  if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); activeBtn = null; return; }
+  activeBtn = btn; btn.classList.add("active"); btn.classList.add("loading");
   const utterance = new SpeechSynthesisUtterance(text);
   const siteLang = localStorage.getItem("siteLang") || "en";
   utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
   utterance.rate = 0.95; utterance.pitch = 1;
 
-  function setVoiceAndSpeak(){
-    let voices = speechSynthesis.getVoices();
-    if(!voices.length){ setTimeout(setVoiceAndSpeak, 100); return; }
+  /* Pick a preferred voice ONLY if the list is already loaded - never wait for it.
+     Waiting for the voice list (which can take seconds on first use, especially
+     on mobile) used to delay every speech request. If voices aren't ready yet,
+     speak straight away and let the device use its own default voice for the
+     language - it will pick up the preferred voice automatically next time. */
+  const voices = speechSynthesis.getVoices();
+  if(voices.length){
     let chosenVoice = null;
     if(utterance.lang === "es-ES"){
       chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
@@ -516,13 +539,12 @@ function speakText(text, btn) {
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
     }
     if(chosenVoice) utterance.voice = chosenVoice;
-    utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); activeBtn = null; } };
-    utterance.onerror = () => { btn.classList.remove("active"); if(activeBtn === btn) activeBtn = null; };
-    window.speechSynthesis.speak(utterance);
   }
 
-  if(speechSynthesis.getVoices().length > 0) setVoiceAndSpeak();
-  else speechSynthesis.addEventListener("voiceschanged", function handler(){ speechSynthesis.removeEventListener("voiceschanged", handler); setVoiceAndSpeak(); });
+  utterance.onstart = () => { btn.classList.remove("loading"); };
+  utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); btn.classList.remove("loading"); activeBtn = null; } };
+  utterance.onerror = () => { btn.classList.remove("active"); btn.classList.remove("loading"); if(activeBtn === btn) activeBtn = null; };
+  window.speechSynthesis.speak(utterance);
 }
 
 function speakSection(headingEl, btn){
