@@ -266,6 +266,11 @@ nav a{
 }
 .spk:hover svg{ transform:scale(1.2); }
 .spk.active svg{ fill:#ff9900; }
+.spk.loading svg{ animation:spk-pulse 0.8s ease-in-out infinite; }
+@keyframes spk-pulse{
+  0%, 100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.5; transform:scale(1.15); }
+}
 
 .spk.nav-spk{
   background:#003366;
@@ -512,9 +517,9 @@ const femaleKeywords = [ "Female","female","Femenino","femenino","Zira","Susan",
 
 function speakText(text, btn) {
   if(window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
-  if(activeBtn && activeBtn !== btn) activeBtn.classList.remove("active");
-  if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn = null; return; }
-  activeBtn = btn; btn.classList.add("active");
+  if(activeBtn && activeBtn !== btn) { activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); }
+  if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); activeBtn = null; return; }
+  activeBtn = btn; btn.classList.add("active"); btn.classList.add("loading");
   const utterance = new SpeechSynthesisUtterance(text);
   const siteLang = localStorage.getItem("siteLang") || "en";
   utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
@@ -540,8 +545,9 @@ function speakText(text, btn) {
     if(chosenVoice) utterance.voice = chosenVoice;
   }
 
-  utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); activeBtn = null; } };
-  utterance.onerror = () => { btn.classList.remove("active"); if(activeBtn === btn) activeBtn = null; };
+  utterance.onstart = () => { btn.classList.remove("loading"); };
+  utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); btn.classList.remove("loading"); activeBtn = null; } };
+  utterance.onerror = () => { btn.classList.remove("active"); btn.classList.remove("loading"); if(activeBtn === btn) activeBtn = null; };
   window.speechSynthesis.speak(utterance);
 }
 
@@ -604,7 +610,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </nav>
 
 <section class="hero">
-  <span class="rev-tag">Rev. 1.5</span>
+  <span class="rev-tag">Rev. 1.7</span>
   <h2 data-en="Welcome to Age Support Almanzora" data-es="Bienvenido a Age Support Almanzora"><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Welcome to Age Support Almanzora
     <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
