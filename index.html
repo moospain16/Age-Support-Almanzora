@@ -411,6 +411,21 @@ footer{
 
 <script>
 /* ==============================
+   SPEECH WARM-UP
+   - Primes the browser's speech engine on page load so the
+     first speaker-icon click isn't delayed
+============================== */
+(function warmUpSpeech(){
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.getVoices();
+  try{
+    const warmup = new SpeechSynthesisUtterance(" ");
+    warmup.volume = 0;
+    speechSynthesis.speak(warmup);
+  }catch(e){}
+})();
+
+/* ==============================
    FONT SIZE SYSTEM
    - Max now 48px, default 20px
 ============================== */
