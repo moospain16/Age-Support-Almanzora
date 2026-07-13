@@ -232,6 +232,11 @@ nav a{
   margin:24px auto 0;
   max-width:900px;
 }
+.hero-action-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
 .hero-btn{
   background:#ffd700;
   color:#003366;
@@ -613,7 +618,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </nav>
 
 <section class="hero">
-  <span class="rev-tag">Rev. 1.1</span>
+  <span class="rev-tag">Rev. 1.2</span>
   <h2 data-en="Welcome to Age Support Almanzora" data-es="Bienvenido a Age Support Almanzora"><img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Welcome to Age Support Almanzora
     <button class="spk" onclick="speakHeroSection(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
@@ -624,14 +629,23 @@ document.addEventListener("DOMContentLoaded",function(){
     We help elderly people live happier, safer and less lonely lives.
   </p>
 
-  <p data-en="Free support for elderly people across the Almanzora Valley. From a friendly home visit to benefits advice and medical equipment, our volunteers are here to help." data-es="Apoyo gratuito para personas mayores en todo el Valle del Almanzora. Desde una visita amistosa a domicilio hasta asesoramiento sobre prestaciones y equipos médicos, nuestros voluntarios están aquí para ayudar." style="max-width:900px;margin:12px auto 0;font-size:1.05em;">
-    Free support for elderly people across the Almanzora Valley. From a friendly home visit to benefits advice and medical equipment, our volunteers are here to help.
+  <p data-en="Free support across the Almanzora Valley. From a friendly home visit to benefits advice and medical equipment, our volunteers are here to help." data-es="Apoyo gratuito en todo el Valle del Almanzora. Desde una visita amistosa a domicilio hasta asesoramiento sobre prestaciones y equipos médicos, nuestros voluntarios están aquí para ayudar." style="max-width:900px;margin:12px auto 0;font-size:1.05em;">
+    Free support across the Almanzora Valley. From a friendly home visit to benefits advice and medical equipment, our volunteers are here to help.
   </p>
 
   <div class="hero-actions">
-    <a class="hero-btn" href="contact.html" data-en="I Need Help" data-es="Necesito Ayuda">I Need Help</a>
-    <a class="hero-btn" href="volunteer.html" data-en="I Want to Help" data-es="Quiero Ayudar">I Want to Help</a>
-    <a class="hero-btn" href="donations.html" data-en="Donate" data-es="Donar">Donate</a>
+    <span class="hero-action-item">
+      <a class="hero-btn" href="contact.html" data-en="I Need Help" data-es="Necesito Ayuda">I Need Help</a>
+      <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Necesito Ayuda':'I Need Help',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    </span>
+    <span class="hero-action-item">
+      <a class="hero-btn" href="volunteer.html" data-en="I Want To Help" data-es="Quiero Ayudar">I Want To Help</a>
+      <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Quiero Ayudar':'I Want To Help',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    </span>
+    <span class="hero-action-item">
+      <a class="hero-btn" href="donations.html" data-en="Donate" data-es="Donar">Donate</a>
+      <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Donar':'Donate',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    </span>
   </div>
 </section>
 
