@@ -213,6 +213,9 @@ nav a{
   align-items:center;
   gap:8px;
 }
+.hero h2 .spk{
+  padding-left:0;
+}
 
 /* HERO IMAGE */
 .hero-image{
@@ -524,14 +527,17 @@ let activeBtn = null;
 const femaleKeywords = [ "Female","female","Femenino","femenino","Zira","Susan","Sarah","Samantha","Victoria","Karen","Moira","Aria","Google UK English Female","Google US English Female","Monica","Paulina","Rosa","Maria","Lucia","Elena","Carmen","Sofia","Isabel","Juana","Teresa","Gabriela","Valeria","Laura","Claudia","es-ES Female","Spanish Female","Google español femenino" ];
 
 function speakText(text, btn) {
+  speakUtterances([text], btn);
+}
+
+function speakUtterances(parts, btn) {
   if(window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
   if(activeBtn && activeBtn !== btn) { activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); }
   if(activeBtn === btn){ activeBtn.classList.remove("active"); activeBtn.classList.remove("loading"); activeBtn = null; return; }
   activeBtn = btn; btn.classList.add("active"); btn.classList.add("loading");
-  const utterance = new SpeechSynthesisUtterance(text);
+
   const siteLang = localStorage.getItem("siteLang") || "en";
-  utterance.lang = siteLang === "es" ? "es-ES" : "en-GB";
-  utterance.rate = 0.95; utterance.pitch = 1;
+  const lang = siteLang === "es" ? "es-ES" : "en-GB";
 
   /* Pick a preferred voice ONLY if the list is already loaded - never wait for it.
      Waiting for the voice list (which can take seconds on first use, especially
@@ -539,9 +545,9 @@ function speakText(text, btn) {
      speak straight away and let the device use its own default voice for the
      language - it will pick up the preferred voice automatically next time. */
   const voices = speechSynthesis.getVoices();
+  let chosenVoice = null;
   if(voices.length){
-    let chosenVoice = null;
-    if(utterance.lang === "es-ES"){
+    if(lang === "es-ES"){
       chosenVoice = voices.find(v => v.lang === "es-ES" && femaleKeywords.some(k => v.name.includes(k)));
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "es-ES");
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("es"));
@@ -550,13 +556,23 @@ function speakText(text, btn) {
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang === "en-GB");
       if(!chosenVoice) chosenVoice = voices.find(v => v.lang.startsWith("en"));
     }
-    if(chosenVoice) utterance.voice = chosenVoice;
   }
 
-  utterance.onstart = () => { btn.classList.remove("loading"); };
-  utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); btn.classList.remove("loading"); activeBtn = null; } };
-  utterance.onerror = () => { btn.classList.remove("active"); btn.classList.remove("loading"); if(activeBtn === btn) activeBtn = null; };
-  window.speechSynthesis.speak(utterance);
+  parts.forEach(function(part, idx){
+    const utterance = new SpeechSynthesisUtterance(part);
+    utterance.lang = lang;
+    utterance.rate = 0.95; utterance.pitch = 1;
+    if(chosenVoice) utterance.voice = chosenVoice;
+
+    if(idx === 0){
+      utterance.onstart = () => { btn.classList.remove("loading"); };
+    }
+    if(idx === parts.length - 1){
+      utterance.onend = () => { if(activeBtn === btn){ btn.classList.remove("active"); btn.classList.remove("loading"); activeBtn = null; } };
+      utterance.onerror = () => { btn.classList.remove("active"); btn.classList.remove("loading"); if(activeBtn === btn) activeBtn = null; };
+    }
+    window.speechSynthesis.speak(utterance);
+  });
 }
 
 function speakSection(headingEl, btn){
@@ -569,17 +585,21 @@ function speakSection(headingEl, btn){
     else if(el.tagName === 'UL'){ el.querySelectorAll('li').forEach(function(li){ parts.push(li.getAttribute('data-' + l) || li.innerText.replace(/\s+/g,' ').trim()); }); }
     el = el.nextElementSibling;
   }
-  speakText(parts.join('. '), btn);
+  speakUtterances(parts, btn);
 }
 
 function speakHeroSection(btn){
   var l = localStorage.getItem('siteLang') || 'en';
   var h2 = btn.closest('h2');
-  var p = h2.nextElementSibling;
-  while(p && p.tagName === 'IMG'){ p = p.nextElementSibling; }
+  var el = h2.nextElementSibling;
+  while(el && el.tagName === 'IMG'){ el = el.nextElementSibling; }
   var headingText = h2.getAttribute('data-' + l);
-  var paraText = p ? (p.getAttribute('data-' + l) || p.innerText) : '';
-  speakText(headingText + '. ' + paraText, btn);
+  var paraTexts = [];
+  while(el && el.tagName === 'P'){
+    paraTexts.push(el.getAttribute('data-' + l) || el.innerText);
+    el = el.nextElementSibling;
+  }
+  speakUtterances([headingText].concat(paraTexts), btn);
 }
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -710,7 +730,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </header>
 
 <footer>
-  <p class="footer-line" id="footerAddress">Camino Segovias 04800, Albox, Almería <a href="https://www.google.com/maps/@37.3817828,-2.136812,412a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2199999999999989%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.23!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDcwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View location on Google Maps" aria-label="View location on Google Maps"><svg class="footer-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></p>
+  <p class="footer-line" id="footerAddress">Camino Segovias 04800, Albox, Almería <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakUtterances(l==='es'?['Camino Segovias 04800, Albox, Almería','Organización Benéfica Registrada No. cinco dos siete cuatro, CIF: G04742219']:['Camino Segovias 04800, Albox, Almería','Registered Charity No. five two seven four, CIF: G04742219'],btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button> <a href="https://www.google.com/maps/@37.3817828,-2.136812,412a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2199999999999989%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.23!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDcwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View location on Google Maps" aria-label="View location on Google Maps"><svg class="footer-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></p>
 
   <div class="charity-info">
     <span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>
