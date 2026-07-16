@@ -606,6 +606,48 @@ document.addEventListener("DOMContentLoaded",function(){
   applyFont();
   loadLanguage();
 });
+
+/* ---- Swipe navigation between pages (mobile) ----
+   Swipe right-to-left -> next page in the site's nav order
+   Swipe left-to-right -> previous page in the site's nav order
+   Wraps around: swiping past the last page goes to the first, and vice versa.
+   This same block should be copied onto every page listed below so the
+   whole site behaves consistently. */
+(function(){
+  var PAGE_ORDER = ["index.html","befriending.html","equipment.html","carer_support.html","volunteer.html","donations.html","contact.html","aboutus.html"];
+
+  function currentPageIndex(){
+    var path = window.location.pathname.split("/").pop();
+    if(path === "") path = "index.html";
+    var idx = PAGE_ORDER.indexOf(path);
+    return idx === -1 ? 0 : idx;
+  }
+
+  var touchStartX = 0, touchStartY = 0;
+  var SWIPE_THRESHOLD = 60;   // minimum horizontal px to count as a deliberate swipe
+  var MAX_VERTICAL_RATIO = 0.6; // if vertical movement is too large relative to horizontal, treat as a scroll, not a swipe
+
+  document.addEventListener("touchstart", function(e){
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, {passive:true});
+
+  document.addEventListener("touchend", function(e){
+    var dx = e.changedTouches[0].screenX - touchStartX;
+    var dy = e.changedTouches[0].screenY - touchStartY;
+
+    if(Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if(Math.abs(dy) > Math.abs(dx) * MAX_VERTICAL_RATIO) return;
+
+    var idx = currentPageIndex();
+    var nextIdx = dx < 0
+      ? (idx + 1) % PAGE_ORDER.length                       // swiped left -> next page (rotates at the end)
+      : (idx - 1 + PAGE_ORDER.length) % PAGE_ORDER.length;   // swiped right -> previous page (rotates at the start)
+
+    window.location.href = PAGE_ORDER[nextIdx];
+  }, {passive:true});
+})();
+
 </script>
 </head>
 
