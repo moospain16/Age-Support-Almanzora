@@ -277,6 +277,10 @@ header p{
 /* Phone row */
 .phone-number-row{ display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:8px; }
 
+/* Fixed-width icon slot so labels below (Phone/Email) line up vertically */
+.row-icon{ display:inline-flex; align-items:center; justify-content:center; width:24px; flex-shrink:0; }
+.row-icon svg{ width:1em; height:1em; }
+
 /* Icon link */
 .icon-link{ display:inline-flex; align-items:center; gap:12px; margin-top:16px; text-decoration:underline; color:#ffd700; font-weight:bold; transition:0.2s; }
 .icon-link:hover{ color:#ffc107; text-decoration:none; }
@@ -451,7 +455,7 @@ function spellOutPhone(number, langCode){
   const en = ['zero','one','two','three','four','five','six','seven','eight','nine'];
   const es = ['cero','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve'];
   const map = (langCode === 'es') ? es : en;
-  return digits.map(d => map[parseInt(d,10)] || d).join('... ');
+  return digits.map(d => map[parseInt(d,10)] || d).join('...... ');
 }
 function speakCard(btn){
   if(!btn) return;
@@ -461,15 +465,19 @@ function speakCard(btn){
   const parts = [];
   const h2 = card.querySelector('h2');
   if(h2) parts.push(h2.getAttribute('data-' + l) || h2.innerText || '');
-  card.querySelectorAll('p, li').forEach(function(el){
-    const t = el.getAttribute('data-' + l) || el.innerText || '';
-    if(t) parts.push(t);
-  });
   const tel = card.querySelector('a[href^="tel:"]');
   if(tel){
     const phone = tel.getAttribute('href').replace(/^tel:/i,'');
-    parts.push((l==='es'?'Por favor llame al':'Please call') + ' ' + spellOutPhone(phone, l));
+    parts.push((l==='es'?'Por favor llame al':'Please call') + '......... ' + spellOutPhone(phone, l));
   }
+  card.querySelectorAll('p, li').forEach(function(el){
+    if(el.id === 'email-line'){
+      parts.push((l==='es'?'Correo electrónico: age support almanzora arroba live punto com':'Email: age support almanzora at live dot com') + '.........');
+      return;
+    }
+    const t = el.getAttribute('data-' + l) || el.innerText || '';
+    if(t) parts.push(t);
+  });
   speakText(parts.join('. '), btn);
 }
 
@@ -553,17 +561,13 @@ document.addEventListener('DOMContentLoaded', function(){
 <section class="hero" aria-labelledby="hero-heading">
   <h2 id="hero-heading" data-en="Contact Us" data-es="Contáctanos">
     <img src="age_support_almanzoa_logo.avif" alt="Age Support Almanzora logo" class="header-logo">Contact Us
-    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var p=h.nextElementSibling;while(p&&p.tagName==='IMG')p=p.nextElementSibling;var text=h.getAttribute('data-'+l)+(p&&p.getAttribute('data-'+l)?'. '+p.getAttribute('data-'+l):'');speakText(text,b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+    <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';var h=b.closest('h2');var el=h.nextElementSibling;var texts=[h.getAttribute('data-'+l)];while(el){if(el.tagName==='P'){var t=el.getAttribute('data-'+l);if(t)texts.push(t);}else if(el.tagName!=='IMG'){break;}el=el.nextElementSibling;}speakText(texts.join('. '),b);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
   </h2>
 
   <img src="contact.avif" alt="A friendly woman wearing a headset ready to help" class="hero-image">
 
   <p class="lead" data-en="If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help." data-es="Si necesita apoyo, le gustaría ser voluntario o simplemente quiere saber más sobre nuestros servicios, por favor póngase en contacto con nosotros. Estamos aquí para ayudar.">
     If you need support, would like to volunteer, or simply want to learn more about our services, please get in touch. We are here to help.
-  </p>
-
-  <p class="sub" data-en="Trusted, local and volunteer-led — quick phone help and friendly email responses." data-es="Confiable, local y dirigido por voluntarios — ayuda rápida por teléfono y respuestas amables por correo electrónico.">
-    Trusted, local and volunteer-led — quick phone help and friendly email responses.
   </p>
 </section>
 
@@ -581,13 +585,13 @@ document.addEventListener('DOMContentLoaded', function(){
         <a href="tel:634316573" style="font-weight:bold;color:#ffd700;">634 316 573</a>
       </div>
 
-      <p><strong data-en="Email:" data-es="Correo electrónico:">Email:</strong><br>
-        <a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;color:#ffd700;">agesupportalmanzora@live.com</a>
+      <p id="email-line" style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;">
+        <strong data-en="Email:" data-es="Correo electrónico:">Email:</strong>
+        <a href="mailto:agesupportalmanzora@live.com" style="text-decoration:underline;color:white;">agesupportalmanzora@live.com</a>
       </p>
 
       <p><strong data-en="Opening Hours:" data-es="Horario de Apertura:">Opening Hours:</strong><br>
-        <span data-en="Tuesday – Friday" data-es="Martes – Viernes">Tuesday – Friday</span><br>
-        10:00 – 14:00
+        <span data-en="Tuesday to Friday (10am to 2pm)" data-es="Martes a Viernes (10:00 a 14:00)">Tuesday to Friday (10am to 2pm)</span>
       </p>
 
       <p><strong data-en="Location:" data-es="Ubicación:">Location:</strong><br>
@@ -639,13 +643,13 @@ document.addEventListener('DOMContentLoaded', function(){
         </svg>
       </button>
       <a href="mailto:agesupportalmanzora@live.com" class="email-link">agesupportalmanzora@live.com</a>
-      <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText('agesupportalmanzora@live.com', b);})(this)" title="Listen" style="padding:0 0 0 4px;"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+      <button class="spk" onclick="(function(b){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'age support almanzora arroba live punto com':'age support almanzora at live dot com', b);})(this)" title="Listen" style="padding:0 0 0 4px;"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
     </span>
   </div>
 </header>
 
 <footer>
-  <p class="footer-line" id="footerAddress">Camino Segovias 04800, Albox, Almería</p>
+  <p class="footer-line" id="footerAddress">Camino Segovias 04800, Albox, Almería <button class="spk" onclick="(function(btn){var l=localStorage.getItem('siteLang')||'en';speakText(l==='es'?'Camino Segovias 04800, Albox, Almería. Organización Benéfica Registrada No. cinco dos siete cuatro, CIF: G04742219':'Camino Segovias 04800, Albox, Almería. Registered Charity No. five two seven four, CIF: G04742219',btn);})(this)" title="Listen"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button> <a href="https://www.google.com/maps/@37.3817828,-2.136812,412a,75y,296.23h,88.78t/data=!3m7!1e1!3m5!1sOc7BIjN8KjHuY8eeEyao7A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.2199999999999989%26panoid%3DOc7BIjN8KjHuY8eeEyao7A%26yaw%3D296.23!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDcwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" title="View location on Google Maps" aria-label="View location on Google Maps"><svg class="footer-pin" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></p>
   <div class="charity-info">
     <span data-en="Registered Charity No. 5274 | CIF: G04742219" data-es="Organización Benéfica Registrada No. 5274 | CIF: G04742219">Registered Charity No. 5274 | CIF: G04742219</span>
   </div>
